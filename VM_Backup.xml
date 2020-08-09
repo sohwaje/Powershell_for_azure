@@ -1,0 +1,238 @@
+<Objs Version="1.1.0.1" xmlns="http://schemas.microsoft.com/powershell/2004/04">
+  <Obj RefId="0">
+    <TN RefId="0">
+      <T>Microsoft.Azure.Commands.Compute.Models.PSVirtualMachine</T>
+      <T>Microsoft.Azure.Commands.Compute.Models.PSOperation</T>
+      <T>System.Object</T>
+    </TN>
+    <ToString>Microsoft.Azure.Commands.Compute.Models.PSVirtualMachine</ToString>
+    <Props>
+      <S N="ResourceGroupName">ISCREAM</S>
+      <S N="Id">/subscriptions/64268000-4de0-460d-9cc0-5b7730789327/resourceGroups/ISCREAM/providers/Microsoft.Compute/virtualMachines/redis4</S>
+      <S N="VmId">0ba37ced-f68b-4408-9575-e462dc1dbe75</S>
+      <S N="Name">redis4</S>
+      <S N="Type">Microsoft.Compute/virtualMachines</S>
+      <S N="Location">koreacentral</S>
+      <Nil N="LicenseType" />
+      <Obj N="Tags" RefId="1">
+        <TN RefId="1">
+          <T>System.Collections.Generic.Dictionary`2[[System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]</T>
+          <T>System.Object</T>
+        </TN>
+        <DCT />
+      </Obj>
+      <Obj N="AvailabilitySetReference" RefId="2">
+        <TN RefId="2">
+          <T>Microsoft.Azure.Management.Compute.Models.SubResource</T>
+          <T>System.Object</T>
+        </TN>
+        <ToString>Microsoft.Azure.Management.Compute.Models.SubResource</ToString>
+        <Props>
+          <S N="Id">/subscriptions/64268000-4de0-460d-9cc0-5b7730789327/resourceGroups/ISCREAM/providers/Microsoft.Compute/availabilitySets/AVAILABILITYSET-REDIS</S>
+        </Props>
+      </Obj>
+      <Obj N="DiagnosticsProfile" RefId="3">
+        <TN RefId="3">
+          <T>Microsoft.Azure.Management.Compute.Models.DiagnosticsProfile</T>
+          <T>System.Object</T>
+        </TN>
+        <ToString>Microsoft.Azure.Management.Compute.Models.DiagnosticsProfile</ToString>
+        <Props>
+          <Obj N="BootDiagnostics" RefId="4">
+            <TN RefId="4">
+              <T>Microsoft.Azure.Management.Compute.Models.BootDiagnostics</T>
+              <T>System.Object</T>
+            </TN>
+            <ToString>Microsoft.Azure.Management.Compute.Models.BootDiagnostics</ToString>
+            <Props>
+              <B N="Enabled">true</B>
+              <S N="StorageUri">https://devhiclassfrontv7539.blob.core.windows.net/</S>
+            </Props>
+          </Obj>
+        </Props>
+      </Obj>
+      <Obj N="Extensions" RefId="5">
+        <TN RefId="5">
+          <T>System.Collections.Generic.List`1[[Microsoft.Azure.Management.Compute.Models.VirtualMachineExtension, Microsoft.Azure.Management.Compute, Version=36.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35]]</T>
+          <T>System.Object</T>
+        </TN>
+        <LST />
+      </Obj>
+      <Obj N="HardwareProfile" RefId="6">
+        <TN RefId="6">
+          <T>Microsoft.Azure.Management.Compute.Models.HardwareProfile</T>
+          <T>System.Object</T>
+        </TN>
+        <ToString>Microsoft.Azure.Management.Compute.Models.HardwareProfile</ToString>
+        <Props>
+          <S N="VmSize">Standard_B2ms</S>
+        </Props>
+      </Obj>
+      <Nil N="InstanceView" />
+      <Obj N="NetworkProfile" RefId="7">
+        <TN RefId="7">
+          <T>Microsoft.Azure.Management.Compute.Models.NetworkProfile</T>
+          <T>System.Object</T>
+        </TN>
+        <ToString>Microsoft.Azure.Management.Compute.Models.NetworkProfile</ToString>
+        <Props>
+          <Obj N="NetworkInterfaces" RefId="8">
+            <TN RefId="8">
+              <T>System.Collections.Generic.List`1[[Microsoft.Azure.Management.Compute.Models.NetworkInterfaceReference, Microsoft.Azure.Management.Compute, Version=36.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35]]</T>
+              <T>System.Object</T>
+            </TN>
+            <LST>
+              <Obj RefId="9">
+                <TN RefId="9">
+                  <T>Microsoft.Azure.Management.Compute.Models.NetworkInterfaceReference</T>
+                  <T>Microsoft.Azure.Management.Compute.Models.SubResource</T>
+                  <T>System.Object</T>
+                </TN>
+                <ToString>Microsoft.Azure.Management.Compute.Models.NetworkInterfaceReference</ToString>
+                <Props>
+                  <Nil N="Primary" />
+                  <S N="Id">/subscriptions/64268000-4de0-460d-9cc0-5b7730789327/resourceGroups/ISCREAM/providers/Microsoft.Network/networkInterfaces/redis-nic4</S>
+                </Props>
+              </Obj>
+            </LST>
+          </Obj>
+        </Props>
+      </Obj>
+      <Nil N="OSProfile" />
+      <Nil N="BillingProfile" />
+      <Nil N="Plan" />
+      <S N="ProvisioningState">Succeeded</S>
+      <Obj N="StorageProfile" RefId="10">
+        <TN RefId="10">
+          <T>Microsoft.Azure.Management.Compute.Models.StorageProfile</T>
+          <T>System.Object</T>
+        </TN>
+        <ToString>Microsoft.Azure.Management.Compute.Models.StorageProfile</ToString>
+        <Props>
+          <Nil N="ImageReference" />
+          <Obj N="OsDisk" RefId="11">
+            <TN RefId="11">
+              <T>Microsoft.Azure.Management.Compute.Models.OSDisk</T>
+              <T>System.Object</T>
+            </TN>
+            <ToString>Microsoft.Azure.Management.Compute.Models.OSDisk</ToString>
+            <Props>
+              <Obj N="OsType" RefId="12">
+                <TN RefId="12">
+                  <T>Microsoft.Azure.Management.Compute.Models.OperatingSystemTypes</T>
+                  <T>System.Enum</T>
+                  <T>System.ValueType</T>
+                  <T>System.Object</T>
+                </TN>
+                <ToString>Linux</ToString>
+                <I32>1</I32>
+              </Obj>
+              <Nil N="EncryptionSettings" />
+              <S N="Name">redis4_osdisk_e8f1f6a808c0408081656c27b4baee57</S>
+              <Nil N="Vhd" />
+              <Nil N="Image" />
+              <Obj N="Caching" RefId="13">
+                <TN RefId="13">
+                  <T>Microsoft.Azure.Management.Compute.Models.CachingTypes</T>
+                  <T>System.Enum</T>
+                  <T>System.ValueType</T>
+                  <T>System.Object</T>
+                </TN>
+                <ToString>ReadWrite</ToString>
+                <I32>2</I32>
+              </Obj>
+              <B N="WriteAcceleratorEnabled">false</B>
+              <Nil N="DiffDiskSettings" />
+              <S N="CreateOption">Attach</S>
+              <I32 N="DiskSizeGB">30</I32>
+              <Obj N="ManagedDisk" RefId="14">
+                <TN RefId="14">
+                  <T>Microsoft.Azure.Management.Compute.Models.ManagedDiskParameters</T>
+                  <T>Microsoft.Azure.Management.Compute.Models.SubResource</T>
+                  <T>System.Object</T>
+                </TN>
+                <ToString>Microsoft.Azure.Management.Compute.Models.ManagedDiskParameters</ToString>
+                <Props>
+                  <S N="StorageAccountType">Standard_LRS</S>
+                  <Nil N="DiskEncryptionSet" />
+                  <S N="Id">/subscriptions/64268000-4de0-460d-9cc0-5b7730789327/resourceGroups/ISCREAM/providers/Microsoft.Compute/disks/redis4_osdisk_e8f1f6a808c0408081656c27b4baee57</S>
+                </Props>
+              </Obj>
+            </Props>
+          </Obj>
+          <Obj N="DataDisks" RefId="15">
+            <TN RefId="15">
+              <T>System.Collections.Generic.List`1[[Microsoft.Azure.Management.Compute.Models.DataDisk, Microsoft.Azure.Management.Compute, Version=36.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35]]</T>
+              <T>System.Object</T>
+            </TN>
+            <LST>
+              <Obj RefId="16">
+                <TN RefId="16">
+                  <T>Microsoft.Azure.Management.Compute.Models.DataDisk</T>
+                  <T>System.Object</T>
+                </TN>
+                <ToString>Microsoft.Azure.Management.Compute.Models.DataDisk</ToString>
+                <Props>
+                  <I32 N="Lun">1</I32>
+                  <S N="Name">redis4_datadisk1</S>
+                  <Nil N="Vhd" />
+                  <Nil N="Image" />
+                  <Obj N="Caching" RefId="17">
+                    <TNRef RefId="13" />
+                    <ToString>None</ToString>
+                    <I32>0</I32>
+                  </Obj>
+                  <B N="WriteAcceleratorEnabled">false</B>
+                  <S N="CreateOption">Attach</S>
+                  <I32 N="DiskSizeGB">50</I32>
+                  <Obj N="ManagedDisk" RefId="18">
+                    <TNRef RefId="14" />
+                    <ToString>Microsoft.Azure.Management.Compute.Models.ManagedDiskParameters</ToString>
+                    <Props>
+                      <S N="StorageAccountType">Standard_LRS</S>
+                      <Nil N="DiskEncryptionSet" />
+                      <S N="Id">/subscriptions/64268000-4de0-460d-9cc0-5b7730789327/resourceGroups/ISCREAM/providers/Microsoft.Compute/disks/redis4_datadisk1</S>
+                    </Props>
+                  </Obj>
+                  <B N="ToBeDetached">false</B>
+                  <Nil N="DiskIOPSReadWrite" />
+                  <Nil N="DiskMBpsReadWrite" />
+                </Props>
+              </Obj>
+            </LST>
+          </Obj>
+        </Props>
+      </Obj>
+      <Obj N="DisplayHint" RefId="19">
+        <TN RefId="17">
+          <T>Microsoft.Azure.Commands.Compute.Models.DisplayHintType</T>
+          <T>System.Enum</T>
+          <T>System.ValueType</T>
+          <T>System.Object</T>
+        </TN>
+        <ToString>Compact</ToString>
+        <I32>0</I32>
+      </Obj>
+      <Nil N="Identity" />
+      <Nil N="Zones" />
+      <Nil N="FullyQualifiedDomainName" />
+      <Nil N="AdditionalCapabilities" />
+      <Nil N="ProximityPlacementGroup" />
+      <Nil N="Host" />
+      <Nil N="VirtualMachineScaleSet" />
+      <Nil N="EvictionPolicy" />
+      <Nil N="Priority" />
+      <S N="RequestId">caed4e91-80f6-43d9-977d-d6c5b0e3d5f6</S>
+      <Obj N="StatusCode" RefId="20">
+        <TN RefId="18">
+          <T>System.Net.HttpStatusCode</T>
+          <T>System.Enum</T>
+          <T>System.ValueType</T>
+          <T>System.Object</T>
+        </TN>
+        <ToString>OK</ToString>
+        <I32>200</I32>
+      </Obj>
+    </Props>
+  </Obj>
+</Objs>
