@@ -7,7 +7,7 @@
 ################################################################################
 #                       가상 머신에 새 관리 디스크 추가하기                             #
 ################################################################################
-# SkuName =
+# SkuName = Premium_LRS, StandardSSD_LRS, Standard_LRS
 $ResourceGroupName            = "ISCREAM"
 $location                     = "koreacentral"
 $vmName                       = "redis4"

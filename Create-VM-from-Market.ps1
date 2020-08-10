@@ -5,18 +5,20 @@
 # Get-AzSubscription
 # Set-AzContext -SubscriptionId "yourSubscriptionID"
 ################################# 변수 설정 ######################################
-$VMLocalAdminUser           = "sigongweb"
-$VMLocalAdminSecurePassword = ConvertTo-SecureString "PASSWORD" -AsPlainText -Force
+$VMLocalAdminUser           = "azureUser"
+$VMLocalAdminSecurePassword = ConvertTo-SecureString 'azureUser!@#123' -AsPlainText -Force
 $location                   = "koreacentral"
 $ResourceGroupName          = "ISCREAM"
-$HostName                   = "MyVM"
-$vmName                     = "MyVM"
+$HostName                   = "TEST2-VM"
+$vmName                     = "TEST2-VM"
 $vmSize                     = "Standard_B1s"
 $vnet_name                  = "Hi-Class"
-$nicName                    = "MyNIC"
+$nicName                    = "TEST2-VM-NIC"
 $subnetindex                = 11
-$PrivateIpAddress           = "10.1.11.9"
-$IpConfigName               = "IPConfig-MyVM"
+$PrivateIpAddress           = "10.1.11.10"
+$IpConfigName               = "IPConfig-TEST2-VM"
+$osDiskName                 = "TEST2-OS-DIsk"
+$StorageAccountType         = "Standard_LRS"
 
 # vnet 가져오기
 $vnet           = Get-AzVirtualNetwork -Name $vnet_name -ResourceGroupName $ResourceGroupName
@@ -27,9 +29,10 @@ $nic            = New-AzNetworkInterface -Name $nicName -ResourceGroupName $Reso
 # 가성머신 사용자 계정 및 패스워드 설정
 $Credential = New-Object System.Management.Automation.PSCredential ($VMLocalAdminUser, $VMLocalAdminSecurePassword);
 
-# 가상머신 구성: 가상 머신 이름, 사이즈, OS 등
+# 가상머신 구성: 가상 머신 이름, 사이즈, 디스크 타입, OS 등
 $VirtualMachine = New-AzVMConfig -VMName $vmName -VMSize $vmSize
 $VirtualMachine = Set-AzVMOperatingSystem -VM $VirtualMachine -Linux -ComputerName $HostName -Credential $Credential
+$VirtualMachine = Set-AzVMOSDisk -VM $VirtualMachine -Name $osDiskName -CreateOption fromImage -StorageAccountType $StorageAccountType
 $VirtualMachine = Add-AzVMNetworkInterface -VM $VirtualMachine -Id $nic.Id
 $VirtualMachine = Set-AzVMSourceImage -VM $VirtualMachine -PublisherName 'OpenLogic' -Offer 'CentOS' -Skus '7.7' -Version latest
 
