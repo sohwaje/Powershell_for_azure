@@ -1,5 +1,9 @@
-## 시작 -> 실행 -> ISE
-## login-azaccount
+################################################################################
+#                         자격 증명을 통해 Azure에 로그인                        #
+################################################################################
+# Login-AzAccount
+# Get-AzSubscription
+# Set-AzContext -SubscriptionId "yourSubscriptionID"
 ################################################################################
 #                                   변수 설정                                   #
 ################################################################################
@@ -10,7 +14,7 @@ $frontendpoolname = "TEST-frontendpool"
 $lbname = "TEST-loadbalancer"
 $security_group_name = "TEST-nsg"
 $AzAvailabilitySet_name  = "my-Availbility-set"
-$vmSize = "Standard_DS3_v2"
+$vmSize = "Standard_B1ms"
 $vnet_name = "Hi-Class"
 $subnet_name = "SEI-Subnet"
 $OS = "CentOS"
@@ -24,8 +28,9 @@ $nic1_name = "TEST-Nic1"
 $nic2_name = "TEST-Nic2"
 
 
-######################### 가상머신 사용자 계정/패스워드 설정 ######################
-$cred = Get-Credential -Message 'Enter a username and password for the virtual machine.'
+########################## VM의 관리자 사용자 이름과 암호를 설정 ##################
+$securePassword = ConvertTo-SecureString '!#SI0aleldj*)' -AsPlainText -Force
+$cred = New-Object System.Management.Automation.PSCredential ("azureuser", $securePassword)
 ############################## 가상네트워크 가져오기 #############################
 $vnet = Get-AzVirtualNetwork -Name $vnet_name -ResourceGroupName $rgName
 ############################### 서브넷 가져오기 #################################
@@ -70,7 +75,7 @@ $natrule1 = New-AzLoadBalancerInboundNatRuleConfig -Name 'SSH' `
 $natrule2 = New-AzLoadBalancerInboundNatRuleConfig -Name 'MySQL' `
   -FrontendIpConfiguration $feip `
   -Protocol tcp -FrontendPort 53306 -BackendPort 3306
-  
+
 # 로드밸런서 생성
 $lb = New-AzLoadBalancer -ResourceGroupName $rgName -Name $lbname `
   -Location $location `
