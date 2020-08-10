@@ -29,7 +29,7 @@ $nic2_name = "TEST-Nic2"
 
 
 ########################## VM의 관리자 사용자 이름과 암호를 설정 ##################
-$securePassword = ConvertTo-SecureString '!#SI0aleldj*)' -AsPlainText -Force
+$securePassword = ConvertTo-SecureString 'Azureuser123!@#' -AsPlainText -Force
 $cred = New-Object System.Management.Automation.PSCredential ("azureuser", $securePassword)
 ############################## 가상네트워크 가져오기 #############################
 $vnet = Get-AzVirtualNetwork -Name $vnet_name -ResourceGroupName $rgName
