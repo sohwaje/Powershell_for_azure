@@ -1,0 +1,20 @@
+# vm 이미지를 만들면 소스 vm은 다시 사용할 수 없다.
+- hosts: localhost
+  connection: local
+  vars:
+    resource_group: ISCREAM
+    source: livechat10-VM
+    image_name: IMAGE_livechat
+
+  tasks:
+  - name: Generalize VM ==> 가상머신을 일반화한다.
+    azure_rm_virtualmachine:
+      resource_group: "{{ resource_group }}"
+      name: "{{ source }}"
+      generalized: yes
+
+  - name: Create an image from a virtual machine ==> 일반화된 가상머신에서 이미지를 생성한다
+    azure_rm_image:
+      resource_group: "{{ resource_group }}"
+      name: "{{ image_name }}"
+      source: "{{ source }}"

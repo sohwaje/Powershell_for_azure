@@ -1,0 +1,17 @@
+## 시작 -> 실행 -> ISE
+## login-azaccount
+
+1. 지역명 : koreacentral, 디스크 사이즈(HDD: Standard_LRS, 표준SSD: StandardSSD_LRS, 프리미엄: Premium_LRS)
+$diskConfig = New-AzDiskConfig -Location koreacentral -CreateOption Empty -DiskSizeGB 128 -AccountType Standard_LRS
+
+2. 리소스 그룹 : ISCREAM, 디스크 이름: TestDATADISK
+$dataDisk = New-AzDisk -ResourceGroupName ISCREAM -DiskName TestDataDisk -Disk $diskConfig
+
+3. 리소스 그룹 : ISCREAM, 가상머신 이름 : Redis-Hi-Class-Service
+$vm = Get-AzVM -ResourceGroupName ISCREAM -Name Redis-Hi-Class-Service
+
+4. 디스크 추가
+$vm = Add-AzVMDataDisk -VM $vm -Name TestDataDisk -CreateOption Attach -ManagedDiskId $dataDisk.Id -Lun 1
+
+5. 업데이트 가상머신
+Update-AzVM -ResourceGroupName ISCREAM -VM $vm
