@@ -12,6 +12,7 @@ $rgName = "ISCREAM"
 $location = "koreacentral"
 $AzRecoveryServicesVault_name = "hiclass-backup-recovery"
 $backup_policy = "DefaultPolicy"
+# 백업된 VM 이름
 $vmName = "Redis-Hi-Class-Service"
 
 ## Azure Backup을 처음 사용하는 경우 다음과 같이 Register-AzResourceProvider를 사용하여 구독에서 Azure Recovery Service 공급자를 등록해야 한다.(이미 생성되어 있으면 pass)
