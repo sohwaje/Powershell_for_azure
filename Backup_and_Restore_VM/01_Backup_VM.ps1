@@ -55,6 +55,3 @@ Backup-AzRecoveryServicesBackupItem -Item $item
 
 # 백업 작업 모니터링
 # Get-AzRecoveryservicesBackupJob
-
-# 백업 데이터 삭제
-# Disable-AzRecoveryServicesBackupProtection -Item $bkpItem -VaultId $targetVault.ID -RemoveRecoveryPoints
