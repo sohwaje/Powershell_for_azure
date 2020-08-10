@@ -33,7 +33,7 @@ $VirtualMachine = Set-AzVMOperatingSystem -VM $VirtualMachine -Linux -ComputerNa
 $VirtualMachine = Add-AzVMNetworkInterface -VM $VirtualMachine -Id $nic.Id
 $VirtualMachine = Set-AzVMSourceImage -VM $VirtualMachine -PublisherName 'OpenLogic' -Offer 'CentOS' -Skus '7.7' -Version latest
 
-# 가싱 머신 생성 : for문을 이용해 2개의 가상 머신을 생성한다.
+# 가싱 머신 생성
 New-AzVM `
  -ResourceGroupName $ResourceGroupName `
  -Location $location `
