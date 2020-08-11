@@ -7,17 +7,18 @@
 ################################################################################
 #                                   변수 설정                                   #
 ################################################################################
-$ResourceGroupNam="ISCREAM"
-$nsg_name="sf-vnet-security"
-$port=8081
-$rulename="allowAppPort$port"
+$ResourceGroupNam     ="ISCREAM"
+$nsg_name             ="sf-vnet-security"
+$port                 = 8081
+$rulename             ="allowAppPort$port"
+$Priority             = 2000
 
 # NSG 정보 가져오기
 $nsg = Get-AzNetworkSecurityGroup -Name $nsgname -ResourceGroupName $RGname
 
 # NSG에 인바운드 Rule 추가
 $nsg | Add-AzNetworkSecurityRuleConfig -Name $rulename -Description "Allow app port" -Access Allow `
-    -Protocol * -Direction Inbound -Priority 3891 -SourceAddressPrefix "*" -SourcePortRange * `
+    -Protocol * -Direction Inbound -Priority $Priority -SourceAddressPrefix "*" -SourcePortRange * `
     -DestinationAddressPrefix * -DestinationPortRange $port
 
 # NSG를 업데이트
