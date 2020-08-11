@@ -145,11 +145,6 @@ $vmConfig = New-AzVMConfig -VMName $vm1_name -VMSize $vmSize -AvailabilitySetId 
   Set-AzVMSourceImage -PublisherName OpenLogic -Offer $OS `
   -Skus $OS_sku -Version $OS_ver | Add-AzVMNetworkInterface -Id $nicVM1.Id
 
-  # $vmConfig = New-AzVMConfig -VMName $vm1_name -VMSize $vmSize -AvailabilitySetId $as.Id | `
-  #   Set-AzVMOperatingSystem -Linux -ComputerName $vm1_name -Credential $cred | `
-  #   Set-AzVMSourceImage -PublisherName OpenLogic -Offer $OS `
-  #   -Skus $OS_sku -Version $OS_ver | Add-AzVMNetworkInterface -Id $nicVM1.Id
-
 # 가상 머신 생성
 $vm1 = New-AzVM -ResourceGroupName $rgName -Location $location -VM $vmConfig
 
