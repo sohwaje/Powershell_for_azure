@@ -5,7 +5,7 @@
 # Get-AzSubscription
 # Set-AzContext -SubscriptionId "yourSubscriptionID"
 ################################# 변수 설정 ######################################
-$nsg_name                 = "redis-NSG"
+$nsg_name                 = "TEST-VM1"
 $ResourceGroupName        = "ISCREAM"
 $Location                 = "koreacentral"
 $SourceAddressPrefix      = "112.223.14.90/32"
