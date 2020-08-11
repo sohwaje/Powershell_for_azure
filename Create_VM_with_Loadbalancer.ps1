@@ -20,12 +20,16 @@ $subnet_name = "SEI-Subnet"
 $OS = "CentOS"
 $OS_sku = "7.7"
 $OS_ver = "latest"
+$osDiskName1 = "TEST1-OS-DIsk"
+$osDiskName2 = "TEST2-OS-DIsk"
+$StorageAccountType = "Standard_LRS"
 $pip_name = "TEST-pip"
 $ip_method = "Static"
 $vm1_name = "TEST-VM1"
 $vm2_name = "TEST-VM2"
 $nic1_name = "TEST-Nic1"
 $nic2_name = "TEST-Nic2"
+$SourceAddressPrefix = "112.223.14.90/32"
 
 
 ########################## VM의 관리자 사용자 이름과 암호를 설정 ##################
@@ -89,23 +93,23 @@ $lb = New-AzLoadBalancer -ResourceGroupName $rgName -Name $lbname `
 # 보안그룹 룰 생성
 $rule1 = New-AzNetworkSecurityRuleConfig -Name 'HTTP' -Description 'Allow HTTP' `
   -Access Allow -Protocol Tcp -Direction Inbound -Priority 1000 `
-  -SourceAddressPrefix Internet -SourcePortRange * `
-  -DestinationAddressPrefix * -DestinationPortRange 80
+  -SourceAddressPrefix $SourceAddressPrefix -SourcePortRange * `
+  -DestinationAddressPrefix VirtualNetwork -DestinationPortRange 80
 
 $rule2 = New-AzNetworkSecurityRuleConfig -Name 'HTTPS' -Description 'Allow HTTPS' `
   -Access Allow -Protocol Tcp -Direction Inbound -Priority 1001 `
-  -SourceAddressPrefix Internet -SourcePortRange * `
-  -DestinationAddressPrefix * -DestinationPortRange 443
+  -SourceAddressPrefix $SourceAddressPrefix -SourcePortRange * `
+  -DestinationAddressPrefix VirtualNetwork -DestinationPortRange 443
 
 $rule3 = New-AzNetworkSecurityRuleConfig -Name 'SSH' -Description 'Allow SSH' `
   -Access Allow -Protocol Tcp -Direction Inbound -Priority 1002 `
-  -SourceAddressPrefix Internet -SourcePortRange * `
-  -DestinationAddressPrefix * -DestinationPortRange 16215
+  -SourceAddressPrefix $SourceAddressPrefix -SourcePortRange * `
+  -DestinationAddressPrefix VirtualNetwork -DestinationPortRange 16215
 
 $rule4 = New-AzNetworkSecurityRuleConfig -Name 'MySQL' -Description 'Allow MySQL' `
   -Access Allow -Protocol Tcp -Direction Inbound -Priority 1003 `
-  -SourceAddressPrefix Internet -SourcePortRange * `
-  -DestinationAddressPrefix * -DestinationPortRange 3306
+  -SourceAddressPrefix $SourceAddressPrefix -SourcePortRange * `
+  -DestinationAddressPrefix VirtualNetwork -DestinationPortRange 3306
 
 # 보안 그룹 생성
 $nsg = New-AzNetworkSecurityGroup -ResourceGroupName $rgName -Location $location `
@@ -136,14 +140,22 @@ $as = New-AzAvailabilitySet -ResourceGroupName $rgName -Location $location `
 ################################################################################
 # VM1 가상머신 설정
 $vmConfig = New-AzVMConfig -VMName $vm1_name -VMSize $vmSize -AvailabilitySetId $as.Id | `
+  Set-AzVMOSDisk -Name $osDiskName1 -CreateOption fromImage -StorageAccountType $StorageAccountType | `
   Set-AzVMOperatingSystem -Linux -ComputerName $vm1_name -Credential $cred | `
   Set-AzVMSourceImage -PublisherName OpenLogic -Offer $OS `
   -Skus $OS_sku -Version $OS_ver | Add-AzVMNetworkInterface -Id $nicVM1.Id
+
+  # $vmConfig = New-AzVMConfig -VMName $vm1_name -VMSize $vmSize -AvailabilitySetId $as.Id | `
+  #   Set-AzVMOperatingSystem -Linux -ComputerName $vm1_name -Credential $cred | `
+  #   Set-AzVMSourceImage -PublisherName OpenLogic -Offer $OS `
+  #   -Skus $OS_sku -Version $OS_ver | Add-AzVMNetworkInterface -Id $nicVM1.Id
+
 # 가상 머신 생성
 $vm1 = New-AzVM -ResourceGroupName $rgName -Location $location -VM $vmConfig
 
 # VM2 가상머신 설정
 $vmConfig = New-AzVMConfig -VMName $vm2_name -VMSize $vmSize -AvailabilitySetId $as.Id | `
+  Set-AzVMOSDisk -Name $osDiskName2 -CreateOption fromImage -StorageAccountType $StorageAccountType | `
   Set-AzVMOperatingSystem -Linux -ComputerName $vm2_name -Credential $cred | `
   Set-AzVMSourceImage -PublisherName OpenLogic -Offer $OS `
   -Skus $OS_sku -Version $OS_ver | Add-AzVMNetworkInterface -Id $nicVM2.Id
