@@ -47,6 +47,7 @@ $backupcontainer = Get-AzRecoveryServicesBackupContainer `
     -ContainerType "AzureVM" `
     -FriendlyName $vmName
 
+# 백업 아이템 이름(=가상머신 이름)
 $item = Get-AzRecoveryServicesBackupItem `
     -Container $backupcontainer `
     -WorkloadType "AzureVM"
