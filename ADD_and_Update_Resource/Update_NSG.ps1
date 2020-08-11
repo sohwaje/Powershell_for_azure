@@ -5,7 +5,7 @@
 # Get-AzSubscription
 # Set-AzContext -SubscriptionId "yourSubscriptionID"
 ################################# 변수 설정 ######################################
-$nsg_name                 = "TEST-VM1"
+$nsg_name                 = "TEST-nsg"
 $ResourceGroupName        = "ISCREAM"
 $Location                 = "koreacentral"
 $SourceAddressPrefix      = "112.223.14.90/32"
@@ -17,23 +17,23 @@ $DestinationAddressPrefix = "VirtualNetwork"
 # nsg 정보를 가져온다.
 $nsg = Get-AzNetworkSecurityGroup -Name $nsg_name -ResourceGroupName $ResourceGroupName
 
-# 보안그룹에 추가 할 Inbound rule 작성
-$nsg | New-AzNetworkSecurityRuleConfig -Name 'HTTP' -Description 'Allow HTTP' `
+# 변경할 Inbound rule 작성
+$nsg | Set-AzNetworkSecurityRuleConfig -Name 'HTTP' -Description 'Allow HTTP' `
     -Access Allow -Protocol Tcp -Direction Inbound -Priority 1000 `
     -SourceAddressPrefix $SourceAddressPrefix -SourcePortRange * `
     -DestinationAddressPrefix $DestinationAddressPrefix -DestinationPortRange 80
 
-$nsg | New-AzNetworkSecurityRuleConfig -Name 'HTTPS' -Description 'Allow HTTPS' `
+$nsg | Set-AzNetworkSecurityRuleConfig -Name 'HTTPS' -Description 'Allow HTTPS' `
     -Access Allow -Protocol Tcp -Direction Inbound -Priority 1001 `
     -SourceAddressPrefix $SourceAddressPrefix -SourcePortRange * `
     -DestinationAddressPrefix $DestinationAddressPrefix -DestinationPortRange 443
 
-$nsg | New-AzNetworkSecurityRuleConfig -Name 'SSH' -Description 'Allow SSH' `
+$nsg | Set-AzNetworkSecurityRuleConfig -Name 'SSH' -Description 'Allow SSH' `
     -Access Allow -Protocol Tcp -Direction Inbound -Priority 1002 `
     -SourceAddressPrefix $SourceAddressPrefix -SourcePortRange * `
     -DestinationAddressPrefix $DestinationAddressPrefix -DestinationPortRange 16215
 
-$nsg | New-AzNetworkSecurityRuleConfig -Name 'MySQL' -Description 'Allow MySQL' `
+$nsg | Set-AzNetworkSecurityRuleConfig -Name 'MySQL' -Description 'Allow MySQL' `
     -Access Allow -Protocol Tcp -Direction Inbound -Priority 1003 `
     -SourceAddressPrefix $SourceAddressPrefix -SourcePortRange * `
     -DestinationAddressPrefix $DestinationAddressPrefix -DestinationPortRange 3306
