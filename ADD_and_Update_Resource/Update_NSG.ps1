@@ -9,7 +9,7 @@ $nsg_name                 = "redis-NSG"
 $ResourceGroupName        = "ISCREAM"
 $Location                 = "koreacentral"
 $SourceAddressPrefix      = "112.223.14.90/32"
-$DestinationAddressPrefix =
+$DestinationAddressPrefix = "VirtualNetwork"
 ################################################################################
 #                           기존 보안 그룹 업데이트                                  #
 ################################################################################
@@ -21,21 +21,21 @@ $nsg = Get-AzNetworkSecurityGroup -Name $nsg_name -ResourceGroupName $ResourceGr
 $nsg | New-AzNetworkSecurityRuleConfig -Name 'HTTP' -Description 'Allow HTTP' `
     -Access Allow -Protocol Tcp -Direction Inbound -Priority 1000 `
     -SourceAddressPrefix $SourceAddressPrefix -SourcePortRange * `
-    -DestinationAddressPrefix VirtualNetwork -DestinationPortRange 80
+    -DestinationAddressPrefix $DestinationAddressPrefix -DestinationPortRange 80
 
 $nsg | New-AzNetworkSecurityRuleConfig -Name 'HTTPS' -Description 'Allow HTTPS' `
     -Access Allow -Protocol Tcp -Direction Inbound -Priority 1001 `
     -SourceAddressPrefix $SourceAddressPrefix -SourcePortRange * `
-    -DestinationAddressPrefix VirtualNetwork -DestinationPortRange 443
+    -DestinationAddressPrefix $DestinationAddressPrefix -DestinationPortRange 443
 
 $nsg | New-AzNetworkSecurityRuleConfig -Name 'SSH' -Description 'Allow SSH' `
     -Access Allow -Protocol Tcp -Direction Inbound -Priority 1002 `
     -SourceAddressPrefix $SourceAddressPrefix -SourcePortRange * `
-    -DestinationAddressPrefix VirtualNetwork -DestinationPortRange 16215
+    -DestinationAddressPrefix $DestinationAddressPrefix -DestinationPortRange 16215
 
 $nsg | New-AzNetworkSecurityRuleConfig -Name 'MySQL' -Description 'Allow MySQL' `
     -Access Allow -Protocol Tcp -Direction Inbound -Priority 1003 `
     -SourceAddressPrefix $SourceAddressPrefix -SourcePortRange * `
-    -DestinationAddressPrefix VirtualNetwork -DestinationPortRange 3306
+    -DestinationAddressPrefix $DestinationAddressPrefix -DestinationPortRange 3306
 # nsg를 업데이트한다.
 $nsg | Set-AzNetworkSecurityGroup
