@@ -18,3 +18,6 @@ $publicIp = New-AzPublicIpAddress `
   -ResourceGroupName $ResourceGroupName `
   -AllocationMethod Static `
   -Location $Location
+
+# VM의 공용 IP 확인
+# Get-AzPublicIpAddress -ResourceGroupName "myResourceGroup" | Select "IpAddress"
