@@ -8,17 +8,17 @@ $rgName                       = "ISCREAM"
 $location                     = "koreacentral"
 $AzRecoveryServicesVault_name = "hiclass-backup-recovery"
 $backup_policy                = "DefaultPolicy"
-$vmName                       = "Redis-Hi-Class-Service"
+$vmName                       = "Front1-Hi-Class-Service"
 $StorageAccountName           = "diag976"
-$newVM                        = "redis4"
-$Availabilityset              = "Availabilityset-redis"
+$newVM                        = "TEST-VM"
+$Availabilityset              = "Availabilityset-TEST-VM"
 $vnet_name                    = "Hi-Class"
-$nicName                      = "redis-nic4"
+$nicName                      = "TEST-nic"
 $destination_path             = "/Users/yusunglee/Downloads/Azure/vmconfig.json"
 # azure portal에 서브넷 리스트의 순서
 $subnetindex                  = 11
-$PrivateIpAddress             = "10.1.11.8"
-$IpConfigName1                = "IPConfig-1"
+$PrivateIpAddress             = "10.1.11.7"
+$IpConfigName                 = "TEST-Ifconfig-1"
 
 # 백업 관련 구독의 모든 자격 증명 모음
 Get-AzRecoveryServicesVault
@@ -34,7 +34,7 @@ $targetVault.ID
 Get-AzRecoveryServicesBackupProtectionPolicy -WorkloadType "AzureVM" -VaultId $targetVault.ID
 
 # 백업된 VM 선택
-$namedContainer = Get-AzRecoveryServicesBackupContainer  -ContainerType "AzureVM" -Status "Registered" -FriendlyName $vmName -VaultId $targetVault.ID
+$namedContainer = Get-AzRecoveryServicesBackupContainer -ContainerType "AzureVM" -Status "Registered" -FriendlyName $vmName -VaultId $targetVault.ID
 $backupitem = Get-AzRecoveryServicesBackupItem -Container $namedContainer  -WorkloadType "AzureVM" -VaultId $targetVault.ID
 
 # 복구 지점 선택: 변수 $rp는 지난 7 일간의 선택 된 백업 항목, $rp[0]은 최신 복구
@@ -91,15 +91,16 @@ $vm.StorageProfile.OsDisk.OsType = $obj.'properties.StorageProfile'.OsDisk.OsTyp
 # 네트워크 설정 지정
 # $pip = New-AzPublicIpAddress -Name $nicName -ResourceGroupName $rgName -Location $location -AllocationMethod Static
 $vnet           = Get-AzVirtualNetwork -Name $vnet_name -ResourceGroupName $rgName
-$IpConfig1      = New-AzNetworkInterfaceIpConfig -Name $IpConfigName1 -SubnetId $vnet.Subnets[$subnetindex].Id -PrivateIpAddress $PrivateIpAddress -Primary
-# $nic            = New-AzNetworkInterface -Name $nicName -ResourceGroupName $rgName -Location $location -SubnetId $vnet.Subnets[$subnetindex].Id -IpConfiguration $IpConfig1
+$IpConfig1      = New-AzNetworkInterfaceIpConfig -Name $IpConfigName -SubnetId $vnet.Subnets[$subnetindex].Id -PrivateIpAddress $PrivateIpAddress -Primary
+# NIC에 IP 자동할당
+# $nic          = New-AzNetworkInterface -Name $nicName -ResourceGroupName $rgName -Location $location -SubnetId $vnet.Subnets[$subnetindex].Id -IpConfiguration $IpConfig1
+# $nic          = New-AzNetworkInterface -Name $nicName -ResourceGroupName $rgName -Location $location -SubnetId $vnet.Subnets[$subnetindex].Id -PublicIpAddressId $pip.Id
 $nic            = New-AzNetworkInterface -Name $nicName -ResourceGroupName $rgName -Location $location -IpConfiguration $IpConfig1
-# $nic = New-AzNetworkInterface -Name $nicName -ResourceGroupName $rgName -Location $location -SubnetId $vnet.Subnets[$subnetindex].Id -PublicIpAddressId $pip.Id
 $vm             = Add-AzVMNetworkInterface -VM $vm -Id $nic.Id
 
 # 가싱 머신 생성
 New-AzVM -ResourceGroupName $rgName -Location $location -VM $vm -Verbose
 # 관리형 디스크로 변환 : VM 할당 취소
 Stop-AzVM -ResourceGroupName $rgName -Name $newVM -Force
-# 관리형 디스크로 변환 : 변환
+# 디스크를 관리형 디스크로 변환 : 변환
 ConvertTo-AzVMManagedDisk -ResourceGroupName $rgName -VMName $newVM
