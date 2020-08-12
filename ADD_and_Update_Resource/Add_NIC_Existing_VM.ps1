@@ -31,7 +31,7 @@ Update-AzVM `
   -VM $VirtualMachine
 
 # [4] VM을 다시 시작
-Start-AzVM -ResourceGroupName $rgName -Name $vmName
+Start-AzVM -ResourceGroupName $ResourceGroupName -Name $vmName
 
 # VM 상태 확인
 # Get-Azvm -Name TEST-VM1 -Status
