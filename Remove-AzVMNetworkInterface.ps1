@@ -14,4 +14,5 @@ Remove-AzVMNetworkInterface `
   -NetworkInterfaceIDs $nicId | `
   Update-AzVm -ResourceGroupName $ResourceGroupName
 
+# [4] VM을 시작
 Start-AzVM -ResourceGroupName $ResourceGroupName -Name $vmName
