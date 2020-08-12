@@ -9,15 +9,15 @@ $VMLocalAdminUser           = "azureUser"
 $VMLocalAdminSecurePassword = ConvertTo-SecureString 'azureUser!@#123' -AsPlainText -Force
 $location                   = "koreacentral"
 $ResourceGroupName          = "ISCREAM"
-$HostName                   = "TEST2-VM"
-$vmName                     = "TEST2-VM"
+$HostName                   = "TEST-VM"
+$vmName                     = "TEST-VM"
 $vmSize                     = "Standard_B1s"
 $vnet_name                  = "Hi-Class"
-$nicName                    = "TEST2-VM-NIC"
+$nicName                    = "TEST-VM-NIC"
 $subnetindex                = 11
 $PrivateIpAddress           = "10.1.11.10"
-$IpConfigName               = "IPConfig-TEST2-VM"
-$osDiskName                 = "TEST2-OS-DIsk"
+$IpConfigName               = "TEST-IPConfig"
+$osDiskName                 = "TEST-OS-DIsk"
 $StorageAccountType         = "Standard_LRS"
 
 # vnet 가져오기
