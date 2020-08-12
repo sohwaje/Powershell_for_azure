@@ -10,7 +10,7 @@ $Location             = "koreacentral"
 $ResourceGroupName    = "ISCREAM"
 $vnet_name            = "Hi-Class"
 $subnet_name          = "SEI-Subnet"
-$TAG                  = "ys"
+$TAG                  = "-ys"
 
 #Vnet, Subnet
 $vnet = Get-AzVirtualNetwork -Name $vnet_name -ResourceGroupName $ResourceGroupName
@@ -44,7 +44,7 @@ $BackendAddressPoolName = "bepool" + $TAG
 $ProbeName = "vmssprobe" + $TAG
 $InboundNatPoolName  = "innatpool" + $TAG
 $LBRuleName = "lbrule" + $TAG
-$LBName = "vmsslb" + $TAG
+$LBName = "Testvmsslb" + $TAG
 
 $Frontend = New-AzLoadBalancerFrontendIpConfig -Name $FrontendName -PublicIpAddress $PIP
 $BackendAddressPool = New-AzLoadBalancerBackendAddressPoolConfig -Name $BackendAddressPoolName
