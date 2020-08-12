@@ -1,10 +1,10 @@
 $ResourceGroupName            = "ISCREAM"
 $location                     = "koreacentral"
 $AllocationMethod             = "Static"
-$pipName                      = "LB-redis-PIP"
-$fepName                      = "FrontendPool"
-$bepName                      = "RedisBackendPool"
-$lbName                       = "LB-redis"
+$pipName                      = "TEST-LB-PIP"
+$fepName                      = "FrontendTESTPool"
+$bepName                      = "BackendTESTPool"
+$lbName                       = "LB-TEST"
 ################################################################################
 #                               로드밸런서 생성                                    #
 ################################################################################
