@@ -7,19 +7,21 @@
 ################################################################################
 #                                   변수 설정                                   #
 ################################################################################
-$ResourceGroupName     ="ISCREAM"
-$nsg_name             ="TEST-nsg"
-$port                 = 8081
-$rulename             ="allowAppPort$port"
-$Priority             = 2000
+$ResourceGroupName        = "ISCREAM"
+$nsg_name                 = "i-screammediacorp"
+$SourceAddressPrefix      = "*"
+$DestinationAddressPrefix = "VirtualNetwork"
+$rulename                 = "HTTP"
+$port                     = 80
+$Priority                 = 101
 
 # NSG 정보 가져오기
 $nsg = Get-AzNetworkSecurityGroup -Name $nsg_name -ResourceGroupName $ResourceGroupName
 
 # NSG에 인바운드 Rule 추가
-$nsg | Add-AzNetworkSecurityRuleConfig -Name $rulename -Description "Allow app port" -Access Allow `
-    -Protocol * -Direction Inbound -Priority $Priority -SourceAddressPrefix "*" -SourcePortRange * `
-    -DestinationAddressPrefix * -DestinationPortRange $port
+$nsg | Add-AzNetworkSecurityRuleConfig -Name $rulename -Description "Allow HTTP" -Access Allow `
+    -Protocol * -Direction Inbound -Priority $Priority -SourceAddressPrefix $SourceAddressPrefix -SourcePortRange * `
+    -DestinationAddressPrefix $DestinationAddressPrefix -DestinationPortRange $port
 
 # NSG를 업데이트
 $nsg | Set-AzNetworkSecurityGroup
