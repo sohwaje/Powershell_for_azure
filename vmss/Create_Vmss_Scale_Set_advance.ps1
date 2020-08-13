@@ -27,7 +27,7 @@ $StorageType    = "Standard_LRS"
 #   -ResourceGroupName $ResourceGroupName `
 #   -Name $StorageName;
 
-# Create public IP : 이름은 소문자만 가능
+# 공용 IP 주소를 만든다: 이름은 소문자만 가능
 $PIP = New-AzPublicIpAddress -Force `
   -Name ("pip" + $TAG) `
   -ResourceGroupName $ResourceGroupName `
@@ -38,23 +38,31 @@ $PIP = Get-AzPublicIpAddress `
   -Name ("pip"  + $TAG) `
   -ResourceGroupName $ResourceGroupName
 
-# Create LoadBalancer
+# 로드밸런서를 만들 때 필요한 변수 선언
 $FrontendName = "fe" + $TAG
 $BackendAddressPoolName = "bepool" + $TAG
 $ProbeName = "vmssprobe" + $TAG
 $InboundNatPoolName  = "innatpool" + $TAG
 $LBRuleName = "lbrule" + $TAG
-$LBName = "Testvmsslb" + $TAG
+$LBName = "testvmsslb" + $TAG
 
+# 프런트 엔드 IP 구성을 만든다.
+################################################################################
 $Frontend = New-AzLoadBalancerFrontendIpConfig -Name $FrontendName -PublicIpAddress $PIP
+# 백 엔드 주소 풀 구성을 만든다.
+################################################################################
 $BackendAddressPool = New-AzLoadBalancerBackendAddressPoolConfig -Name $BackendAddressPoolName
+# 상태 프로브 만들기
+################################################################################
 $Probe = New-AzLoadBalancerProbeConfig -Name $ProbeName -RequestPath / `
   -Protocol http `
   -Port 80 `
   -IntervalInSeconds 15 `
   -ProbeCount 2
-$InboundNatPool = New-AzLoadBalancerInboundNatPoolConfig -Name $InboundNatPoolName  -FrontendIPConfigurationId `
-    $Frontend.Id -Protocol Tcp -FrontendPortRangeStart 3360 -FrontendPortRangeEnd 3362 -BackendPort 3370
+$InboundNatPool = New-AzLoadBalancerInboundNatPoolConfig -Name $InboundNatPoolName `
+  -FrontendIPConfigurationId $Frontend.Id `
+  -Protocol Tcp `
+  -FrontendPortRangeStart 50000 -FrontendPortRangeEnd 50004 -BackendPort 16215
 $LBRule = New-AzLoadBalancerRuleConfig -Name $LBRuleName `
     -FrontendIPConfiguration $Frontend -BackendAddressPool $BackendAddressPool `
     -Probe $Probe -Protocol Tcp -FrontendPort 80 -BackendPort 80 `
@@ -66,14 +74,14 @@ $ExpectedLb = Get-AzLoadBalancer -Name $LBName -ResourceGroupName $ResourceGroup
 
 
 # New VMSS Parameters
-$VMSSName = "VMSS" + $ResourceGroupName;
+$VMSSName = "vmss" + $TAG
 $AdminUsername = "azureUser";
-$AdminPassword = "azureUser@123" + $ResourceGroupName;
+$AdminPassword = "azureUser@123" + $TAG
 $PublisherName = "OpenLogic"
 $Offer         = "CentOS"
 $Skus          = "7.7"
 $Version       = "latest"
-$VHDContainer = "https://" + $StorageName + ".blob.core.contoso.net/" + $VMSSName;
+$VHDContainer = "https://" + $StorageName + ".blob.core.windows.net/" + $VMSSName;
 # $ExtName = "CSETest";
 # $Publisher = "Microsoft.Compute";
 # $ExtType = "BGInfo";
@@ -86,15 +94,27 @@ $IPCfg = New-AzVmssIPConfig -Name "VMss-Test" `
     -LoadBalancerBackendAddressPoolsId $ExpectedLb.BackendAddressPools[0].Id `
     -SubnetId $SubnetID;
 
+# $IPCfg = New-AzVmssIPConfig -Name "VMss-Test" `
+#     -LoadBalancerInboundNatPoolsId $ExpectedLb.InboundNatPools[0].Id `
+#     -LoadBalancerBackendAddressPoolsId $ExpectedLb.BackendAddressPools[0].Id `
+#     -SubnetId $SubnetID;
+
 #VMSS Config
-$VMSS = New-AzVmssConfig -Location $location -SkuCapacity 2 -SkuName "Standard_B1ms" -UpgradePolicyMode "Automatic" `
-    | Add-AzVmssNetworkInterfaceConfiguration -Name "Test-vmssNICconfig" -Primary $True -IPConfiguration $IPCfg `
-    | Add-AzVmssNetworkInterfaceConfiguration -Name "Test2-vmssNICconfig"  -IPConfiguration $IPCfg `
-    | Set-AzVmssOSProfile -ComputerNamePrefix "Test-vmssProfile"  -AdminUsername $AdminUsername -AdminPassword $AdminPassword `
-    | Set-AzVmssStorageProfile -Name "Test-StorageProfile"  -OsDiskCreateOption 'FromImage' -OsDiskCaching "None" `
+# $VMSS = New-AzVmssConfig -Location $location -SkuCapacity 2 -SkuName "Standard_DS1_v2" -UpgradePolicyMode "Automatic" `
+#     | Add-AzVmssNetworkInterfaceConfiguration -Name "Test-vmssNICconfig" -Primary $True -IPConfiguration $IPCfg `
+#     | Add-AzVmssNetworkInterfaceConfiguration -Name "Test2-vmssNICconfig"  -IPConfiguration $IPCfg `
+#     | Set-AzVmssOSProfile -ComputerNamePrefix "Test-vmssProfile" -AdminUsername $AdminUsername -AdminPassword $AdminPassword `
+#     | Set-AzVmssStorageProfile -Name "Test-StorageProfile"  -OsDiskCreateOption 'FromImage' -OsDiskCaching "None" `
+#     -ImageReferenceOffer $Offer -ImageReferenceSku $Skus -ImageReferenceVersion $Version `
+#     -ImageReferencePublisher $PublisherName -VhdContainer $VHDContainer `
+#     | Add-AzVmssExtension -Name $ExtName -Publisher $Publisher -Type $ExtType -TypeHandlerVersion $ExtVer -AutoUpgradeMinorVersion $True
+
+$VMSS = New-AzVmssConfig -Location $location -SkuCapacity 2 -SkuName "Standard_DS1_v2" -UpgradePolicyMode "Automatic" `
+    | Add-AzVmssNetworkInterfaceConfiguration -Name "test-vmssNICconfig" -Primary $True -IPConfiguration $IPCfg `
+    | Set-AzVmssOSProfile -ComputerNamePrefix "test-vmssProfile" -AdminUsername $AdminUsername -AdminPassword $AdminPassword `
+    | Set-AzVmssStorageProfile -Name "test-StorageProfile"  -OsDiskCreateOption 'FromImage' -OsDiskCaching "None" `
     -ImageReferenceOffer $Offer -ImageReferenceSku $Skus -ImageReferenceVersion $Version `
-    -ImageReferencePublisher $PublisherName -VhdContainer $VHDContainer `
-    | Add-AzVmssExtension -Name $ExtName -Publisher $Publisher -Type $ExtType -TypeHandlerVersion $ExtVer -AutoUpgradeMinorVersion $True
+    -ImageReferencePublisher $PublisherName -VhdContainer $VHDContainer
 
 #Create the VMSS
-New-AzVmss -ResourceGroupName $ResourceGroupName -Name $VMSSName -VirtualMachineScaleSet $VMSS;
+New-AzVmss -ResourceGroupName $ResourceGroupName -Name $VMSSName -VirtualMachineScaleSet $VMSS
