@@ -7,19 +7,19 @@
 ################################################################################
 #                                   변수 설정                                   #
 ################################################################################
-$ResourceGroupName        = "ISCREAM"
-$nsg_name                 = "i-screammediacorp"
+$ResourceGroupName        = "C-TFT"
+$nsg_name                 = "educon_bank-NSG"
 $SourceAddressPrefix      = "*"
 $DestinationAddressPrefix = "VirtualNetwork"
 $rulename                 = "HTTP"
-$port                     = 80
+$port                     = 80,443
 $Priority                 = 101
 
 # NSG 정보 가져오기
 $nsg = Get-AzNetworkSecurityGroup -Name $nsg_name -ResourceGroupName $ResourceGroupName
 
 # NSG에 인바운드 Rule 추가
-$nsg | Add-AzNetworkSecurityRuleConfig -Name $rulename -Description "Allow HTTP" -Access Allow `
+$nsg | Add-AzNetworkSecurityRuleConfig -Name $rulename -Description "Allow Admin_home" -Access Allow `
     -Protocol * -Direction Inbound -Priority $Priority -SourceAddressPrefix $SourceAddressPrefix -SourcePortRange * `
     -DestinationAddressPrefix $DestinationAddressPrefix -DestinationPortRange $port
 
