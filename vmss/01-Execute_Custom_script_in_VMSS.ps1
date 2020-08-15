@@ -41,9 +41,11 @@ Add-AzVmssExtension -VirtualMachineScaleSet $vmss `
   -TypeHandlerVersion 2.1 `
   -Setting $customConfig
 ################################################################################
-#                   스크립트를 실행하고 가상머신 확장집합 업데이트                 
+#                   스크립트를 실행하고 가상머신 확장집합 업데이트
 ################################################################################
 Update-AzVmss `
   -ResourceGroupName $ResourceGroupName `
   -Name $vmss_name `
   -VirtualMachineScaleSet $vmss
+
+Get-AzPublicIpAddress -ResourceGroupName $ResourceGroupName | Select IpAddress

@@ -10,32 +10,27 @@ $location          = "koreacentral"
 ################################################################################
 #                               스케일아웃 룰 설정
 ################################################################################
-# 아래 명령어를 통해 vmss의 MetricResourceId를 알아낸다.
-$MetricResourceId = Get-AzVmss `
-  -ResourceGroupName $ResourceGroupName `
-  -VMScaleSetName $vmss_name | select Id
-
 # CPU 부하가 5분간 70%를 초과할 경우 확장 집합의 VM 인스턴스 수를 3개로 늘리는 규칙
-$myRuleScaleOutv2 = New-AzAutoscaleRule `
+$myRuleScaleOut = New-AzAutoscaleRule `
   -MetricName "Percentage CPU" `
-  -MetricResourceId $MetricResourceId `
+  -MetricResourceId /subscriptions/64268000-4de0-460d-9cc0-5b7730789327/resourceGroups/ISCREAM/providers/Microsoft.Compute/virtualMachineScaleSets/vmss-gaudium `
   -TimeGrain 00:01:00 `
   -MetricStatistic "Average" `
   -TimeWindow 00:05:00 `
   -Operator "GreaterThan" `
-  -Threshold 80 `
+  -Threshold 70 `
   -ScaleActionDirection "Increase" `
   -ScaleActionScaleType "ChangeCount" `
   -ScaleActionValue 3 `
   -ScaleActionCooldown 00:05:00
 
 # CPU 부하가 5분 간 30% 미만을 경우 VM의 수를 1개로 줄이는 규칙
-$myRuleScaleInv2 = New-AzAutoscaleRule `
+$myRuleScaleIn = New-AzAutoscaleRule `
   -MetricName "Percentage CPU" `
-  -MetricResourceId $MetricResourceId `
+  -MetricResourceId /subscriptions/64268000-4de0-460d-9cc0-5b7730789327/resourceGroups/ISCREAM/providers/Microsoft.Compute/virtualMachineScaleSets/vmss-gaudium `
   -Operator "LessThan" `
   -MetricStatistic "Average" `
-  -Threshold 40 `
+  -Threshold 30 `
   -TimeGrain 00:01:00 `
   -TimeWindow 00:05:00 `
   -ScaleActionCooldown 00:05:00 `
@@ -43,18 +38,18 @@ $myRuleScaleInv2 = New-AzAutoscaleRule `
   -ScaleActionScaleType "ChangeCount" `
   -ScaleActionValue 1
 
-# 자동 스케일 아웃 프로파일 생성
-$myScaleProfilev2 = New-AzAutoscaleProfile `
-  -DefaultCapacity 2  `
+# 자동 스케일 아웃 프로파일 생성. -Name:기본 프로파일
+$myScaleProfile = New-AzAutoscaleProfile `
+  -DefaultCapacity 1  `
   -MaximumCapacity 10 `
-  -MinimumCapacity 2 `
-  -Rule $myRuleScaleOutv2,$myRuleScaleInv2 `
-  -Name "autoprofilev2"
+  -MinimumCapacity 1 `
+  -Rule $myRuleScaleOut,$myRuleScaleIn `
+  -Name "autoprofilev1"
 
-# 자동 스케일 아웃을 VMSS에 적용한다.
+# 자동 스케일 아웃을 VMSS에 적용한다. -Name:자동 크기 조정 설정 이름
 Add-AzAutoscaleSetting `
   -Location $location `
-  -Name "autosettingv2" `
+  -Name "autosetting" `
   -ResourceGroupName $ResourceGroupName `
-  -TargetResourceId $MetricResourceId `
-  -AutoscaleProfile $myScaleProfilev2
+  -TargetResourceId /subscriptions/64268000-4de0-460d-9cc0-5b7730789327/resourceGroups/ISCREAM/providers/Microsoft.Compute/virtualMachineScaleSets/vmss-gaudium `
+  -AutoscaleProfile $myScaleProfile
