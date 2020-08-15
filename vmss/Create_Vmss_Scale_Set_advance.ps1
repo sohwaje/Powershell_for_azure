@@ -10,7 +10,7 @@ $Location             = "koreacentral"
 $ResourceGroupName    = "ISCREAM"
 $vnet_name            = "Hi-Class"
 $subnet_name          = "SEI-Subnet"
-$TAG                  = "-ys"
+$TAG                  = "-gaudium"
 
 #Vnet, Subnet
 $vnet = Get-AzVirtualNetwork -Name $vnet_name -ResourceGroupName $ResourceGroupName
@@ -82,10 +82,12 @@ $Offer         = "CentOS"
 $Skus          = "7.7"
 $Version       = "latest"
 $VHDContainer = "https://" + $StorageName + ".blob.core.windows.net/" + $VMSSName;
-# $ExtName = "CSETest";
-# $Publisher = "Microsoft.Compute";
-# $ExtType = "BGInfo";
-# $ExtVer = "2.1";
+# VMSS에 사용자 지정 스크립트 설치 : OS 초기에 필요한 설치를 스크립트를 통해 진행할 수 있다.
+# VMSS에 사용자 지정 스크립트는 한 번에 하나만 적용할 수 있다. 추가 적용은 기존 스크립트를 삭제하고 재적용 해야 한다.
+$ExtName = "InitialSettings";
+$Publisher = "Microsoft.Azure.Extensions";
+$ExtType = "customScript";
+$ExtVer = "2.1";
 
 
 #IP Config for the NIC
@@ -94,27 +96,18 @@ $IPCfg = New-AzVmssIPConfig -Name "VMss-Test" `
     -LoadBalancerBackendAddressPoolsId $ExpectedLb.BackendAddressPools[0].Id `
     -SubnetId $SubnetID;
 
-# $IPCfg = New-AzVmssIPConfig -Name "VMss-Test" `
-#     -LoadBalancerInboundNatPoolsId $ExpectedLb.InboundNatPools[0].Id `
-#     -LoadBalancerBackendAddressPoolsId $ExpectedLb.BackendAddressPools[0].Id `
-#     -SubnetId $SubnetID;
 
 #VMSS Config
-# $VMSS = New-AzVmssConfig -Location $location -SkuCapacity 2 -SkuName "Standard_DS1_v2" -UpgradePolicyMode "Automatic" `
-#     | Add-AzVmssNetworkInterfaceConfiguration -Name "Test-vmssNICconfig" -Primary $True -IPConfiguration $IPCfg `
-#     | Add-AzVmssNetworkInterfaceConfiguration -Name "Test2-vmssNICconfig"  -IPConfiguration $IPCfg `
-#     | Set-AzVmssOSProfile -ComputerNamePrefix "Test-vmssProfile" -AdminUsername $AdminUsername -AdminPassword $AdminPassword `
-#     | Set-AzVmssStorageProfile -Name "Test-StorageProfile"  -OsDiskCreateOption 'FromImage' -OsDiskCaching "None" `
-#     -ImageReferenceOffer $Offer -ImageReferenceSku $Skus -ImageReferenceVersion $Version `
-#     -ImageReferencePublisher $PublisherName -VhdContainer $VHDContainer `
-#     | Add-AzVmssExtension -Name $ExtName -Publisher $Publisher -Type $ExtType -TypeHandlerVersion $ExtVer -AutoUpgradeMinorVersion $True
-
 $VMSS = New-AzVmssConfig -Location $location -SkuCapacity 2 -SkuName "Standard_DS1_v2" -UpgradePolicyMode "Automatic" `
     | Add-AzVmssNetworkInterfaceConfiguration -Name "test-vmssNICconfig" -Primary $True -IPConfiguration $IPCfg `
     | Set-AzVmssOSProfile -ComputerNamePrefix "test-vmssProfile" -AdminUsername $AdminUsername -AdminPassword $AdminPassword `
     | Set-AzVmssStorageProfile -Name "test-StorageProfile"  -OsDiskCreateOption 'FromImage' -OsDiskCaching "None" `
     -ImageReferenceOffer $Offer -ImageReferenceSku $Skus -ImageReferenceVersion $Version `
-    -ImageReferencePublisher $PublisherName -VhdContainer $VHDContainer
+    -ImageReferencePublisher $PublisherName -VhdContainer $VHDContainer `
+    | Add-AzVmssExtension -Name $ExtName -Publisher $Publisher -Type $ExtType -TypeHandlerVersion $ExtVer -AutoUpgradeMinorVersion $True
 
 #Create the VMSS
-New-AzVmss -ResourceGroupName $ResourceGroupName -Name $VMSSName -VirtualMachineScaleSet $VMSS
+New-AzVmss `
+  -ResourceGroupName $ResourceGroupName `
+  -Name $VMSSName `
+  -VirtualMachineScaleSet $VMSS
