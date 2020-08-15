@@ -6,7 +6,7 @@
 # Login-AzAccount
 # Get-AzSubscription
 # Set-AzContext -SubscriptionId "yourSubscriptionID"
-################################# 변수 설정 #####################################
+################################# 변수 설정 ######################################
 $ResourceGroupName = "ISCREAM"
 $vmss_name         = "vmss-gaudium"
 $sctip_name        = "HTTPInstall"
