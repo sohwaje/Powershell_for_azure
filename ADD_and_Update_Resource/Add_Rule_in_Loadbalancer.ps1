@@ -48,5 +48,6 @@ $slb | Add-AzLoadBalancerRuleConfig `
   -Protocol $protocol `
   -FrontendPort $port `
   -BackendPort $port `
+  -Probe $probe
   -FrontendIpConfiguration $slb.FrontendIpConfigurations[0] `
   -DisableOutboundSNAT | Set-AzLoadBalancer
