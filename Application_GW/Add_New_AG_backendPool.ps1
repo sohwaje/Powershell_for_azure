@@ -19,10 +19,11 @@ $PoolSettings_name        = "TEST88.hiclass.net-38080"
 $HttpListener_name        = "TEST88.hiclass.net-http-listner"
 $HttpsListener_name       = "TEST88.hiclass.net-https-listner"
 $hostname                 = "TEST88.hiclass.net"
-$hostname_http            = "TEST88.hiclass.net-http-rul"
-$hostname_https           = "TEST88.hiclass.net-httsp-rul"
+$hostname_http            = "TEST88.hiclass.net-http-rule"
+$hostname_https           = "TEST88.hiclass.net-httsp-rule"
 $frontendport_http_name   = "port_80"
 $frontendport_https_name  = "port_443"
+$cert                     = "hiclassnet"
 
 #[1] vnet 구하기
 $vnet = Get-AzvirtualNetwork -Name $vnet_name -ResourceGroupName $resourceGroups
@@ -45,47 +46,69 @@ $fipconfig = Get-AzApplicationGatewayFrontendIPConfig -Name $fipconfig_name -App
 $frontendport_http = Get-AzApplicationGatewayFrontendPort -name $frontendport_http_name -ApplicationGateway $appgw
 $frontendport_https = Get-AzApplicationGatewayFrontendPort -name $frontendport_https_name -ApplicationGateway $appgw
 
-# 백엔드 풀 설정
-$backendPool = Add-AzApplicationGatewayBackendAddressPool `
-  -Name $backendPool_name -ApplicationGateway $appgw
+# 백 엔드 풀 설정
+$appgw = Add-AzApplicationGatewayBackendAddressPool `
+  -ApplicationGateway $appgw `
+  -Name $backendPool_name
+# 백 엔드 풀 가져오기
+$backendPool = Get-AzApplicationGatewayBackendAddressPool `
+  -ApplicationGateway $appgw `
+  -Name $backendPool_name
 
-# HTTP 설정에 추가할 정보 설정
-$poolSettings = Add-AzApplicationGatewayBackendHttpSetting `
+# http probe 설정
+$appgw = Add-AzApplicationGatewayProbeConfig `
+  -ApplicationGateway $appgw `
+  -Name "Probe01" `
+  -Protocol Http `
+  -HostName $hostname -Path "/" -Interval 30 -Timeout 120 -UnhealthyThreshold 8
+
+$probe = Get-AzApplicationGatewayProbeConfig `
+  -ApplicationGateway $appgw `
+  -Name "Probe01"
+
+# HTTP 설정
+$appgw = Add-AzApplicationGatewayBackendHttpSetting `
   -ApplicationGateway $appgw `
   -Name $PoolSettings_name `
   -Port 38080 `
   -Protocol Http `
   -CookieBasedAffinity Enabled `
-  -RequestTimeout 30
+  -RequestTimeout 30 `
+  -Probe $probe
+# HTTP 설정 가져오기
+$poolSettings = Get-AzApplicationGatewayBackendHttpSetting `
+  -ApplicationGateway $appgw `
+  -Name $PoolSettings_name
 
-
-### 리스너, 규칙 생성
-#/ ** HTTP 리스너 ** /
-$defaultlistener = Add-AzApplicationGatewayHttpListener `
+# HTTP 리스너 설정
+$appgw = Add-AzApplicationGatewayHttpListener `
+  -ApplicationGateway $appgw `
   -Name $HttpListener_name `
   -Protocol Http `
   -FrontendIPConfiguration $fipconfig `
   -FrontendPort $frontendport_http `
-  -HostName $hostname `
-  -ApplicationGateway $appgw
-# / ** HTTPS 리스너** /
-# $httpslistner = Add-AzApplicationGatewayHttpListener `
-#   -Name $HttpsListener_name `
-#   -Protocol Https `
-#   -FrontendIPConfiguration $fipconfig `
-#   -FrontendPort $frontendport_https `
-#   -HostName $hostname `
-#   -ApplicationGateway $appgw
-
-# 기본 수신기 가져오기(http :80)
-# $defaultlistener = Get-AzApplicationGatewayHttpListener `
-#   -Name $HttpListener_name -ApplicationGateway $appgw
-#
-# $httpslistner = Get-AzApplicationGatewayHttpListener `
-#   -Name $HttpsListener_name -ApplicationGateway $appgw
+  -HostName $hostname
+# HTTP 리스너 가져오기
+$defaultlistener = Get-AzApplicationGatewayHttpListener `
+  -ApplicationGateway $appgw `
+  -Name $HttpListener_name
+# SSL/TLS 인증서 가져오기
+$SslCertificate = Get-AzApplicationGatewaySslCertificate -ApplicationGateway $appgw -Name $cert
+# HTTPS 리스너 설정 $httpslistner
+$appgw = Add-AzApplicationGatewayHttpListener `
+  -ApplicationGateway $appgw `
+  -Name $HttpsListener_name `
+  -Protocol Https `
+  -FrontendIPConfiguration $fipconfig `
+  -FrontendPort $frontendport_https `
+  -SslCertificate $SslCertificate `
+  -HostName $hostname
+# HTTPS 리스너 가져오기
+$httpslistner = Get-AzApplicationGatewayHttpListener `
+  -Name $HttpsListener_name -ApplicationGateway $appgw
 
 # http rule 설정
-Add-AzApplicationGatewayRequestRoutingRule `
+$appgw = Add-AzApplicationGatewayRequestRoutingRule `
   -ApplicationGateway $appgw `
   -Name $hostname_http `
   -RuleType Basic `
@@ -93,15 +116,14 @@ Add-AzApplicationGatewayRequestRoutingRule `
   -HttpListener $defaultlistener `
   -BackendAddressPool $backendPool
 
-
-
 # https rule 설정
-# $appgw | Add-AzApplicationGatewayRequestRoutingRule `
-#   -Name $hostname_https `
-#   -RuleType Basic `
-#   -HttpListener $httpslistner `
-#   -BackendAddressPool $backendPool `
-#   -BackendHttpSettings $poolSettings
+$appgw = Add-AzApplicationGatewayRequestRoutingRule `
+  -ApplicationGateway $appgw `
+  -Name $hostname_https `
+  -RuleType Basic `
+  -HttpListener $httpslistner `
+  -BackendAddressPool $backendPool `
+  -BackendHttpSettings $poolSettings
 
 # Application GW에 모든 설정 적용
 Set-AzApplicationGateway -ApplicationGateway $appgw
