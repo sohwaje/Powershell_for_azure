@@ -20,7 +20,7 @@ $ag_name                    = "AG-HICLASS"
 $backendPool_name           = "TEST_Backend-Pool"
 # 어플리케이션 이름 구하기
 # Get-AzApplicationGateway -ResourceGroupName ISCREAM | select name
-$appgw = Get-AzApplicationGateway -ResourceGroupName $ResourceGroupName -Name $ag_name
+$appgw       = Get-AzApplicationGateway -ResourceGroupName $ResourceGroupName -Name $ag_name
 # 백 엔드 풀 가져오기
 $backendPool = Get-AzApplicationGatewayBackendAddressPool `
   -ApplicationGateway $appgw `
