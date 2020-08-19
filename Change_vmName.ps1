@@ -7,9 +7,9 @@
 ################################# 변수 설정 ######################################
 $ResourceGroupName = 'ISCREAM'
 # 변경 대상 가상 머신 이름
-$oldVMName = 'Redis4'
+$oldVMName = 'Old-vm-name'
 # 새 가상 머신의 이름을 설정한다.
-$newVMName = 'Redis5'
+$newVMName = 'New-vm-name'
 
 # 가성머신 속성을 xml 파일로 저장한다.
 Get-AzVM -ResourceGroupName $ResourceGroupName -Name $oldVMName `

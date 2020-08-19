@@ -1,0 +1,298 @@
+<Objs Version="1.1.0.1" xmlns="http://schemas.microsoft.com/powershell/2004/04">
+  <Obj RefId="0">
+    <TN RefId="0">
+      <T>Microsoft.Azure.Commands.Compute.Models.PSVirtualMachine</T>
+      <T>Microsoft.Azure.Commands.Compute.Models.PSOperation</T>
+      <T>System.Object</T>
+    </TN>
+    <ToString>Microsoft.Azure.Commands.Compute.Models.PSVirtualMachine</ToString>
+    <Props>
+      <S N="ResourceGroupName">ISCREAM</S>
+      <S N="Id">/subscriptions/64268000-4de0-460d-9cc0-5b7730789327/resourceGroups/ISCREAM/providers/Microsoft.Compute/virtualMachines/BroadcastDB-Hi-Class</S>
+      <S N="VmId">f0a0854e-3d90-4a27-b6fd-85e2c784c671</S>
+      <S N="Name">BroadcastDB-Hi-Class</S>
+      <S N="Type">Microsoft.Compute/virtualMachines</S>
+      <S N="Location">koreacentral</S>
+      <Nil N="LicenseType" />
+      <Obj N="Tags" RefId="1">
+        <TN RefId="1">
+          <T>System.Collections.Generic.Dictionary`2[[System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]</T>
+          <T>System.Object</T>
+        </TN>
+        <DCT />
+      </Obj>
+      <Nil N="AvailabilitySetReference" />
+      <Nil N="DiagnosticsProfile" />
+      <Obj N="Extensions" RefId="2">
+        <TN RefId="2">
+          <T>System.Collections.Generic.List`1[[Microsoft.Azure.Management.Compute.Models.VirtualMachineExtension, Microsoft.Azure.Management.Compute, Version=36.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35]]</T>
+          <T>System.Object</T>
+        </TN>
+        <LST>
+          <Obj RefId="3">
+            <TN RefId="3">
+              <T>Microsoft.Azure.Management.Compute.Models.VirtualMachineExtension</T>
+              <T>Microsoft.Azure.Management.Compute.Models.Resource</T>
+              <T>System.Object</T>
+            </TN>
+            <ToString>Microsoft.Azure.Management.Compute.Models.VirtualMachineExtension</ToString>
+            <Props>
+              <Nil N="ForceUpdateTag" />
+              <S N="Publisher">Microsoft.EnterpriseCloud.Monitoring</S>
+              <S N="VirtualMachineExtensionType">OmsAgentForLinux</S>
+              <S N="TypeHandlerVersion">1.0</S>
+              <B N="AutoUpgradeMinorVersion">true</B>
+              <Obj N="Settings" RefId="4">
+                <TN RefId="4">
+                  <T>Newtonsoft.Json.Linq.JObject</T>
+                  <T>Newtonsoft.Json.Linq.JContainer</T>
+                  <T>Newtonsoft.Json.Linq.JToken</T>
+                  <T>System.Object</T>
+                </TN>
+                <LST>
+                  <Obj RefId="5">
+                    <TN RefId="5">
+                      <T>Newtonsoft.Json.Linq.JProperty</T>
+                      <T>Newtonsoft.Json.Linq.JContainer</T>
+                      <T>Newtonsoft.Json.Linq.JToken</T>
+                      <T>System.Object</T>
+                    </TN>
+                    <LST>
+                      <Obj RefId="6">
+                        <TN RefId="6">
+                          <T>Newtonsoft.Json.Linq.JValue</T>
+                          <T>Newtonsoft.Json.Linq.JToken</T>
+                          <T>System.Object</T>
+                        </TN>
+                        <IE />
+                        <Props>
+                          <B N="HasValues">false</B>
+                          <Obj N="Type" RefId="7">
+                            <TN RefId="7">
+                              <T>Newtonsoft.Json.Linq.JTokenType</T>
+                              <T>System.Enum</T>
+                              <T>System.ValueType</T>
+                              <T>System.Object</T>
+                            </TN>
+                            <ToString>String</ToString>
+                            <I32>8</I32>
+                          </Obj>
+                          <S N="Value">a2dad82a-5d55-4216-b39d-cbf9912cf624</S>
+                          <Ref N="Parent" RefId="5" />
+                          <Ref N="Root" RefId="4" />
+                          <Nil N="Next" />
+                          <Nil N="Previous" />
+                          <S N="Path">workspaceId</S>
+                          <I32 N="LineNumber">0</I32>
+                          <I32 N="LinePosition">0</I32>
+                        </Props>
+                      </Obj>
+                    </LST>
+                  </Obj>
+                </LST>
+              </Obj>
+              <Nil N="ProtectedSettings" />
+              <S N="ProvisioningState">Succeeded</S>
+              <Nil N="InstanceView" />
+              <S N="Id">/subscriptions/64268000-4de0-460d-9cc0-5b7730789327/resourceGroups/ISCREAM/providers/Microsoft.Compute/virtualMachines/BroadcastDB-Hi-Class/extensions/OmsAgentForLinux</S>
+              <S N="Name">OmsAgentForLinux</S>
+              <S N="Type">Microsoft.Compute/virtualMachines/extensions</S>
+              <S N="Location">koreacentral</S>
+              <Nil N="Tags" />
+            </Props>
+          </Obj>
+        </LST>
+      </Obj>
+      <Obj N="HardwareProfile" RefId="8">
+        <TN RefId="8">
+          <T>Microsoft.Azure.Management.Compute.Models.HardwareProfile</T>
+          <T>System.Object</T>
+        </TN>
+        <ToString>Microsoft.Azure.Management.Compute.Models.HardwareProfile</ToString>
+        <Props>
+          <S N="VmSize">Standard_D4s_v3</S>
+        </Props>
+      </Obj>
+      <Nil N="InstanceView" />
+      <Obj N="NetworkProfile" RefId="9">
+        <TN RefId="9">
+          <T>Microsoft.Azure.Management.Compute.Models.NetworkProfile</T>
+          <T>System.Object</T>
+        </TN>
+        <ToString>Microsoft.Azure.Management.Compute.Models.NetworkProfile</ToString>
+        <Props>
+          <Obj N="NetworkInterfaces" RefId="10">
+            <TN RefId="10">
+              <T>System.Collections.Generic.List`1[[Microsoft.Azure.Management.Compute.Models.NetworkInterfaceReference, Microsoft.Azure.Management.Compute, Version=36.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35]]</T>
+              <T>System.Object</T>
+            </TN>
+            <LST>
+              <Obj RefId="11">
+                <TN RefId="11">
+                  <T>Microsoft.Azure.Management.Compute.Models.NetworkInterfaceReference</T>
+                  <T>Microsoft.Azure.Management.Compute.Models.SubResource</T>
+                  <T>System.Object</T>
+                </TN>
+                <ToString>Microsoft.Azure.Management.Compute.Models.NetworkInterfaceReference</ToString>
+                <Props>
+                  <B N="Primary">true</B>
+                  <S N="Id">/subscriptions/64268000-4de0-460d-9cc0-5b7730789327/resourceGroups/ISCREAM/providers/Microsoft.Network/networkInterfaces/BroadcastDB-Hi-Class-NIC</S>
+                </Props>
+              </Obj>
+            </LST>
+          </Obj>
+        </Props>
+      </Obj>
+      <Obj N="OSProfile" RefId="12">
+        <TN RefId="12">
+          <T>Microsoft.Azure.Management.Compute.Models.OSProfile</T>
+          <T>System.Object</T>
+        </TN>
+        <ToString>Microsoft.Azure.Management.Compute.Models.OSProfile</ToString>
+        <Props>
+          <S N="ComputerName">BroadcastDB-Hi-Class</S>
+          <S N="AdminUsername">sigongweb</S>
+          <Nil N="AdminPassword" />
+          <Nil N="CustomData" />
+          <Nil N="WindowsConfiguration" />
+          <Obj N="LinuxConfiguration" RefId="13">
+            <TN RefId="13">
+              <T>Microsoft.Azure.Management.Compute.Models.LinuxConfiguration</T>
+              <T>System.Object</T>
+            </TN>
+            <ToString>Microsoft.Azure.Management.Compute.Models.LinuxConfiguration</ToString>
+            <Props>
+              <B N="DisablePasswordAuthentication">false</B>
+              <Nil N="Ssh" />
+              <B N="ProvisionVMAgent">true</B>
+            </Props>
+          </Obj>
+          <Obj N="Secrets" RefId="14">
+            <TN RefId="14">
+              <T>System.Collections.Generic.List`1[[Microsoft.Azure.Management.Compute.Models.VaultSecretGroup, Microsoft.Azure.Management.Compute, Version=36.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35]]</T>
+              <T>System.Object</T>
+            </TN>
+            <LST />
+          </Obj>
+          <B N="AllowExtensionOperations">true</B>
+          <Nil N="RequireGuestProvisionSignal" />
+        </Props>
+      </Obj>
+      <Nil N="BillingProfile" />
+      <Nil N="Plan" />
+      <S N="ProvisioningState">Succeeded</S>
+      <Obj N="StorageProfile" RefId="15">
+        <TN RefId="15">
+          <T>Microsoft.Azure.Management.Compute.Models.StorageProfile</T>
+          <T>System.Object</T>
+        </TN>
+        <ToString>Microsoft.Azure.Management.Compute.Models.StorageProfile</ToString>
+        <Props>
+          <Obj N="ImageReference" RefId="16">
+            <TN RefId="16">
+              <T>Microsoft.Azure.Management.Compute.Models.ImageReference</T>
+              <T>Microsoft.Azure.Management.Compute.Models.SubResource</T>
+              <T>System.Object</T>
+            </TN>
+            <ToString>Microsoft.Azure.Management.Compute.Models.ImageReference</ToString>
+            <Props>
+              <S N="Publisher">OpenLogic</S>
+              <S N="Offer">CentOS</S>
+              <S N="Sku">7.7</S>
+              <S N="Version">7.7.201912090</S>
+              <S N="ExactVersion">7.7.201912090</S>
+              <Nil N="Id" />
+            </Props>
+          </Obj>
+          <Obj N="OsDisk" RefId="17">
+            <TN RefId="17">
+              <T>Microsoft.Azure.Management.Compute.Models.OSDisk</T>
+              <T>System.Object</T>
+            </TN>
+            <ToString>Microsoft.Azure.Management.Compute.Models.OSDisk</ToString>
+            <Props>
+              <Obj N="OsType" RefId="18">
+                <TN RefId="18">
+                  <T>Microsoft.Azure.Management.Compute.Models.OperatingSystemTypes</T>
+                  <T>System.Enum</T>
+                  <T>System.ValueType</T>
+                  <T>System.Object</T>
+                </TN>
+                <ToString>Linux</ToString>
+                <I32>1</I32>
+              </Obj>
+              <Nil N="EncryptionSettings" />
+              <S N="Name">BroadcastDB-Hi-Class-DISK</S>
+              <Nil N="Vhd" />
+              <Nil N="Image" />
+              <Obj N="Caching" RefId="19">
+                <TN RefId="19">
+                  <T>Microsoft.Azure.Management.Compute.Models.CachingTypes</T>
+                  <T>System.Enum</T>
+                  <T>System.ValueType</T>
+                  <T>System.Object</T>
+                </TN>
+                <ToString>ReadOnly</ToString>
+                <I32>1</I32>
+              </Obj>
+              <Nil N="WriteAcceleratorEnabled" />
+              <Nil N="DiffDiskSettings" />
+              <S N="CreateOption">FromImage</S>
+              <I32 N="DiskSizeGB">100</I32>
+              <Obj N="ManagedDisk" RefId="20">
+                <TN RefId="20">
+                  <T>Microsoft.Azure.Management.Compute.Models.ManagedDiskParameters</T>
+                  <T>Microsoft.Azure.Management.Compute.Models.SubResource</T>
+                  <T>System.Object</T>
+                </TN>
+                <ToString>Microsoft.Azure.Management.Compute.Models.ManagedDiskParameters</ToString>
+                <Props>
+                  <S N="StorageAccountType">Standard_LRS</S>
+                  <Nil N="DiskEncryptionSet" />
+                  <S N="Id">/subscriptions/64268000-4de0-460d-9cc0-5b7730789327/resourceGroups/ISCREAM/providers/Microsoft.Compute/disks/BroadcastDB-Hi-Class-DISK</S>
+                </Props>
+              </Obj>
+            </Props>
+          </Obj>
+          <Obj N="DataDisks" RefId="21">
+            <TN RefId="21">
+              <T>System.Collections.Generic.List`1[[Microsoft.Azure.Management.Compute.Models.DataDisk, Microsoft.Azure.Management.Compute, Version=36.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35]]</T>
+              <T>System.Object</T>
+            </TN>
+            <LST />
+          </Obj>
+        </Props>
+      </Obj>
+      <Obj N="DisplayHint" RefId="22">
+        <TN RefId="22">
+          <T>Microsoft.Azure.Commands.Compute.Models.DisplayHintType</T>
+          <T>System.Enum</T>
+          <T>System.ValueType</T>
+          <T>System.Object</T>
+        </TN>
+        <ToString>Compact</ToString>
+        <I32>0</I32>
+      </Obj>
+      <Nil N="Identity" />
+      <Nil N="Zones" />
+      <Nil N="FullyQualifiedDomainName" />
+      <Nil N="AdditionalCapabilities" />
+      <Nil N="ProximityPlacementGroup" />
+      <Nil N="Host" />
+      <Nil N="VirtualMachineScaleSet" />
+      <Nil N="EvictionPolicy" />
+      <Nil N="Priority" />
+      <S N="RequestId">a1359b95-4736-488a-8668-64c69906c4eb</S>
+      <Obj N="StatusCode" RefId="23">
+        <TN RefId="23">
+          <T>System.Net.HttpStatusCode</T>
+          <T>System.Enum</T>
+          <T>System.ValueType</T>
+          <T>System.Object</T>
+        </TN>
+        <ToString>OK</ToString>
+        <I32>200</I32>
+      </Obj>
+    </Props>
+  </Obj>
+</Objs>

@@ -5,14 +5,14 @@
 # Get-AzSubscription
 # Set-AzContext -SubscriptionId "yourSubscriptionID"
 ################################# 변수 설정 ######################################
-$ResourceGroupName        = "C-TFT"
-$nsg_name                 = "educon_bank-NSG"
-$SourceAddressPrefix      = "10.10.10.10"
-$DestinationAddressPrefix = "VirtualNetwork"
+$ResourceGroupName        = "ISCREAM"
+$nsg_name                 = "i-screammediacorp"
+$SourceAddressPrefix      = "*"
+$DestinationAddressPrefix = "10.1.8.6"
 # rule 변경 시 변경할 rule의 이름
 $rulename                 = "HTTP"
-$port                     = 16215,80,443
-$Priority                 = 1000
+$port                     = 80,443
+$Priority                 = 101
 ################################################################################
 #                           기존 보안 그룹 업데이트                              #
 ################################################################################
@@ -22,7 +22,7 @@ $nsg = Get-AzNetworkSecurityGroup -Name $nsg_name -ResourceGroupName $ResourceGr
 
 # 변경할 Inbound rule 작성
 # rule을 변경할 때는 변경할 Rule Name을 지정한다.
-$nsg | Set-AzNetworkSecurityRuleConfig -Name 'HTTP' -Description 'Allow HTTP' `
+$nsg | Set-AzNetworkSecurityRuleConfig -Name 'HTTP' -Description 'Allow HTTP, HTTPS' `
     -Access Allow -Protocol Tcp -Direction Inbound -Priority $Priority `
     -SourceAddressPrefix $SourceAddressPrefix -SourcePortRange * `
     -DestinationAddressPrefix $DestinationAddressPrefix -DestinationPortRange $port
