@@ -9,17 +9,17 @@
 ################################################################################
 $ResourceGroupName        = "C-TFT"
 $nsg_name                 = "educon_bank-NSG"
-$SourceAddressPrefix      = "*"
+$SourceAddressPrefix      = "10.10.10.10"
 $DestinationAddressPrefix = "VirtualNetwork"
-$rulename                 = "HTTP"
-$port                     = 80,443
+$rulename                 = "admin-management-port"
+$port                     = 80,443,16215,3306
 $Priority                 = 101
 
 # NSG 정보 가져오기
 $nsg = Get-AzNetworkSecurityGroup -Name $nsg_name -ResourceGroupName $ResourceGroupName
 
 # NSG에 인바운드 Rule 추가
-$nsg | Add-AzNetworkSecurityRuleConfig -Name $rulename -Description "Allow Admin_home" -Access Allow `
+$nsg | Add-AzNetworkSecurityRuleConfig -Name $rulename -Description "Allow Admin" -Access Allow `
     -Protocol * -Direction Inbound -Priority $Priority -SourceAddressPrefix $SourceAddressPrefix -SourcePortRange * `
     -DestinationAddressPrefix $DestinationAddressPrefix -DestinationPortRange $port
 
