@@ -6,26 +6,30 @@
 # Set-AzContext -SubscriptionId "yourSubscriptionID"
 ################################# 변수 설정 ######################################
 $ResourceGroupName        = "ISCREAM"
-$nsg_name                 = "i-screammediacorp"
-$SourceAddressPrefix      = "1.1.1.1"
-$DestinationAddressPrefix = "10.1.8.6"
+$nsg_name                 = "Jenkins-HI-Class-VM-nsg"
+$SourceAddressPrefix      = "10.10.10.10","10.10.10.10","10.10.10.10"
+$DestinationAddressPrefix = "10.1.10.5"
 # rule 변경 시 변경할 rule의 이름
-$rulename                 = "SSH"
+$rulename                 = "test"
+$Description              = "Allow SSH from ADMIN"
 $port                     = 16215
-$Priority                 = 100
+$Priority                 = 110
 ################################################################################
 #                           기존 보안 그룹 업데이트                              #
 ################################################################################
 
 # nsg 정보를 가져온다.
+Write-Verbose "NSG 정보를 가져온다: $nsg_name"
 $nsg = Get-AzNetworkSecurityGroup -Name $nsg_name -ResourceGroupName $ResourceGroupName
 
 # 변경할 Inbound rule 작성
 # rule을 변경할 때는 변경할 Rule Name을 지정한다.
-$nsg | Set-AzNetworkSecurityRuleConfig -Name 'SSH' -Description 'Allow SSH' `
+Write-Verbose "업데이트 할 Rule을 설정한다: $rulename"
+$nsg | Set-AzNetworkSecurityRuleConfig -Name $rulename -Description $Description `
     -Access Allow -Protocol Tcp -Direction Inbound -Priority $Priority `
     -SourceAddressPrefix $SourceAddressPrefix -SourcePortRange * `
     -DestinationAddressPrefix $DestinationAddressPrefix -DestinationPortRange $port
 
 # nsg를 업데이트한다.
+Write-Verbose "NSG를 업데이트한다.: $nsg"
 $nsg | Set-AzNetworkSecurityGroup
