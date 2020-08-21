@@ -88,5 +88,9 @@ sudo sed -i 's/^#Banner none$/Banner \/etc\/issue.net/' /etc/ssh/sshd_config
 sudo sed -i 's/^#PrintMotd yes$/PrintMotd no/' /etc/ssh/sshd_config
 sudo systemctl restart sshd
 
+# motd download and path settings
+sudo curl -o /usr/bin/dynmotd https://raw.githubusercontent.com/sohwaje/Powershell_for_azure/master/extensions/motd.sh | chmod +x /usr/bin/dynmotd
+sudo echo "/usr/bin/dynmotd" >> /etc/profile
+
 # Install bashtop
 sudo git clone https://github.com/aristocratos/bpytop.git && cd bpytop && make install

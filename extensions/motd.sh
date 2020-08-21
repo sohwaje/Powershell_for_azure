@@ -9,10 +9,10 @@
 #      # session optional pam_motd.so
 #
 # 3.   vim /etc/profile
-#      /usr/local/bin/dynmotd # Place at the bottom
+#      /usr/bin/dynmotd # Place at the bottom
 #
 # 4.   Then of course drop this file at
-#      /usr/local/bin/dynmotd
+#      /usr/bin/dynmotd
 #
 
 USER=`whoami`
@@ -48,13 +48,7 @@ LOAD5=`cat /proc/loadavg | awk {'print $2'}`
 LOAD15=`cat /proc/loadavg | awk {'print $3'}`
 
 echo "
- _______  __   __  _______  _______  _______  __    _  _______  __   __  _______  _______  _______  _______
- |       ||  | |  ||   _   ||       ||       ||  |  | ||       ||  | |  ||       ||   _   ||       ||       |
- |       ||  |_|  ||  |_|  ||  _____||   _   ||   |_| ||       ||  |_|  ||   _   ||  |_|  ||_     _||    ___|
- |       ||       ||       || |_____ |  | |  ||       ||       ||       ||  | |  ||       |  |   |  |   |___
- |      _||       ||       ||_____  ||  |_|  ||  _    ||      _||       ||  |_|  ||       |  |   |  |    ___|
- |     |_ |   _   ||   _   | _____| ||       || | |   ||     |_ |   _   ||       ||   _   |  |   |  |   |___
- |_______||__| |__||__| |__||_______||_______||_|  |__||_______||__| |__||_______||__| |__|  |___|  |_______|
+                          ISCREAMmedia Corp
 Good $TIME $USER"
 
 echo "
