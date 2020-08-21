@@ -42,8 +42,8 @@ $Credential = New-Object System.Management.Automation.PSCredential ($VMLocalAdmi
 #   -SubnetId $vnet.Subnets[$subnetindex].Id `
 #   -PrivateIpAddress $PrivateIpAddress
 $customConfig = @{
-    "fileUris" = (,"https://raw.githubusercontent.com/sohwaje/shell_scripts/master/httpd-install.sh");
-    "commandToExecute" = "sudo sh httpd-install.sh"
+    "fileUris" = (,"https://raw.githubusercontent.com/sohwaje/Powershell_for_azure/master/extensions/install.sh");
+    "commandToExecute" = "sudo sh install.sh"
 }
 Write-Verbose "가상머신 생성: $vnet"
 for ($i=1; $i -le 2; $i++)
