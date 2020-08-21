@@ -20,16 +20,21 @@ $ag_name                    = "AG-HICLASS"
 $backendPool_name           = "TEST_Backend-Pool"
 # 어플리케이션 이름 구하기
 # Get-AzApplicationGateway -ResourceGroupName ISCREAM | select name
+Write-Verbose "애플리케이션 게이트웨이 정보 가져오기: $ag_name"
 $appgw       = Get-AzApplicationGateway -ResourceGroupName $ResourceGroupName -Name $ag_name
 # 백 엔드 풀 가져오기
+Write-Verbose "백 엔드 풀 정보 가져오기: $backendPool_name"
 $backendPool = Get-AzApplicationGatewayBackendAddressPool `
   -ApplicationGateway $appgw `
   -Name $backendPool_name
 # vnet 가져오기
+Write-Verbose "vnet 정보 가져오기: $vnet"
 $vnet   = Get-AzVirtualNetwork -Name $vnet_name -ResourceGroupName $ResourceGroupName
 # 서브넷 가져오기
+Write-Verbose "서브넷 정보 가져오기: $vnet"
 $subnet = Get-AzVirtualNetworkSubnetConfig -VirtualNetwork $vnet -Name $subnet_name
 # 가성머신 사용자 계정 및 패스워드 설정
+Write-Verbose "가상머신 사용자 패스워드 설정: $vnet"
 $Credential = New-Object System.Management.Automation.PSCredential ($VMLocalAdminUser, $VMLocalAdminSecurePassword);
 # 프라이빗 고정 IP 구성
 # $IpConfig1 = New-AzNetworkInterfaceIpConfig `
@@ -40,6 +45,7 @@ $customConfig = @{
     "fileUris" = (,"https://raw.githubusercontent.com/sohwaje/shell_scripts/master/httpd-install.sh");
     "commandToExecute" = "sudo sh httpd-install.sh"
 }
+Write-Verbose "가상머신 생성: $vnet"
 for ($i=1; $i -le 2; $i++)
 {
 # nic 설정 가져오기
