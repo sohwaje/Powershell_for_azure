@@ -83,3 +83,10 @@ sudo systemctl enable httpd
 # SSH port 수정
 sudo sed -i 's/^#Port 22$/Port 16215/' /etc/ssh/sshd_config
 sudo sed -i 's/^#Banner none$/Banner \/etc\/issue.net/' /etc/ssh/sshd_config
+
+# SSH motd disable
+sudo sed -i 's/^#PrintMotd yes$/PrintMotd no/' /etc/ssh/sshd_config
+sudo systemctl restart sshd
+
+# Install bashtop
+sudo git clone https://github.com/aristocratos/bpytop.git && cd bpytop && make install
