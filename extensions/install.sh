@@ -83,14 +83,34 @@ sudo systemctl enable httpd
 # SSH port 수정
 sudo sed -i 's/^#Port 22$/Port 16215/' /etc/ssh/sshd_config
 sudo sed -i 's/^#Banner none$/Banner \/etc\/issue.net/' /etc/ssh/sshd_config
+# 로그인 배너
+sudo bash -c "cat << EOF > /etc/issue.net
+*******************************************************************************
+*                                                                             *
+*                                                                             *
+*  [[[ WARNING ]]] This Machine Is ISCREAMmedia Inc's Property.               *
+*                                                                             *
+*  A Person Autherized By SIGONGmedia Inc Can Use This Machine.               *
+*  Even If You Are Autherized, You Can Only Utilize To The Purpose.           *
+*  Any Illegal Action May Results In Severe Civil And Criminal Penalties.     *
+*                                                                             *
+*                                                                             *
+*  [[[ 경 고 ]]] 이 장비는 아이스크림미디어의 자산입니다.                     *
+*  이 장비는 승인된 사용자만 접속해야합니다.                                  *
+*  허가된 목적이 아닌 다른 목적으로 시스템을 사용해선 안 됩니다.              *
+*  불법적인 행동에는 민형사상 법적 책임이 따릅니다.                           *
+*                                                                             *
+*                                                                             *
+*******************************************************************************
+EOF"
 
 # SSH motd disable
 sudo sed -i 's/^#PrintMotd yes$/PrintMotd no/' /etc/ssh/sshd_config
 sudo systemctl restart sshd
 
-# motd download and path settings
+# 환영 배너
 sudo curl -o /usr/bin/dynmotd https://raw.githubusercontent.com/sohwaje/Powershell_for_azure/master/extensions/motd.sh | chmod +x /usr/bin/dynmotd
 sudo echo "/usr/bin/dynmotd" >> /etc/profile
 
-# Install bashtop
-sudo git clone https://github.com/aristocratos/bpytop.git && cd bpytop && make install
+# # Install bashtop
+# sudo git clone https://github.com/aristocratos/bpytop.git && cd bpytop && make install
