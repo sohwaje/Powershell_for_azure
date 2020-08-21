@@ -70,7 +70,7 @@ yum -y install java-1.8.0-openjdk java-1.8.0-openjdk-devel
 # 인스톨 docker
 sudo curl -s https://get.docker.com | sudo sh && systemctl start docker && systemctl enable docker
 
-# 인스톨 아파(테스트 용도)
+# 인스톨 아파치(테스트 용도)
 sudo yum install -y httpd
 sudo sed -i 's/^Listen 80$/Listen 38080/' /etc/httpd/conf/httpd.conf
 sudo echo "Test-Page" > /var/www/html/index.html
