@@ -7,12 +7,12 @@
 ################################# 변수 설정 ######################################
 $ResourceGroupName        = "ISCREAM"
 $nsg_name                 = "i-screammediacorp"
-$SourceAddressPrefix      = "*"
+$SourceAddressPrefix      = "1.1.1.1"
 $DestinationAddressPrefix = "10.1.8.6"
 # rule 변경 시 변경할 rule의 이름
-$rulename                 = "HTTP"
-$port                     = 80,443
-$Priority                 = 101
+$rulename                 = "SSH"
+$port                     = 16215
+$Priority                 = 100
 ################################################################################
 #                           기존 보안 그룹 업데이트                              #
 ################################################################################
@@ -22,7 +22,7 @@ $nsg = Get-AzNetworkSecurityGroup -Name $nsg_name -ResourceGroupName $ResourceGr
 
 # 변경할 Inbound rule 작성
 # rule을 변경할 때는 변경할 Rule Name을 지정한다.
-$nsg | Set-AzNetworkSecurityRuleConfig -Name 'HTTP' -Description 'Allow HTTP, HTTPS' `
+$nsg | Set-AzNetworkSecurityRuleConfig -Name 'SSH' -Description 'Allow SSH' `
     -Access Allow -Protocol Tcp -Direction Inbound -Priority $Priority `
     -SourceAddressPrefix $SourceAddressPrefix -SourcePortRange * `
     -DestinationAddressPrefix $DestinationAddressPrefix -DestinationPortRange $port
