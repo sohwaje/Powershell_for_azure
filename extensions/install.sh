@@ -116,24 +116,24 @@ yum -y install java-1.8.0-openjdk java-1.8.0-openjdk-devel
 # install a docker
 sudo curl -s https://get.docker.com | sudo sh && systemctl start docker && systemctl enable docker
 sudo groupadd docker
-sudo usermod -aG docker ${USER}
+sudo usermod -aG docker azureUser
 # install a docker-compose
 sudo curl -L "https://github.com/docker/compose/releases/download/1.24.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 chmod +x /usr/local/bin/docker-compose
 ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
 
 # install a python3.x
-yum install -y python3 python3-devel
+sudo yum install -y python3 python3-devel
 # install python3 pip
 sudo curl https://bootstrap.pypa.io/get-pip.py | python
 # install and import python3 psutil
 sudo python3 -m pip install -U psutil
-
+# install git
+sudo yum install -y git
 # fluentd docker image pull
 docker pull fluent/fluentd:v0.12-debian
 # Install a bashtop(resource monitoring)
-sudo git clone https://github.com/aristocratos/bpytop.git
-cd bpytop;make install
+sudo git clone https://github.com/aristocratos/bpytop.git && cd bpytop;sudo make install
 sudo ln -s /usr/local/bin/bpytop /usr/bin/
 
 # install httpd(to test)
