@@ -68,7 +68,7 @@ $nsgRuleHTTP = New-AzNetworkSecurityRuleConfig `
   -DestinationPortRange 80 `
   -Access "Allow"
 
-$nsgRuleSSH = New-AzNetworkSecurityRuleConfig `
+$nsgRuleNetdata = New-AzNetworkSecurityRuleConfig `
   -Name "TestNetdataNSG"  `
   -Protocol "Tcp" `
   -Direction "Inbound" `
@@ -84,7 +84,7 @@ $nsg = New-AzNetworkSecurityGroup `
   -ResourceGroupName $ResourceGroupName `
   -Location $location `
   -Name $nsg_name `
-  -SecurityRules $nsgRuleSSH,$nsgRuleHTTP,$nsgRuleSSH
+  -SecurityRules $nsgRuleSSH,$nsgRuleHTTP,$nsgRuleNetdata
 
 # NIC 만들기
 $nic = New-AzNetworkInterface `
