@@ -1,15 +1,15 @@
 #!/bin/sh
-# 리눅스 시간 변경
+# change date timezone into Asia/seoul
 sudo ln -sf /usr/share/zoneinfo/Asia/Seoul /etc/localtime
 sudo timedatectl set-timezone Asia/Seoul
 
 # selinux disable
 sudo sed -i 's/^SELINUX=enforcing$/SELINUX=disable/' /etc/selinux/config && sudo setenforce 0
 ################################################################################
-# SSH port 수정
+# change the ssh listening port
 sudo sed -i 's/^#Port 22$/Port 16215/' /etc/ssh/sshd_config
 sudo sed -i 's/^#Banner none$/Banner \/etc\/issue.net/' /etc/ssh/sshd_config
-# 로그인 배너
+# add a login banner
 sudo bash -c "cat << EOF > /etc/issue.net
 *******************************************************************************
 *                                                                             *
@@ -30,15 +30,15 @@ sudo bash -c "cat << EOF > /etc/issue.net
 *******************************************************************************
 EOF"
 
-# SSH motd disable
+# change a "#PrintMotd yes" into "PrintMotd no"
 sudo sed -i 's/^#PrintMotd yes$/PrintMotd no/' /etc/ssh/sshd_config
 sudo systemctl restart sshd
 
-# 환영 배너
+# Add a "welcome banner"
 sudo curl -o /usr/bin/dynmotd https://raw.githubusercontent.com/sohwaje/Powershell_for_azure/master/extensions/motd.sh
 sudo chmod +x /usr/bin/dynmotd && sudo echo "/usr/bin/dynmotd" >> /etc/profile
 ################################################################################
-# 커널 파라미터 튜닝
+# Tunning Kernel parameter values
 sudo swapoff -a
 sudo sed -e '/swap/ s/^#*/#/' -i /etc/fstab
 
@@ -84,7 +84,7 @@ vm.overcommit_memory=1
 EOF"
 sudo /sbin/sysctl -p /etc/sysctl.conf
 
-# 파일 디스크립터 개수 수정
+# filedescriptor
 sudo bash -c "cat << EOF > /etc/security/limits.conf
 *          soft    nproc     unlimited
 *          hard    nproc     unlimited
@@ -98,47 +98,45 @@ root       soft    nproc     unlimited
 root       hard    nproc     unlimited
 EOF"
 
-# 로그인 프롬프트 변경
+# customize "login-prompt"
 sudo echo "export PS1=\`hostname\`'-\$LOGNAME \$PWD>'" >> /etc/profile
 sudo echo "export PS1=\"[\$LOGNAME@\`hostname\`:\$PWD]\"" >> /root/.bashrc
 ################################################################################
 
-# OS 업데이트
+# update system, and add yum repository
 sudo yum update -y
-
-# 리포지토리 업데이트
 yum -y install yum-plugin-priorities
 yum -y install epel-release
 yum -y install centos-release-scl-rh centos-release-scl
 yum -y install http://rpms.famillecollet.com/enterprise/remi-release-7.rpm
 
-# 인스톨 openjdk 8
+# install openjdk-8
 yum -y install java-1.8.0-openjdk java-1.8.0-openjdk-devel
 
-# 인스톨 docker
+# install a docker
 sudo curl -s https://get.docker.com | sudo sh && systemctl start docker && systemctl enable docker
 sudo groupadd docker
 sudo usermod -aG docker ${USER}
-# 인스톨 docker-compose
+# install a docker-compose
 sudo curl -L "https://github.com/docker/compose/releases/download/1.24.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 chmod +x /usr/local/bin/docker-compose
 ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
 
-# python3.x 설치
+# install a python3.x
 yum install -y python3 python3-devel
-# python3 pip 설치
+# install python3 pip
 sudo curl https://bootstrap.pypa.io/get-pip.py | python
-# python3 psutil 설치
+# install and import python3 psutil
 sudo python3 -m pip install -U psutil
 
 # fluentd docker image pull
 docker pull fluent/fluentd:v0.12-debian
-# # Install bashtop
+# Install a bashtop(resource monitoring)
 sudo git clone https://github.com/aristocratos/bpytop.git
 cd bpytop;make install
 sudo ln -s /usr/local/bin/bpytop /usr/bin/
 
-# 인스톨 아파치(테스트 용도)
+# install httpd(to test)
 sudo yum install -y httpd
 # sudo sed -i 's/^Listen 80$/Listen 38080/' /etc/httpd/conf/httpd.conf
 sudo sed -i 's/Listen 38080/Listen 80/' /etc/httpd/conf/httpd.conf
