@@ -100,7 +100,7 @@ EOF"
 
 # 로그인 프롬프트 변경
 sudo echo "export PS1=\`hostname\`'-\$LOGNAME \$PWD>'" >> /etc/profile
-sudo echo """export PS1=\"[\$LOGNAME@\`hostname\`:\$PWD]\"" >> /root/.bashrc
+sudo echo "export PS1=\"[\$LOGNAME@\`hostname\`:\$PWD]\"" >> /root/.bashrc
 ################################################################################
 
 # OS 업데이트
