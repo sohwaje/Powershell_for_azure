@@ -122,7 +122,7 @@ sudo curl -L "https://github.com/docker/compose/releases/download/1.24.1/docker-
 chmod +x /usr/local/bin/docker-compose
 ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
 # install "Development Tools"
-sudo yum group install "Development Tools"
+sudo yum group install -y "Development Tools"
 # install a python3.x
 sudo yum install -y python3 python3-devel
 # install python3 pip

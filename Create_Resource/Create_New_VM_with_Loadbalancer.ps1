@@ -14,7 +14,7 @@ $frontendpoolname = "TEST-frontendpool"
 $lbname = "TEST-loadbalancer"
 $security_group_name = "TEST-nsg"
 $AzAvailabilitySet_name  = "TEST-Availbility-set"
-$vmSize = "Standard_B1ms"
+$vmSize = "Standard_D2s_v3"
 $vnet_name = "Hi-Class"
 $subnet_name = "SEI-Subnet"
 $OS = "CentOS"
@@ -29,12 +29,18 @@ $vm1_name = "TEST-VM1"
 $vm2_name = "TEST-VM2"
 $nic1_name = "TEST-Nic1"
 $nic2_name = "TEST-Nic2"
-$SourceAddressPrefix = "112.223.14.90/32"
+$SourceAddressPrefix = "175.208.212.79/32"
+$VMLocalAdminUser           = "azureUser"
+$VMLocalAdminSecurePassword = ConvertTo-SecureString 'azureUser!@#123' -AsPlainText -Force
 
+# 사용자 지정 스크립트 VM 생성 시 자동 실행
+$customConfig = @{
+    "fileUris" = (,"https://raw.githubusercontent.com/sohwaje/Powershell_for_azure/master/extensions/install.sh");
+    "commandToExecute" = "sudo sh install.sh"
+}
 
 ########################## VM의 관리자 사용자 이름과 암호를 설정 ##################
-$securePassword = ConvertTo-SecureString 'Azureuser123!@#' -AsPlainText -Force
-$cred = New-Object System.Management.Automation.PSCredential ("azureuser", $securePassword)
+$cred = New-Object System.Management.Automation.PSCredential ($VMLocalAdminUser, $VMLocalAdminSecurePassword
 ############################## 가상네트워크 가져오기 #############################
 $vnet = Get-AzVirtualNetwork -Name $vnet_name -ResourceGroupName $rgName
 ############################### 서브넷 가져오기 #################################
@@ -136,23 +142,68 @@ $as = New-AzAvailabilitySet -ResourceGroupName $rgName -Location $location `
   -PlatformUpdateDomainCount 2
 
 ################################################################################
-#                               가상머신 생성                                   #
+#                               가상머신 생성                                     #
 ################################################################################
 # VM1 가상머신 설정
 $vmConfig = New-AzVMConfig -VMName $vm1_name -VMSize $vmSize -AvailabilitySetId $as.Id | `
   Set-AzVMOSDisk -Name $osDiskName1 -CreateOption fromImage -StorageAccountType $StorageAccountType | `
-  Set-AzVMOperatingSystem -Linux -ComputerName $vm1_name -Credential $cred | `
+  Set-AzVMOperatingSystem -Linux -ComputerName $vm1_name -Credential $cred -DisablePasswordAuthentication | `
   Set-AzVMSourceImage -PublisherName OpenLogic -Offer $OS `
   -Skus $OS_sku -Version $OS_ver | Add-AzVMNetworkInterface -Id $nicVM1.Id
 
+# Configure the SSH key
+$sshPublicKey = cat ~/.ssh/id_rsa.pub
+Add-AzVMSshPublicKey `
+  -VM $vmConfig `
+  -KeyData $sshPublicKey `
+  -Path "/home/azureUser/.ssh/authorized_keys"
+
 # 가상 머신 생성
-$vm1 = New-AzVM -ResourceGroupName $rgName -Location $location -VM $vmConfig
+# $vm1 = New-AzVM -ResourceGroupName $rgName -Location $location -VM $vmConfig -Verbose
+New-AzVM `
+  -ResourceGroupName $rgName `
+  -Location $location `
+  -VM $vmConfig `
+  -Verbose
+
+Set-AzVMExtension `
+ -ResourceGroupName $rgName `
+ -ExtensionName linux `
+ -VMName $vm1_name `
+ -Publisher Microsoft.Azure.Extensions `
+ -Type "CustomScript" `
+ -TypeHandlerVersion 2.1 `
+ -Location $location `
+ -Settings $customConfig
 
 # VM2 가상머신 설정
 $vmConfig = New-AzVMConfig -VMName $vm2_name -VMSize $vmSize -AvailabilitySetId $as.Id | `
   Set-AzVMOSDisk -Name $osDiskName2 -CreateOption fromImage -StorageAccountType $StorageAccountType | `
-  Set-AzVMOperatingSystem -Linux -ComputerName $vm2_name -Credential $cred | `
+  Set-AzVMOperatingSystem -Linux -ComputerName $vm2_name -Credential $cred -DisablePasswordAuthentication | `
   Set-AzVMSourceImage -PublisherName OpenLogic -Offer $OS `
   -Skus $OS_sku -Version $OS_ver | Add-AzVMNetworkInterface -Id $nicVM2.Id
+
+# Configure the SSH key
+$sshPublicKey = cat ~/.ssh/id_rsa.pub
+Add-AzVMSshPublicKey `
+  -VM $vmConfig `
+  -KeyData $sshPublicKey `
+  -Path "/home/azureUser/.ssh/authorized_keys"
+
 # 가상 머신 생성
-$vm2 = New-AzVM -ResourceGroupName $rgName -Location $location -VM $vmConfig
+New-AzVM `
+  -ResourceGroupName $rgName `
+  -Location $location `
+  -VM $vmConfig `
+  -Verbose
+
+Set-AzVMExtension `
+ -ResourceGroupName $rgName `
+ -ExtensionName linux `
+ -VMName $vm2_name `
+ -Publisher Microsoft.Azure.Extensions `
+ -Type "CustomScript" `
+ -TypeHandlerVersion 2.1 `
+ -Location $location `
+ -Settings $customConfig
+# $vm2 = New-AzVM -ResourceGroupName $rgName -Location $location -VM $vmConfig -Verbose
