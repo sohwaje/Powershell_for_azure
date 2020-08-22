@@ -117,6 +117,8 @@ yum -y install java-1.8.0-openjdk java-1.8.0-openjdk-devel
 
 # 인스톨 docker
 sudo curl -s https://get.docker.com | sudo sh && systemctl start docker && systemctl enable docker
+sudo groupadd docker
+sudo usermod -aG docker ${USER}
 # 인스톨 docker-compose
 sudo curl -L "https://github.com/docker/compose/releases/download/1.24.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 chmod +x /usr/local/bin/docker-compose
