@@ -132,12 +132,14 @@ sudo python3 -m pip install -U psutil
 # fluentd docker image pull
 docker pull fluent/fluentd:v0.12-debian
 # # Install bashtop
-sudo git clone https://github.com/aristocratos/bpytop.git && cd bpytop && make install
+sudo git clone https://github.com/aristocratos/bpytop.git
+cd bpytop;make install
 sudo ln -s /usr/local/bin/bpytop /usr/bin/
 
 # 인스톨 아파치(테스트 용도)
 sudo yum install -y httpd
-sudo sed -i 's/^Listen 80$/Listen 38080/' /etc/httpd/conf/httpd.conf
+# sudo sed -i 's/^Listen 80$/Listen 38080/' /etc/httpd/conf/httpd.conf
+sudo sed -i 's/Listen 38080/Listen 80/' /etc/httpd/conf/httpd.conf
 sudo echo "Test-Page" > /var/www/html/index.html
 sudo systemctl start httpd
 sudo systemctl enable httpd
