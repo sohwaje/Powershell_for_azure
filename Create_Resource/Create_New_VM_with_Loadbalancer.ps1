@@ -81,10 +81,10 @@ $natrule1 = New-AzLoadBalancerInboundNatRuleConfig -Name 'SSH' `
   -FrontendIpConfiguration $feip `
   -Protocol tcp -FrontendPort 16215 -BackendPort 16215
 
-# NAT MySQL <-> TCP 3306 port
+# NAT Netdata <-> TCP 19999 port
 $natrule2 = New-AzLoadBalancerInboundNatRuleConfig -Name 'MySQL' `
   -FrontendIpConfiguration $feip `
-  -Protocol tcp -FrontendPort 53306 -BackendPort 3306
+  -Protocol tcp -FrontendPort 19999 -BackendPort 19999
 
 # 로드밸런서 생성
 $lb = New-AzLoadBalancer -ResourceGroupName $rgName -Name $lbname `
@@ -208,4 +208,5 @@ Set-AzVMExtension `
  -Settings $customConfig
 # $vm2 = New-AzVM -ResourceGroupName $rgName -Location $location -VM $vmConfig -Verbose
 
+# IP 출력하기
 Get-AzPublicIpAddress -ResourceGroupName $ResourceGroupName -Name $pip_name | select ipAddress
