@@ -23,7 +23,7 @@ $OS_ver = "latest"
 $osDiskName1 = "TEST1-OS-DIsk"
 $osDiskName2 = "TEST2-OS-DIsk"
 $StorageAccountType = "Standard_LRS"
-$pip_name = "TEST-pip"
+$pip_name = "TEST-LB-pip"
 $ip_method = "Static"
 $vm1_name = "TEST-VM1"
 $vm2_name = "TEST-VM2"
@@ -40,7 +40,7 @@ $customConfig = @{
 }
 
 ########################## VM의 관리자 사용자 이름과 암호를 설정 ##################
-$cred = New-Object System.Management.Automation.PSCredential ($VMLocalAdminUser, $VMLocalAdminSecurePassword
+$cred = New-Object System.Management.Automation.PSCredential ($VMLocalAdminUser, $VMLocalAdminSecurePassword)
 ############################## 가상네트워크 가져오기 #############################
 $vnet = Get-AzVirtualNetwork -Name $vnet_name -ResourceGroupName $rgName
 ############################### 서브넷 가져오기 #################################
@@ -207,3 +207,5 @@ Set-AzVMExtension `
  -Location $location `
  -Settings $customConfig
 # $vm2 = New-AzVM -ResourceGroupName $rgName -Location $location -VM $vmConfig -Verbose
+
+Get-AzPublicIpAddress -ResourceGroupName $ResourceGroupName -Name $pip_name | select ipAddress
