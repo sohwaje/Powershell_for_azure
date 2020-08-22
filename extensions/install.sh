@@ -103,15 +103,19 @@ sudo echo "export PS1=\`hostname\`'-\$LOGNAME \$PWD>'" >> /etc/profile
 sudo echo "export PS1=\"[\$LOGNAME@\`hostname\`:\$PWD]\"" >> /root/.bashrc
 ################################################################################
 
-# update system, and add yum repository
+# update system, install software and add yum repository
 sudo yum update -y
-yum -y install yum-plugin-priorities
-yum -y install epel-release
-yum -y install centos-release-scl-rh centos-release-scl
-yum -y install http://rpms.famillecollet.com/enterprise/remi-release-7.rpm
-
-# install openjdk-8
-yum -y install java-1.8.0-openjdk java-1.8.0-openjdk-devel
+yum -y install yum-plugin-priorities \
+epel-release centos-release-scl-rh \
+centos-release-scl \
+http://rpms.famillecollet.com/enterprise/remi-release-7.rpm \
+java-1.8.0-openjdk \
+java-1.8.0-openjdk-devel \
+git \
+httpd \
+python3 \
+python3-devel
+sudo yum groupinstall -y "Development Tools"
 
 # install a docker
 sudo curl -s https://get.docker.com | sudo sh && systemctl start docker && systemctl enable docker
@@ -121,26 +125,35 @@ sudo usermod -aG docker azureUser
 sudo curl -L "https://github.com/docker/compose/releases/download/1.24.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 chmod +x /usr/local/bin/docker-compose
 ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
-# install "Development Tools"
-sudo yum group install -y "Development Tools"
-# install a python3.x
-sudo yum install -y python3 python3-devel
+
 # install python3 pip
 sudo curl https://bootstrap.pypa.io/get-pip.py | python
 # install and import python3 psutil
 sudo python3 -m pip install -U psutil
-# install git
-sudo yum install -y git
+
 # fluentd docker image pull
 docker pull fluent/fluentd:v0.12-debian
 # Install a bashtop(resource monitoring)
 sudo git clone https://github.com/aristocratos/bpytop.git && cd bpytop;sudo make install
 sudo ln -s /usr/local/bin/bpytop /usr/bin/
 
-# install httpd(to test)
-sudo yum install -y httpd
 # sudo sed -i 's/^Listen 80$/Listen 38080/' /etc/httpd/conf/httpd.conf
 sudo sed -i 's/Listen 38080/Listen 80/' /etc/httpd/conf/httpd.conf
 sudo echo "Test-Page" > /var/www/html/index.html
 sudo systemctl start httpd
 sudo systemctl enable httpd
+
+# for monitoring resource install and excute netdata
+docker run -d --name=netdata \
+  -p 19999:19999 \
+  -v netdatalib:/var/lib/netdata \
+  -v netdatacache:/var/cache/netdata \
+  -v /etc/passwd:/host/etc/passwd:ro \
+  -v /etc/group:/host/etc/group:ro \
+  -v /proc:/host/proc:ro \
+  -v /sys:/host/sys:ro \
+  -v /etc/os-release:/host/etc/os-release:ro \
+  --restart unless-stopped \
+  --cap-add SYS_PTRACE \
+  --security-opt apparmor=unconfined \
+  netdata/netdata
