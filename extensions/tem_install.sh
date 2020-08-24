@@ -27,4 +27,4 @@ systemctl restart sshd
 
 # Add a "welcome banner"
 curl -o /usr/bin/dynmotd https://raw.githubusercontent.com/sohwaje/Powershell_for_azure/master/extensions/motd.sh
-chmod +x /usr/bin/dynmotd && sudo echo "/usr/bin/dynmotd" >> /etc/profile
+chmod +x /usr/bin/dynmotd && echo "/usr/bin/dynmotd" >> /etc/profile
