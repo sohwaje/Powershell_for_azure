@@ -6,14 +6,14 @@
 # Set-AzContext -SubscriptionId "yourSubscriptionID"
 ################################# 변수 설정 ######################################
 $ResourceGroupName        = "ISCREAM"
-$nsg_name                 = "Jenkins-HI-Class-VM-nsg"
-$SourceAddressPrefix      = "10.10.10.10","10.10.10.10","10.10.10.10"
-$DestinationAddressPrefix = "10.1.10.5"
+$nsg_name                 = "i-screammediacorp"
+$SourceAddressPrefix      = "10.10.10.10"
+$DestinationAddressPrefix = "10.1.8.6"
 # rule 변경 시 변경할 rule의 이름
-$rulename                 = "test"
+$rulename                 = "homepage-dev-user"
 $Description              = "Allow SSH from ADMIN"
 $port                     = 16215
-$Priority                 = 110
+$Priority                 = 103
 ################################################################################
 #                           기존 보안 그룹 업데이트                              #
 ################################################################################
