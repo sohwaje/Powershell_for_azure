@@ -1,7 +1,7 @@
 #!/bin/sh
 sed -i 's/^#Banner none$/Banner \/etc\/issue.net/' /etc/ssh/sshd_config
 # add a login banner
-sudo bash -c "cat << EOF > /etc/issue.net
+bash -c "cat << EOF > /etc/issue.net
 *******************************************************************************
 *                                                                             *
 *                                                                             *
