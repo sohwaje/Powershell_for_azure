@@ -116,10 +116,10 @@ httpd \
 python3 \
 python3-devel
 sudo yum groupinstall -y "Development Tools"
-# nodejs, npm
+
+# install nodejs, npm
 curl -sL https://rpm.nodesource.com/setup_12.x | sudo bash -
 sudo yum clean all && sudo yum makecache fast gcc-c++ make nodejs npm
-
 
 # install a docker
 sudo curl -s https://get.docker.com | sudo sh && systemctl start docker && systemctl enable docker
