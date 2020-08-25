@@ -24,6 +24,7 @@ $vmName                     = "TEST-VM"
 $vmSize                     = "Standard_D2s_v3"
 $osDiskName                 = "TEST-OS-DIsk"
 $StorageAccountType         = "Standard_LRS"
+$AzAvailabilitySet_name     = "TEST-Availbility-set"
 
 # 사용자 지정 스크립트 VM 생성 시 자동 실행
 $customConfig = @{
@@ -95,6 +96,14 @@ $nic = New-AzNetworkInterface `
   -PublicIpAddressId $pip.Id `
   -NetworkSecurityGroupId $nsg.Id
 
+################################################################################
+#                             가용성 집합 생성                                     #
+################################################################################
+$as = New-AzAvailabilitySet -ResourceGroupName $ResourceGroupName -Location $location `
+  -Name $AzAvailabilitySet_name -Sku Aligned -PlatformFaultDomainCount 2 `
+  -PlatformUpdateDomainCount 2
+
+
 # Define a credential object
 # $securePassword = ConvertTo-SecureString ' ' -AsPlainText -Force
 $cred = New-Object System.Management.Automation.PSCredential ($VMLocalAdminUser, $VMLocalAdminSecurePassword)
@@ -102,7 +111,8 @@ $cred = New-Object System.Management.Automation.PSCredential ($VMLocalAdminUser,
 # Create a virtual machine configuration
 $vmConfig = New-AzVMConfig `
   -VMName $vmName `
-  -VMSize $vmSize
+  -VMSize $vmSize `
+  -AvailabilitySetId $as.Id
 $vmConfig = Set-AzVMOperatingSystem `
   -VM $vmConfig `
   -Linux `
