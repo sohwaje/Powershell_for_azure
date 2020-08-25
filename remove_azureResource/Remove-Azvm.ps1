@@ -40,12 +40,12 @@ Param (
 
 Remove-AzVM -ResourceGroupName $ResourceGroupName -Name $vmName
 
+Remove-AzNetworkInterface -Name $nic_name -ResourceGroup $ResourceGroupName
+
 Remove-AzDisk -ResourceGroupName $ResourceGroupName -DiskName $osDisk_name -Force
 
 Remove-AzPublicIpAddress -Name $pip_name -ResourceGroupName $ResourceGroupName
 
 Remove-AzNetworkSecurityGroup -Name $nsg_name -ResourceGroupName $ResourceGroupName
-
-Remove-AzNetworkInterface -Name $nic_name -ResourceGroup $ResourceGroupName
 
 Remove-AzAvailabilitySet -Name $AzAvailabilitySet_name -ResourceGroup $ResourceGroupName
