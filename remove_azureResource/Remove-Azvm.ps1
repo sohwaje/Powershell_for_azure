@@ -30,8 +30,11 @@ Param (
 
     [Parameter(Position = 5, Mandatory = $True, HelpMessage = 'NSG 이름 입력')]
     [Alias('nsg')]
-    [String]$nsg_name
+    [String]$nsg_name,
 
+    [Parameter(Position = 6, Mandatory = $True, HelpMessage = 'Ava 이름 입력')]
+    [Alias('ava')]
+    [String]$AzAvailabilitySet_name
 
 )
 
@@ -44,3 +47,5 @@ Remove-AzPublicIpAddress -Name $pip_name -ResourceGroupName $ResourceGroupName
 Remove-AzNetworkSecurityGroup -Name $nsg_name -ResourceGroupName $ResourceGroupName
 
 Remove-AzNetworkInterface -Name $nic_name -ResourceGroup $ResourceGroupName
+
+Remove-AzAvailabilitySet -Name $AzAvailabilitySet_name -ResourceGroup $ResourceGroupName
