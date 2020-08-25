@@ -119,7 +119,7 @@ sudo yum groupinstall -y "Development Tools"
 
 # install nodejs, npm
 curl -sL https://rpm.nodesource.com/setup_12.x | sudo bash -
-sudo yum clean all && sudo yum makecache fast gcc-c++ make nodejs npm
+sudo yum install -y nodejs
 
 # install a docker
 sudo curl -s https://get.docker.com | sudo sh && systemctl start docker && systemctl enable docker
