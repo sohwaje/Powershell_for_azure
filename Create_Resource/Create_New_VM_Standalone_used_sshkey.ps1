@@ -104,9 +104,6 @@ $as = New-AzAvailabilitySet -ResourceGroupName $ResourceGroupName -Location $loc
   -Name $AzAvailabilitySet_name -Sku Aligned -PlatformFaultDomainCount 2 `
   -PlatformUpdateDomainCount 2
 
-
-# Define a credential object
-# $securePassword = ConvertTo-SecureString ' ' -AsPlainText -Force
 $cred = New-Object System.Management.Automation.PSCredential ($VMLocalAdminUser, $VMLocalAdminSecurePassword)
 
 # Create a virtual machine configuration
