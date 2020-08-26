@@ -11,20 +11,21 @@
 ################################################################################
 #                                   변수 설정                                    #
 ################################################################################
-$VMLocalAdminUser           = "azureUser"
+$VMLocalAdminUser           = "azureuser"
 $VMLocalAdminSecurePassword = ConvertTo-SecureString 'azureUser!@#123' -AsPlainText -Force
 $location                   = "koreacentral"
 $ResourceGroupName          = "ISCREAM"
 $vnet_name                  = "Hi-Class"
-$pip_name                   = "TEST-PIP"
-$nsg_name                   = "TEST-NSG"
-$nicName                    = "TEST-VM-NIC"
-$HostName                   = "TEST-VM"
-$vmName                     = "TEST-VM"
-$vmSize                     = "Standard_D2s_v3"
-$osDiskName                 = "TEST-OS-DIsk"
-$StorageAccountType         = "Standard_LRS"
-$AzAvailabilitySet_name     = "TEST-Availbility-set"
+$pip_name                   = "MONITORING-PIP"
+$nsg_name                   = "MONITORING-NSG"
+$nicName                    = "MONITORING-VM-NIC"
+$HostName                   = "MONITORING-VM"
+$vmName                     = "MONITORING-VM"
+$vmSize                     = "Standard_D8s_v3"
+$osDiskName                 = "MONITORING-OS-DIsk"
+$StorageAccountType         = "StandardSSD_LRS"
+$AzAvailabilitySet_name     = "MONITORING-Availbility-set"
+$SourceAddressPrefix        = "112.223.14.90","183.98.92.130"
 
 # 사용자 지정 스크립트 VM 생성 시 자동 실행
 $customConfig = @{
@@ -48,36 +49,36 @@ $pip = New-AzPublicIpAddress `
 ## NSG 만들기
 # SSH rule 만들기
 $nsgRuleSSH = New-AzNetworkSecurityRuleConfig `
-  -Name "TestSSHNSG"  `
+  -Name "SSH"  `
   -Protocol "Tcp" `
   -Direction "Inbound" `
   -Priority 1000 `
-  -SourceAddressPrefix * `
+  -SourceAddressPrefix $SourceAddressPrefix `
   -SourcePortRange * `
   -DestinationAddressPrefix * `
   -DestinationPortRange 16215 `
   -Access "Allow"
 
-$nsgRuleHTTP = New-AzNetworkSecurityRuleConfig `
-  -Name "TestHTTPNSG"  `
+$nsgRulePro = New-AzNetworkSecurityRuleConfig `
+  -Name "Prometheus"  `
   -Protocol "Tcp" `
   -Direction "Inbound" `
   -Priority 1001 `
-  -SourceAddressPrefix * `
+  -SourceAddressPrefix $SourceAddressPrefix `
   -SourcePortRange * `
   -DestinationAddressPrefix * `
-  -DestinationPortRange 80 `
+  -DestinationPortRange 9090 `
   -Access "Allow"
 
-$nsgRuleNetdata = New-AzNetworkSecurityRuleConfig `
-  -Name "TestNetdataNSG"  `
+$nsgRuleGrafana = New-AzNetworkSecurityRuleConfig `
+  -Name "Grafana"  `
   -Protocol "Tcp" `
   -Direction "Inbound" `
   -Priority 1002 `
-  -SourceAddressPrefix * `
+  -SourceAddressPrefix $SourceAddressPrefix `
   -SourcePortRange * `
   -DestinationAddressPrefix * `
-  -DestinationPortRange 19999 `
+  -DestinationPortRange 3000 `
   -Access "Allow"
 
 # NSG 생성
@@ -85,7 +86,7 @@ $nsg = New-AzNetworkSecurityGroup `
   -ResourceGroupName $ResourceGroupName `
   -Location $location `
   -Name $nsg_name `
-  -SecurityRules $nsgRuleSSH,$nsgRuleHTTP,$nsgRuleNetdata
+  -SecurityRules $nsgRuleSSH,$nsgRulePro,$nsgRuleGrafana
 
 # NIC 만들기
 $nic = New-AzNetworkInterface `
@@ -139,7 +140,7 @@ $sshPublicKey = cat ~/.ssh/id_rsa.pub
 Add-AzVMSshPublicKey `
   -VM $vmconfig `
   -KeyData $sshPublicKey `
-  -Path "/home/azureUser/.ssh/authorized_keys"
+  -Path "/home/azureuser/.ssh/authorized_keys"
 
 # 가상머신을 생성하면서 가상머신 설정을 반영하기
 New-AzVM `
