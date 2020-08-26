@@ -10,10 +10,10 @@
 # SkuName = Premium_LRS, StandardSSD_LRS, Standard_LRS
 $ResourceGroupName            = "ISCREAM"
 $location                     = "koreacentral"
-$vmName                       = "redis4"
-$storageType                  = 'Standard_LRS'
+$vmName                       = "MONITORING-VM"
+$storageType                  = "StandardSSD_LRS"
 $dataDiskName                 = $vmName + '_datadisk1'
-$DiskSize                     = 50
+$DiskSize                     = 500
 
 # 추가할 디스크 구성 설정
 $diskConfig = New-AzDiskConfig `
