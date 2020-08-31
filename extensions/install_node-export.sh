@@ -1,7 +1,7 @@
 #!/bin/sh
 #ref : https://teamsmiley.github.io/2020/01/17/prometheus/
 # download node_exporter and decompress
-wget https://github.com/prometheus/node_exporter/releases/download/v1.0.1/node_exporter-1.0.1.linux-amd64.tar.gz
+wget -P /tmp/ https://github.com/prometheus/node_exporter/releases/download/v1.0.1/node_exporter-1.0.1.linux-amd64.tar.gz
 tar xvfz node_exporter-1.0.1.linux-amd64.tar.gz
 cd node_exporter-1.0.1.linux-amd64/
 cp node_exporter /usr/local/bin
