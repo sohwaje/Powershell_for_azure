@@ -12,7 +12,7 @@
 #                                   변수 설정                                    #
 ################################################################################
 $VMLocalAdminUser           = "azureuser"
-$VMLocalAdminSecurePassword = ConvertTo-SecureString 'azureUser!@#123' -AsPlainText -Force
+$VMLocalAdminSecurePassword = ConvertTo-SecureString 'azureuser!@#123' -AsPlainText -Force
 $location                   = "koreacentral"
 $ResourceGroupName          = "ISCREAM"
 $vnet_name                  = "Hi-Class"
