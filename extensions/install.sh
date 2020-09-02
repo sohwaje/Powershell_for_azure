@@ -166,10 +166,12 @@ docker run -d --name=netdata \
   netdata/netdata
 
 # install prometheus node-exporter
-sudo wget -P /tmp/ https://github.com/prometheus/node_exporter/releases/download/v1.0.1/node_exporter-1.0.1.linux-amd64.tar.gz
-sudo tar xvfz /tmp/node_exporter-1.0.1.linux-amd64.tar.gz
-sudo cp /tmp/node_exporter-1.0.1.linux-amd64/node_exporter /usr/local/bin
-sudo rm -rf /tmp/node_exporter*
+sudo wget -P \
+  /tmp/ https://github.com/prometheus/node_exporter/releases/download/v1.0.1/node_exporter-1.0.1.linux-amd64.tar.gz; \
+  cd /tmp; \
+  sudo tar xvfz node_exporter-1.0.1.linux-amd64.tar.gz; \
+  sudo cp /tmp/node_exporter-1.0.1.linux-amd64/node_exporter /usr/local/bin; \
+  sudo rm -rf /tmp/node_exporter*
 
 # add systemctl service
 sudo bash -c "cat << EOF > /etc/systemd/system/node_exporter.service
