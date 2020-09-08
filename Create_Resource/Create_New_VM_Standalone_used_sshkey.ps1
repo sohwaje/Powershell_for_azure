@@ -28,8 +28,12 @@ $AzAvailabilitySet_name     = "TEST-Availbility-set"
 $SourceAddressPrefix        = "175.208.212.79"
 
 # 사용자 지정 스크립트 VM 생성 시 자동 실행
+# $customConfig = @{
+#     "fileUris" = (,"https://raw.githubusercontent.com/sohwaje/Powershell_for_azure/master/extensions/install.sh");
+#     "commandToExecute" = "sudo sh install.sh"
+# }
 $customConfig = @{
-    "fileUris" = (,"https://raw.githubusercontent.com/sohwaje/Powershell_for_azure/master/extensions/install.sh");
+    "fileUris" = (,"https://raw.githubusercontent.com/sohwaje/ncloud_terraform/master/install.sh");
     "commandToExecute" = "sudo sh install.sh"
 }
 
