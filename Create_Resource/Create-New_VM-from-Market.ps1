@@ -35,6 +35,8 @@ $VirtualMachine = Set-AzVMOperatingSystem -VM $VirtualMachine -Linux -ComputerNa
 $VirtualMachine = Set-AzVMOSDisk -VM $VirtualMachine -Name $osDiskName -CreateOption fromImage -StorageAccountType $StorageAccountType
 $VirtualMachine = Add-AzVMNetworkInterface -VM $VirtualMachine -Id $nic.Id
 $VirtualMachine = Set-AzVMSourceImage -VM $VirtualMachine -PublisherName 'OpenLogic' -Offer 'CentOS' -Skus '7.7' -Version latest
+$VirtualMachine = Set-AzVMBootDiagnostic -VM $VirtualMachine -Disable
+
 
 # 가싱 머신 생성
 New-AzVM `
