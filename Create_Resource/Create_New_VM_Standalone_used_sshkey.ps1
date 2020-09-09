@@ -33,7 +33,7 @@ $SourceAddressPrefix        = "175.208.212.79"
 #     "commandToExecute" = "sudo sh install.sh"
 # }
 $customConfig = @{
-    "fileUris" = (,"https://raw.githubusercontent.com/sohwaje/ncloud_terraform/master/install.sh");
+    "fileUris" = (,"https://raw.githubusercontent.com/sohwaje/ncloud_terraform/master/user-data.sh");
     "commandToExecute" = "sudo sh install.sh"
 }
 
