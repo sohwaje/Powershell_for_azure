@@ -149,7 +149,7 @@ $vmConfig = New-AzVMConfig -VMName $vm1_name -VMSize $vmSize -AvailabilitySetId 
   Set-AzVMOSDisk -Name $osDiskName1 -CreateOption fromImage -StorageAccountType $StorageAccountType | `
   Set-AzVMOperatingSystem -Linux -ComputerName $vm1_name -Credential $cred -DisablePasswordAuthentication | `
   Set-AzVMSourceImage -PublisherName OpenLogic -Offer $OS `
-  -Skus $OS_sku -Version $OS_ver | Add-AzVMNetworkInterface -Id $nicVM1.Id
+  -Skus $OS_sku -Version $OS_ver | Add-AzVMNetworkInterface -Id $nicVM1.Id | Set-AzVMBootDiagnostic -Disable
 
 # Configure the SSH key
 $sshPublicKey = cat ~/.ssh/id_rsa.pub
@@ -181,7 +181,7 @@ $vmConfig = New-AzVMConfig -VMName $vm2_name -VMSize $vmSize -AvailabilitySetId 
   Set-AzVMOSDisk -Name $osDiskName2 -CreateOption fromImage -StorageAccountType $StorageAccountType | `
   Set-AzVMOperatingSystem -Linux -ComputerName $vm2_name -Credential $cred -DisablePasswordAuthentication | `
   Set-AzVMSourceImage -PublisherName OpenLogic -Offer $OS `
-  -Skus $OS_sku -Version $OS_ver | Add-AzVMNetworkInterface -Id $nicVM2.Id
+  -Skus $OS_sku -Version $OS_ver | Add-AzVMNetworkInterface -Id $nicVM2.Id | Set-AzVMBootDiagnostic -Disable
 
 # Configure the SSH key
 $sshPublicKey = cat ~/.ssh/id_rsa.pub
