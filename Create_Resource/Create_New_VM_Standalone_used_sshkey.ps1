@@ -135,6 +135,9 @@ $vmconfig = Set-AzVMSourceImage `
 $vmconfig = Add-AzVMNetworkInterface `
   -VM $vmConfig `
   -Id $nic.Id
+$vmconfig = Set-AzVMBootDiagnostic `
+  -VM $vmconfig `
+  -Disable
 
 # Configure the SSH key
 $sshPublicKey = cat ~/.ssh/id_rsa.pub
