@@ -34,7 +34,7 @@ $SourceAddressPrefix        = "175.208.212.79"
 # }
 $customConfig = @{
     "fileUris" = (,"https://raw.githubusercontent.com/sohwaje/ncloud_terraform/master/user-data.sh");
-    "commandToExecute" = "sudo sh install.sh"
+    "commandToExecute" = "sudo sh user-data.sh"
 }
 
 # vnet 가져오기
