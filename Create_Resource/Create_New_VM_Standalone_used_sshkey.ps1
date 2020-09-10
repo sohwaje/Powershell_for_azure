@@ -25,7 +25,7 @@ $vmSize                     = "Standard_DS3_v2"
 $osDiskName                 = "TEST-OS-DIsk"
 $StorageAccountType         = "StandardSSD_LRS"
 $AzAvailabilitySet_name     = "TEST-Availbility-set"
-$SourceAddressPrefix        = "175.208.212.79"
+$SourceAddressPrefix        = "175.208.212.79","112.223.14.90"
 
 # 사용자 지정 스크립트 VM 생성 시 자동 실행
 # $customConfig = @{
