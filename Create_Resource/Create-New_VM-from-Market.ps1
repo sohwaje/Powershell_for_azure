@@ -5,8 +5,8 @@
 # Get-AzSubscription
 # Set-AzContext -SubscriptionId "yourSubscriptionID"
 ################################# 변수 설정 ######################################
-$VMLocalAdminUser           = "azureUser"
-$VMLocalAdminSecurePassword = ConvertTo-SecureString 'azureUser!@#123' -AsPlainText -Force
+$VMLocalAdminUser           = "azureuser"
+$VMLocalAdminSecurePassword = ConvertTo-SecureString 'azureuser!@#123' -AsPlainText -Force
 $location                   = "koreacentral"
 $ResourceGroupName          = "ISCREAM"
 $HostName                   = "TEST-VM"
