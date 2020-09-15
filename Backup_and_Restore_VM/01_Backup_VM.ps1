@@ -8,11 +8,11 @@
 ################################################################################
 #                                   변수 설정                                   #
 ################################################################################
-$rgName = "ISCREAM"
+$rgName = "webrtc"
 $location = "koreacentral"
 $AzRecoveryServicesVault_name = "hiclass-backup-recovery"
 $backup_policy = "DefaultPolicy"
-$vmName = "Front3-Hi-Class-Service"
+$vmName = "webrtcVM"
 
 ## Azure Backup을 처음 사용하는 경우 다음과 같이 Register-AzResourceProvider를 사용하여 구독에서 Azure Recovery Service 공급자를 등록해야 한다.(이미 생성되어 있으면 pass)
 # Register-AzResourceProvider -ProviderNamespace "Microsoft.RecoveryServices"
