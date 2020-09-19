@@ -85,12 +85,23 @@ $nsgRuleGrafana = New-AzNetworkSecurityRuleConfig `
   -DestinationPortRange 3000 `
   -Access "Allow"
 
+$nsgRuleTomcat = New-AzNetworkSecurityRuleConfig `
+  -Name "Tomcat"  `
+  -Protocol "Tcp" `
+  -Direction "Inbound" `
+  -Priority 1003 `
+  -SourceAddressPrefix $SourceAddressPrefix `
+  -SourcePortRange * `
+  -DestinationAddressPrefix * `
+  -DestinationPortRange 8080 `
+  -Access "Allow"
+
 # NSG 생성
 $nsg = New-AzNetworkSecurityGroup `
   -ResourceGroupName $ResourceGroupName `
   -Location $location `
   -Name $nsg_name `
-  -SecurityRules $nsgRuleSSH,$nsgRulePro,$nsgRuleGrafana
+  -SecurityRules $nsgRuleSSH,$nsgRulePro,$nsgRuleGrafana,$nsgRuleTomcat
 
 # NIC 만들기
 $nic = New-AzNetworkInterface `
@@ -140,7 +151,7 @@ $vmconfig = Set-AzVMBootDiagnostic `
   -Disable
 
 # Configure the SSH key
-$sshPublicKey = cat ~/.ssh/id_rsa.pub
+$sshPublicKey = cat ~/.ssh/id_rsa.pub     # local public key
 Add-AzVMSshPublicKey `
   -VM $vmconfig `
   -KeyData $sshPublicKey `
