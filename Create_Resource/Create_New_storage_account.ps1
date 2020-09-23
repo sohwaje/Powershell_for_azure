@@ -43,7 +43,7 @@ New-AzStorageAccount `
   -Location $Location `
   -Kind "BlobStorage" `
   -SkuName "Standard_LRS" `
-  -AccessTier Hot
+  -AccessTier Hot `
   -NetworkRuleSet (@{bypass="Logging,Metrics";
   ipRules=(@{IPAddressOrRange="10.1.0.0/24";Action="allow"},
            @{IPAddressOrRange="10.1.3.0/24";Action="allow"},
