@@ -10,10 +10,10 @@
 # SkuName = Premium_LRS, StandardSSD_LRS, Standard_LRS
 $ResourceGroupName            = "ISCREAM"
 $location                     = "koreacentral"
-$vmName                       = "MONITORING-VM"
-$storageType                  = "StandardSSD_LRS"
+$vmName                       = "MasterDB-HiClass"
+$storageType                  = "Premium_LRS"
 $dataDiskName                 = $vmName + '_datadisk1'
-$DiskSize                     = 500
+$DiskSize                     = 2000
 
 # 추가할 디스크 구성 설정
 $diskConfig = New-AzDiskConfig `
@@ -32,7 +32,7 @@ $vm = Get-AzVM -Name $vmName -ResourceGroupName $ResourceGroupName
 $vm = Add-AzVMDataDisk -VM $vm -Name $dataDiskName `
   -CreateOption Attach `
   -ManagedDiskId $dataDisk1.Id `
-  -Lun 1
+  -Lun 2
 
 # 가상 머신 업데이트
 Update-AzVM -VM $vm -ResourceGroupName $ResourceGroupName
