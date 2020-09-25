@@ -1,6 +1,6 @@
 <#
 .Description
-구독에 있는 모든 VM의 자세한 정보를 가져온다.
+구독에 있는 모든 VM의 자세한 정보를 CSV 리스트로 가져온다.
 #>
 #Provide the subscription Id where the VMs reside
 $subscriptionId = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
