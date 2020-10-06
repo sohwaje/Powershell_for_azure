@@ -7,9 +7,9 @@
 ################################################################################
 #                                   변수 설정                                   #
 ################################################################################
-$ResourceGroupName = "ISCREAM"
-$vmName            = "VMname"
-$VmSize            = "Standard_DS3_v2"
+$ResourceGroupName = "전략사업실"
+$vmName            = "SMARTclass"
+$VmSize            = "Standard_B8ms"
 # 0. 사용 가능한 리소스 찾기
 Get-AzVMSize -Location "koreacentral"
 
