@@ -5,15 +5,19 @@
 # Get-AzSubscription
 # Set-AzContext -SubscriptionId "yourSubscriptionID"
 ################################# 변수 설정 ######################################
-$ResourceGroupName        = "ISCREAM"
-$nsg_name                 = "MONITORING-NSG"
-$SourceAddressPrefix      = "0.0.0.0"
-$DestinationAddressPrefix = "*"
+<#
+.Example
+Get-AzNetworkSecurityGroup -ResourceGroupName "quiz_rg" -Name "quiz_server"
+#>
+$ResourceGroupName        = "quiz_rg"
+$nsg_name                 = "quiz_server"
+$SourceAddressPrefix      = "10.10.10.10","110.10.10.10","10.10.10.10"
+$DestinationAddressPrefix = "10.3.1.0/24"
 # rule 변경 시 변경할 rule의 이름
-$rulename                 = "Grafana"
-$Description              = "Allow Grafana"
+$rulename                 = "nodejs"
+$Description              = "Allow nodejs"
 $port                     = 3000
-$Priority                 = 1002
+$Priority                 = 103
 ################################################################################
 #                           기존 보안 그룹 업데이트                              #
 ################################################################################
