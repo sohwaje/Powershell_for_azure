@@ -9,15 +9,15 @@
 .Example
 Get-AzNetworkSecurityGroup -ResourceGroupName "quiz_rg" -Name "quiz_server"
 #>
-$ResourceGroupName        = "quiz_rg"
-$nsg_name                 = "quiz_server"
+$ResourceGroupName        = "ISCREAM"
+$nsg_name                 = "bastion-NSG"
 $SourceAddressPrefix      = "10.10.10.10","110.10.10.10","10.10.10.10"
-$DestinationAddressPrefix = "10.3.1.0/24"
+$DestinationAddressPrefix = "VirtualNetwork"
 # rule 변경 시 변경할 rule의 이름
-$rulename                 = "nodejs"
-$Description              = "Allow nodejs"
-$port                     = 3000
-$Priority                 = 103
+$rulename                 = "SSH"
+$port                     = 16215
+$Priority                 = 100
+$Description              = "Allow SSH"
 ################################################################################
 #                           기존 보안 그룹 업데이트                              #
 ################################################################################
