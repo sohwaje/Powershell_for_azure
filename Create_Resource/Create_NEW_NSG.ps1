@@ -6,7 +6,7 @@
 # Set-AzContext -SubscriptionId "yourSubscriptionID"
 
 ################################# 변수 설정 ######################################
-$nsg_name            = "redis-NSG"
+$nsg_name            = "bastion-NSG"
 $ResourceGroupName   = "ISCREAM"
 $Location            = "koreacentral"
 $SourceAddressPrefix = "112.223.14.90/32"
@@ -14,27 +14,28 @@ $SourceAddressPrefix = "112.223.14.90/32"
 #                           신규 보안 그룹 생성                                     #
 ################################################################################
 #[보안그룹 rule 생성]
-$rule1 = New-AzNetworkSecurityRuleConfig -Name 'SSH' -Description "Allow RDP" `
+$rule1 = New-AzNetworkSecurityRuleConfig -Name 'SSH' -Description "Allow SSH" `
   -Access Allow -Protocol Tcp -Direction Inbound -Priority 100 `
   -SourceAddressPrefix $SourceAddressPrefix `
   -SourcePortRange * `
   -DestinationAddressPrefix VirtualNetwork `
-  -DestinationPortRange 22
+  -DestinationPortRange 16215
 
-$rule2 = New-AzNetworkSecurityRuleConfig -Name 'WEB' -Description "Allow HTTP" `
-  -Access Allow -Protocol Tcp -Direction Inbound -Priority 101 `
-  -SourceAddressPrefix $SourceAddressPrefix `
-  -SourcePortRange * `
-  -DestinationAddressPrefix VirtualNetwork `
-  -DestinationPortRange 80
+# $rule2 = New-AzNetworkSecurityRuleConfig -Name 'WEB' -Description "Allow HTTP" `
+#   -Access Allow -Protocol Tcp -Direction Inbound -Priority 101 `
+#   -SourceAddressPrefix $SourceAddressPrefix `
+#   -SourcePortRange * `
+#   -DestinationAddressPrefix VirtualNetwork `
+#   -DestinationPortRange 80
 
 # [새로 생성할 nsg에 룰을 적용한다.]
 $nsg = New-AzNetworkSecurityGroup -ResourceGroupName $ResourceGroupName -Location $Location `
-  -Name "NSG-FrontEnd" -SecurityRules $rule1,$rule2
-
+  -Name $nsg_name -SecurityRules $rule1
+  # $nsg = New-AzNetworkSecurityGroup -ResourceGroupName $ResourceGroupName -Location $Location `
+  #   -Name "NSG-FrontEnd" -SecurityRules $rule1,$rule2
 # [보안그룹 생성]
 New-AzNetworkSecurityGroup -Name $nsg_name `
   -ResourceGroupName $ResourceGroupName `
   -Location $Location `
-  -SecurityRules $rule1,$rule2 `
+  -SecurityRules $rule1 `
   -Force -Confirm:$false

@@ -8,12 +8,12 @@
 $ResourceGroupName        = "ISCREAM"
 $Location                 = "koreacentral"
 $vet                      = "Hi-Class"
-$subnet_name              = "SEI-Subnet"
-$newpublicIpName          = "TEST-PIP2"
-$vmName                   = "TEST-VM"
-$IpConfigName             = "TEST-IPConfig"
+$subnet_name              = "Hi-Class-Subnet"
+$newpublicIpName          = "bastion-PIP"
+$vmName                   = "bastion-VM"
+$IpConfigName             = "bastion-IPConfig"
 #기존 NIC 이름
-$exitedvmNIC              = "TEST-VM-NIC"
+$exitedvmNIC              = "bastion-VM-NIC"
 
 # Get-AzPublicIpAddress -Name myPublicIp*
 ################################################################################
