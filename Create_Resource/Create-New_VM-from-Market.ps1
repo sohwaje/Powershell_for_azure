@@ -6,18 +6,18 @@
 # Set-AzContext -SubscriptionId "yourSubscriptionID"
 ################################# 변수 설정 ######################################
 $VMLocalAdminUser           = "azureuser"
-$VMLocalAdminSecurePassword = ConvertTo-SecureString 'azureuser!@#123' -AsPlainText -Force
+$VMLocalAdminSecurePassword = ConvertTo-SecureString 'azureuser' -AsPlainText -Force
 $location                   = "koreacentral"
 $ResourceGroupName          = "ISCREAM"
-$HostName                   = "TEST-VM"
-$vmName                     = "TEST-VM"
-$vmSize                     = "Standard_B1s"
+$HostName                   = "bastion-VM"
+$vmName                     = "bastion-VM"
+$vmSize                     = "Standard_B1ms"
 $vnet_name                  = "Hi-Class"
-$nicName                    = "TEST-VM-NIC"
+$nicName                    = "bastion-VM-NIC"
 $subnetindex                = 11
-$PrivateIpAddress           = "10.1.11.10"
-$IpConfigName               = "TEST-IPConfig"
-$osDiskName                 = "TEST-OS-DIsk"
+$PrivateIpAddress           = "10.1.0.253"
+$IpConfigName               = "bastion-IPConfig"
+$osDiskName                 = "bastion-OS-DIsk"
 $StorageAccountType         = "Standard_LRS"
 
 # vnet 가져오기
