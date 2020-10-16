@@ -22,8 +22,7 @@ sudo mount /dev/sdc1 /datadrive
 
 ###[4] 디스크 UUID 확인
 ```
-sudo mkdir /datadrive
-sudo mount /dev/sdc1 /datadrive
+sudo blkid
 ```
 
 ###[5] /etc/fstab 편집
