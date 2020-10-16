@@ -22,6 +22,7 @@ $diskConfig = New-AzDiskConfig `
   -CreateOption Empty `
   -DiskSizeGB $DiskSize
 
+# 새로운 데이터 디스크 생성
 $dataDisk1 = New-AzDisk `
   -DiskName $dataDiskName `
   -Disk $diskConfig `
