@@ -112,7 +112,6 @@ http://rpms.famillecollet.com/enterprise/remi-release-7.rpm \
 java-1.8.0-openjdk \
 java-1.8.0-openjdk-devel \
 git \
-httpd \
 python3 \
 python3-devel
 sudo yum groupinstall -y "Development Tools"
@@ -149,21 +148,6 @@ sudo sed -i 's/Listen 38080/Listen 80/' /etc/httpd/conf/httpd.conf
 sudo echo "Test-Page" > /var/www/html/index.html
 sudo systemctl start httpd
 sudo systemctl enable httpd
-
-# for monitoring resource install and excute netdata
-docker run -d --name=netdata \
-  -p 19999:19999 \
-  -v netdatalib:/var/lib/netdata \
-  -v netdatacache:/var/cache/netdata \
-  -v /etc/passwd:/host/etc/passwd:ro \
-  -v /etc/group:/host/etc/group:ro \
-  -v /proc:/host/proc:ro \
-  -v /sys:/host/sys:ro \
-  -v /etc/os-release:/host/etc/os-release:ro \
-  --restart unless-stopped \
-  --cap-add SYS_PTRACE \
-  --security-opt apparmor=unconfined \
-  netdata/netdata
 
 # install prometheus node-exporter
 sudo wget -P \
