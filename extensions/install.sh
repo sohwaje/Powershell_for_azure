@@ -121,14 +121,14 @@ curl -sL https://rpm.nodesource.com/setup_12.x | sudo bash -
 sudo yum install -y nodejs
 
 # install a docker
-sudo curl -s https://get.docker.com | sudo sh && systemctl start docker && systemctl enable docker
+sudo curl -s https://get.docker.com | sudo sh && sudo systemctl start docker && sudo systemctl enable docker
 sudo groupadd docker
 sudo usermod -aG docker azureuser
 
 # install a docker-compose
 sudo curl -L "https://github.com/docker/compose/releases/download/1.24.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-chmod +x /usr/local/bin/docker-compose
-ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
 
 # install python3 pip
 sudo curl https://bootstrap.pypa.io/get-pip.py | python
@@ -144,10 +144,10 @@ sudo git clone https://github.com/aristocratos/bpytop.git && cd bpytop;sudo make
 sudo ln -s /usr/local/bin/bpytop /usr/bin/
 
 # sudo sed -i 's/^Listen 80$/Listen 38080/' /etc/httpd/conf/httpd.conf
-sudo sed -i 's/Listen 38080/Listen 80/' /etc/httpd/conf/httpd.conf
-sudo echo "Test-Page" > /var/www/html/index.html
-sudo systemctl start httpd
-sudo systemctl enable httpd
+# sudo sed -i 's/Listen 38080/Listen 80/' /etc/httpd/conf/httpd.conf
+# sudo echo "Test-Page" > /var/www/html/index.html
+# sudo systemctl start httpd
+# sudo systemctl enable httpd
 
 # install prometheus node-exporter
 sudo wget -P \
@@ -158,7 +158,7 @@ sudo wget -P \
   sudo rm -rf /tmp/node_exporter*
 
 # add systemctl service
-sudo bash -c "cat << EOF > /etc/systemd/system/node_exporter.service
+sudo bash -c "cat << EOF > c
 [Unit]
 Description=Node Exporter
 After=network.target

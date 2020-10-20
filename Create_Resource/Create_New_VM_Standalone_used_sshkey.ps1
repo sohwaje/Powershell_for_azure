@@ -14,17 +14,17 @@
 $VMLocalAdminUser           = "azureuser"
 $VMLocalAdminSecurePassword = ConvertTo-SecureString 'azureuser!@#123' -AsPlainText -Force
 $location                   = "koreacentral"
-$ResourceGroupName          = "ISCREAM"
-$vnet_name                  = "Hi-Class"
-$pip_name                   = "TEST-PIP"
-$nsg_name                   = "TEST-NSG"
-$nicName                    = "TEST-VM-NIC"
-$HostName                   = "TEST-VM"
-$vmName                     = "TEST-VM"
+$ResourceGroupName          = "webrtc"
+$vnet_name                  = "webrtc_vnet"
+$pip_name                   = "janus-PIP"
+$nsg_name                   = "webrtc-NetworkSecurityGroup"
+$nicName                    = "janus-NIC"
+$HostName                   = "janus-VM"
+$vmName                     = "janus-VM"
 $vmSize                     = "Standard_DS3_v2"
-$osDiskName                 = "TEST-OS-DIsk"
+$osDiskName                 = "janus-OS-DIsk"
 $StorageAccountType         = "StandardSSD_LRS"
-$AzAvailabilitySet_name     = "TEST-Availbility-set"
+$AzAvailabilitySet_name     = "janus-Availbility-set"
 $SourceAddressPrefix        = "175.208.212.79","112.223.14.90"
 
 # 사용자 지정 스크립트 VM 생성 시 자동 실행
@@ -33,8 +33,8 @@ $SourceAddressPrefix        = "175.208.212.79","112.223.14.90"
 #     "commandToExecute" = "sudo sh install.sh"
 # }
 $customConfig = @{
-    "fileUris" = (,"https://raw.githubusercontent.com/sohwaje/ncloud_terraform/master/user-data.sh");
-    "commandToExecute" = "sudo sh user-data.sh"
+    "fileUris" = (,"https://raw.githubusercontent.com/sohwaje/Powershell_for_azure/master/extensions/install.sh");
+    "commandToExecute" = "sudo sh install.sh"
 }
 
 # vnet 가져오기
@@ -108,7 +108,7 @@ $nic = New-AzNetworkInterface `
   -Name $nicName `
   -ResourceGroupName $ResourceGroupName `
   -Location $location `
-  -SubnetId $vnet.Subnets[11].Id `
+  -SubnetId $vnet.Subnets[0].Id `
   -PublicIpAddressId $pip.Id `
   -NetworkSecurityGroupId $nsg.Id
 

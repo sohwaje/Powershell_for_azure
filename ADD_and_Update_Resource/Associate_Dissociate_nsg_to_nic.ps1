@@ -11,9 +11,9 @@
 .Description
 기존 nic에 새로운 nsg를 연결한다.
 #>
-$ResourceGroupName        = "ISCREAM"
-$nsg_name                 = "bastion-nsg"
-$nic_name                 = "bastion-VM-NIC"
+$ResourceGroupName        = "webrtc"
+$nsg_name                 = "webrtc-NetworkSecurityGroup"
+$nic_name                 = "janus-NIC"
 
 $nic = Get-AzNetworkInterface -ResourceGroupName $ResourceGroupName -Name $nic_name
 $nsg = Get-AzNetworkSecurityGroup -ResourceGroupName $ResourceGroupName -Name $nsg_name
