@@ -1,4 +1,20 @@
 #!/bin/sh
+#### 가상 머신 생성 알림 설정
+# WEBHOOK_ADDRESS=""
+# # 슬랙 메세지 함수
+# function slack_message(){
+#     # $1 : message
+#     # $2 : true=good, false=danger
+#
+#     COLOR="danger"
+#     if $2 ; then
+#         COLOR="good"
+#     fi
+#     curl -s -d 'payload={"attachments":[{"color":"'"$COLOR"'","pretext":"<!channel> *lab*","text":"*HOST* : '"$HOSTNAME"' \n*MESSAGE* : '"$1"'"}]}' $WEBHOOK_ADDRESS > /dev/null 2>&1
+# }
+#
+# slack_message "$HOSTNAME 가상 머신을 생성하는 중입니다." true
+
 # change date timezone into Asia/seoul
 sudo ln -sf /usr/share/zoneinfo/Asia/Seoul /etc/localtime
 sudo timedatectl set-timezone Asia/Seoul
@@ -113,7 +129,8 @@ java-1.8.0-openjdk \
 java-1.8.0-openjdk-devel \
 git \
 python3 \
-python3-devel
+python3-devel \
+golang
 sudo yum groupinstall -y "Development Tools"
 
 # install nodejs, npm
@@ -178,3 +195,5 @@ sudo systemctl daemon-reload && sudo systemctl start node_exporter && sudo syste
 
 # prometheus reload
 sudo curl -X POST http://10.1.12.6:9090/-/reload
+
+# slack_message "$HOSTNAME 가상 머신을 생성하였습니다." true
