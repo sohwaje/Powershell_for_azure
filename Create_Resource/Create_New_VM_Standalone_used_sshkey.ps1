@@ -137,19 +137,23 @@ $vmConfig = Set-AzVMOSDisk `
   -Name $osDiskName `
   -CreateOption fromImage `
   -StorageAccountType $StorageAccountType
-# $vmconfig = Set-AzVMSourceImage `
-#   -VM $vmConfig `
-#   -PublisherName "OpenLogic" `
-#   -Offer "CentOS" `
-#   -Skus "7.7" `
-#   -Version "latest"
-### ubuntu
+
+### centos
 $vmconfig = Set-AzVMSourceImage `
   -VM $vmConfig `
-  -PublisherName "Canonical" `
-  -Offer "UbuntuServer" `
-  -Skus "18.04-LTS" `
+  -PublisherName "OpenLogic" `
+  -Offer "CentOS" `
+  -Skus "7.7" `
   -Version "latest"
+
+### ubuntu
+# $vmconfig = Set-AzVMSourceImage `
+#   -VM $vmConfig `
+#   -PublisherName "Canonical" `
+#   -Offer "UbuntuServer" `
+#   -Skus "18.04-LTS" `
+#   -Version "latest"
+
 $vmconfig = Add-AzVMNetworkInterface `
   -VM $vmConfig `
   -Id $nic.Id
@@ -178,7 +182,7 @@ Set-AzVMExtension `
  -Publisher Microsoft.Azure.Extensions `
  -Type "CustomScript" `
  -TypeHandlerVersion 2.1 `
- -Location $location `
+ -Location $location
  -Settings $customConfig
 
 # IP 출력하기
