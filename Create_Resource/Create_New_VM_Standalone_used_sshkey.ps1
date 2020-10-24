@@ -137,11 +137,18 @@ $vmConfig = Set-AzVMOSDisk `
   -Name $osDiskName `
   -CreateOption fromImage `
   -StorageAccountType $StorageAccountType
+# $vmconfig = Set-AzVMSourceImage `
+#   -VM $vmConfig `
+#   -PublisherName "OpenLogic" `
+#   -Offer "CentOS" `
+#   -Skus "7.7" `
+#   -Version "latest"
+### ubuntu
 $vmconfig = Set-AzVMSourceImage `
   -VM $vmConfig `
-  -PublisherName "OpenLogic" `
-  -Offer "CentOS" `
-  -Skus "7.7" `
+  -PublisherName "Canonical" `
+  -Offer "UbuntuServer" `
+  -Skus "18.04-LTS" `
   -Version "latest"
 $vmconfig = Add-AzVMNetworkInterface `
   -VM $vmConfig `
