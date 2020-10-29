@@ -16,15 +16,15 @@ $VMLocalAdminSecurePassword = ConvertTo-SecureString 'azureuser!@#123' -AsPlainT
 $location                   = "koreacentral"
 $ResourceGroupName          = "webrtc"
 $vnet_name                  = "webrtc_vnet"
-$pip_name                   = "janus-PIP"
-$nsg_name                   = "webrtc-NetworkSecurityGroup"
-$nicName                    = "janus-NIC"
-$HostName                   = "janus-VM"
-$vmName                     = "janus-VM"
+$pip_name                   = "testwebrtc-PIP"
+$nsg_name                   = "testwebrtc-NetworkSecurityGroup"
+$nicName                    = "testwebrtc-NIC"
+$HostName                   = "testwebrtc-VM"
+$vmName                     = "testwebrtc-VM"
 $vmSize                     = "Standard_DS3_v2"
-$osDiskName                 = "janus-OS-DIsk"
+$osDiskName                 = "testwebrtc-OS-DIsk"
 $StorageAccountType         = "StandardSSD_LRS"
-$AzAvailabilitySet_name     = "janus-Availbility-set"
+$AzAvailabilitySet_name     = "testwebrtc-Availbility-set"
 $SourceAddressPrefix        = "175.208.212.79","112.223.14.90"
 
 # 사용자 지정 스크립트 VM 생성 시 자동 실행
@@ -182,7 +182,7 @@ Set-AzVMExtension `
  -Publisher Microsoft.Azure.Extensions `
  -Type "CustomScript" `
  -TypeHandlerVersion 2.1 `
- -Location $location
+ -Location $location `
  -Settings $customConfig
 
 # IP 출력하기
