@@ -14,17 +14,17 @@
 $VMLocalAdminUser           = "azureuser"
 $VMLocalAdminSecurePassword = ConvertTo-SecureString 'azureuser!@#123' -AsPlainText -Force
 $location                   = "koreacentral"
-$ResourceGroupName          = "webrtc"
-$vnet_name                  = "webrtc_vnet"
-$pip_name                   = "testwebrtc-PIP"
-$nsg_name                   = "testwebrtc-NetworkSecurityGroup"
-$nicName                    = "testwebrtc-NIC"
-$HostName                   = "testwebrtc-VM"
-$vmName                     = "testwebrtc-VM"
+$ResourceGroupName          = "ISCREAM"
+$vnet_name                  = "Hi-Class"
+$pip_name                   = "TEST-PIP"
+$nsg_name                   = "TEST-NetworkSecurityGroup"
+$nicName                    = "TEST-NIC"
+$HostName                   = "TEST-VM"
+$vmName                     = "TEST-VM"
 $vmSize                     = "Standard_DS3_v2"
 $osDiskName                 = "testwebrtc-OS-DIsk"
 $StorageAccountType         = "StandardSSD_LRS"
-$AzAvailabilitySet_name     = "testwebrtc-Availbility-set"
+$AzAvailabilitySet_name     = "TEST-Availbility-set"
 $SourceAddressPrefix        = "175.208.212.79","112.223.14.90"
 
 # 사용자 지정 스크립트 VM 생성 시 자동 실행
@@ -63,52 +63,52 @@ $nsgRuleSSH = New-AzNetworkSecurityRuleConfig `
   -DestinationPortRange 16215 `
   -Access "Allow"
 
-$nsgRulePro = New-AzNetworkSecurityRuleConfig `
-  -Name "Prometheus"  `
-  -Protocol "Tcp" `
-  -Direction "Inbound" `
-  -Priority 1001 `
-  -SourceAddressPrefix $SourceAddressPrefix `
-  -SourcePortRange * `
-  -DestinationAddressPrefix * `
-  -DestinationPortRange 9090 `
-  -Access "Allow"
-
-$nsgRuleGrafana = New-AzNetworkSecurityRuleConfig `
-  -Name "Grafana"  `
-  -Protocol "Tcp" `
-  -Direction "Inbound" `
-  -Priority 1002 `
-  -SourceAddressPrefix $SourceAddressPrefix `
-  -SourcePortRange * `
-  -DestinationAddressPrefix * `
-  -DestinationPortRange 3000 `
-  -Access "Allow"
-
-$nsgRuleTomcat = New-AzNetworkSecurityRuleConfig `
-  -Name "Tomcat"  `
-  -Protocol "Tcp" `
-  -Direction "Inbound" `
-  -Priority 1003 `
-  -SourceAddressPrefix $SourceAddressPrefix `
-  -SourcePortRange * `
-  -DestinationAddressPrefix * `
-  -DestinationPortRange 8080 `
-  -Access "Allow"
+# $nsgRulePro = New-AzNetworkSecurityRuleConfig `
+#   -Name "Prometheus"  `
+#   -Protocol "Tcp" `
+#   -Direction "Inbound" `
+#   -Priority 1001 `
+#   -SourceAddressPrefix $SourceAddressPrefix `
+#   -SourcePortRange * `
+#   -DestinationAddressPrefix * `
+#   -DestinationPortRange 9090 `
+#   -Access "Allow"
+#
+# $nsgRuleGrafana = New-AzNetworkSecurityRuleConfig `
+#   -Name "Grafana"  `
+#   -Protocol "Tcp" `
+#   -Direction "Inbound" `
+#   -Priority 1002 `
+#   -SourceAddressPrefix $SourceAddressPrefix `
+#   -SourcePortRange * `
+#   -DestinationAddressPrefix * `
+#   -DestinationPortRange 3000 `
+#   -Access "Allow"
+#
+# $nsgRuleTomcat = New-AzNetworkSecurityRuleConfig `
+#   -Name "Tomcat"  `
+#   -Protocol "Tcp" `
+#   -Direction "Inbound" `
+#   -Priority 1003 `
+#   -SourceAddressPrefix $SourceAddressPrefix `
+#   -SourcePortRange * `
+#   -DestinationAddressPrefix * `
+#   -DestinationPortRange 8080 `
+#   -Access "Allow"
 
 # NSG 생성
 $nsg = New-AzNetworkSecurityGroup `
   -ResourceGroupName $ResourceGroupName `
   -Location $location `
   -Name $nsg_name `
-  -SecurityRules $nsgRuleSSH,$nsgRulePro,$nsgRuleGrafana,$nsgRuleTomcat
-
+  -SecurityRules $nsgRuleSSH
+  # -SecurityRules $nsgRuleSSH,$nsgRulePro,$nsgRuleGrafana,$nsgRuleTomcat
 # NIC 만들기
 $nic = New-AzNetworkInterface `
   -Name $nicName `
   -ResourceGroupName $ResourceGroupName `
   -Location $location `
-  -SubnetId $vnet.Subnets[0].Id `
+  -SubnetId $vnet.Subnets[11].Id `
   -PublicIpAddressId $pip.Id `
   -NetworkSecurityGroupId $nsg.Id
 
