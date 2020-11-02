@@ -192,6 +192,7 @@ EOF"
 
 # create makedir
 sudo mkdir /home/azureuser/apps
+sudo chown -R /home/azureuser/apps
 # start node_exporter
 sudo systemctl daemon-reload && sudo systemctl start node_exporter && sudo systemctl enable node_exporter
 
