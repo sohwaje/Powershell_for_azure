@@ -175,7 +175,7 @@ sudo wget -P \
   sudo rm -rf /tmp/node_exporter*
 
 # add systemctl service
-sudo bash -c "cat << EOF > c
+sudo bash -c "cat << EOF > /etc/systemd/system/node_exporter.service
 [Unit]
 Description=Node Exporter
 After=network.target
