@@ -126,11 +126,11 @@ epel-release centos-release-scl-rh \
 centos-release-scl \
 http://rpms.famillecollet.com/enterprise/remi-release-7.rpm \
 java-1.8.0-openjdk \
-java-1.8.0-openjdk-devel \
-git \
-python3 \
-python3-devel \
-golang
+java-1.8.0-openjdk-devel
+# git \
+# python3 \
+# python3-devel \
+# golang
 sudo yum groupinstall -y "Development Tools"
 
 # install nodejs, npm
@@ -139,7 +139,7 @@ sudo yum install -y nodejs
 
 # install a docker
 sudo curl -s https://get.docker.com | sudo sh && sudo systemctl start docker && sudo systemctl enable docker
-sudo groupadd docker
+# sudo groupadd docker
 sudo usermod -aG docker azureuser
 
 # install a docker-compose
@@ -148,10 +148,10 @@ sudo chmod +x /usr/local/bin/docker-compose
 sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
 
 # install python3 pip
-sudo curl https://bootstrap.pypa.io/get-pip.py | python
+# sudo curl https://bootstrap.pypa.io/get-pip.py | python
 
 # install and import python3 psutil
-sudo python3 -m pip install -U psutil
+# sudo python3 -m pip install -U psutil
 
 # install prometheus node-exporter
 # sudo wget -P \
