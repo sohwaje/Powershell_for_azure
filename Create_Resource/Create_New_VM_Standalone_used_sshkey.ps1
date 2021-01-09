@@ -175,15 +175,15 @@ New-AzVM `
   -VM $vmConfig `
   -Verbose
 
-# Set-AzVMExtension `
-#  -ResourceGroupName $ResourceGroupName `
-#  -ExtensionName linux `
-#  -VMName $vmName `
-#  -Publisher Microsoft.Azure.Extensions `
-#  -Type "CustomScript" `
-#  -TypeHandlerVersion 2.1 `
-#  -Location $location `
-#  -Settings $customConfig
+Set-AzVMExtension `
+ -ResourceGroupName $ResourceGroupName `
+ -ExtensionName linux `
+ -VMName $vmName `
+ -Publisher Microsoft.Azure.Extensions `
+ -Type "CustomScript" `
+ -TypeHandlerVersion 2.1 `
+ -Location $location `
+ -Settings $customConfig
 
 # IP 출력하기
 Get-AzPublicIpAddress -ResourceGroupName $ResourceGroupName -Name $pip_name | select ipAddress
