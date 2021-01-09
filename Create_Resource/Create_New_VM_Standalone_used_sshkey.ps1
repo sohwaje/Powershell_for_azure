@@ -14,17 +14,17 @@
 $VMLocalAdminUser           = "azureuser"
 $VMLocalAdminSecurePassword = ConvertTo-SecureString 'azureuser!@#123' -AsPlainText -Force
 $location                   = "koreacentral"
-$ResourceGroupName          = "ISCREAM"
-$vnet_name                  = "Hi-Class"
-$pip_name                   = "TEST-PIP"
-$nsg_name                   = "TEST-NetworkSecurityGroup"
-$nicName                    = "TEST-NIC"
-$HostName                   = "TEST-VM"
-$vmName                     = "TEST-VM"
+$ResourceGroupName          = "C-TFT"
+$vnet_name                  = "C-TFT-Vnet"
+$pip_name                   = "example-PIP"
+$nsg_name                   = "example-NetworkSecurityGroup"
+$nicName                    = "example-NIC"
+$HostName                   = "example-VM"
+$vmName                     = "example-VM"
 $vmSize                     = "Standard_DS3_v2"
-$osDiskName                 = "TEST-OS-DIsk"
+$osDiskName                 = "example-OS-DIsk"
 $StorageAccountType         = "StandardSSD_LRS"
-$AzAvailabilitySet_name     = "TEST-Availbility-set"
+$AzAvailabilitySet_name     = "example-Availbility-set"
 $SourceAddressPrefix        = "175.208.212.79","112.223.14.90"
 
 # 사용자 지정 스크립트 VM 생성 시 자동 실행
@@ -108,7 +108,7 @@ $nic = New-AzNetworkInterface `
   -Name $nicName `
   -ResourceGroupName $ResourceGroupName `
   -Location $location `
-  -SubnetId $vnet.Subnets[11].Id `
+  -SubnetId $vnet.Subnets[2].Id `
   -PublicIpAddressId $pip.Id `
   -NetworkSecurityGroupId $nsg.Id
 

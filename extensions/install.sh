@@ -127,10 +127,10 @@ centos-release-scl \
 http://rpms.famillecollet.com/enterprise/remi-release-7.rpm \
 java-1.8.0-openjdk \
 java-1.8.0-openjdk-devel
-# git \
-# python3 \
-# python3-devel \
-# golang
+git \
+python3 \
+python3-devel \
+golang
 sudo yum groupinstall -y "Development Tools"
 
 # install nodejs, npm
@@ -148,42 +148,42 @@ sudo chmod +x /usr/local/bin/docker-compose
 sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
 
 # install python3 pip
-# sudo curl https://bootstrap.pypa.io/get-pip.py | python
+sudo curl https://bootstrap.pypa.io/get-pip.py | python
 
 # install and import python3 psutil
-# sudo python3 -m pip install -U psutil
+sudo python3 -m pip install -U psutil
 
 # install prometheus node-exporter
-# sudo wget -P \
-#   /tmp/ https://github.com/prometheus/node_exporter/releases/download/v1.0.1/node_exporter-1.0.1.linux-amd64.tar.gz; \
-#   cd /tmp; \
-#   sudo tar xvfz node_exporter-1.0.1.linux-amd64.tar.gz; \
-#   sudo cp /tmp/node_exporter-1.0.1.linux-amd64/node_exporter /usr/local/bin; \
-#   sudo rm -rf /tmp/node_exporter*
+sudo wget -P \
+  /tmp/ https://github.com/prometheus/node_exporter/releases/download/v1.0.1/node_exporter-1.0.1.linux-amd64.tar.gz; \
+  cd /tmp; \
+  sudo tar xvfz node_exporter-1.0.1.linux-amd64.tar.gz; \
+  sudo cp /tmp/node_exporter-1.0.1.linux-amd64/node_exporter /usr/local/bin; \
+  sudo rm -rf /tmp/node_exporter*
 #
 # # add systemctl service
-# sudo bash -c "cat << EOF > /etc/systemd/system/node_exporter.service
-# [Unit]
-# Description=Node Exporter
-# After=network.target
-#
-# [Service]
-# User=root
-# Group=root
-# Type=simple
-# ExecStart=/usr/local/bin/node_exporter
-#
-# [Install]
-# WantedBy=multi-user.target
-# EOF"
+sudo bash -c "cat << EOF > /etc/systemd/system/node_exporter.service
+[Unit]
+Description=Node Exporter
+After=network.target
+
+[Service]
+User=root
+Group=root
+Type=simple
+ExecStart=/usr/local/bin/node_exporter
+
+[Install]
+WantedBy=multi-user.target
+EOF"
 
 # create makedir
-# sudo mkdir /home/azureuser/apps
-# sudo chown -R azureuser.azureuser /home/azureuser/apps
+sudo mkdir /home/azureuser/apps
+sudo chown -R azureuser.azureuser /home/azureuser/apps
 # start node_exporter
-# sudo systemctl daemon-reload && sudo systemctl start node_exporter && sudo systemctl enable node_exporter
+sudo systemctl daemon-reload && sudo systemctl start node_exporter && sudo systemctl enable node_exporter
 
 # prometheus reload
-# sudo curl -X POST http://10.1.12.6:9090/-/reload
+sudo curl -X POST http://10.1.12.6:9090/-/reload
 
 # slack_message "$HOSTNAME 가상 머신을 생성하였습니다." true
