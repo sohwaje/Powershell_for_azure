@@ -33,7 +33,7 @@ $SourceAddressPrefix        = "175.208.212.79","112.223.14.90"
 #     "commandToExecute" = "sudo sh install.sh"
 # }
 $customConfig = @{
-    "fileUris" = ["https://raw.githubusercontent.com/sohwaje/Powershell_for_azure/master/extensions/install.sh"],
+    "fileUris" = (,"https://raw.githubusercontent.com/sohwaje/Powershell_for_azure/master/extensions/install.sh");
     "commandToExecute" = "sudo sh install.sh"
 }
 
