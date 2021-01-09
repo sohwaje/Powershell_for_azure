@@ -122,20 +122,18 @@ sudo echo "export PS1=\"[\$LOGNAME@\`hostname\`:\$PWD]\"" >> /root/.bashrc
 # update system, install software and add yum repository
 sudo yum update -y
 sudo yum -y install yum-plugin-priorities \
-epel-release centos-release-scl-rh \
-centos-release-scl \
-http://rpms.famillecollet.com/enterprise/remi-release-7.rpm \
+epel-release \
 java-1.8.0-openjdk \
-java-1.8.0-openjdk-devel
+java-1.8.0-openjdk-devel \
 git \
 python3 \
-python3-devel \
-golang
+python3-devel
+
 sudo yum groupinstall -y "Development Tools"
 
 # install nodejs, npm
-curl -sL https://rpm.nodesource.com/setup_12.x | sudo bash -
-sudo yum install -y nodejs
+# curl -sL https://rpm.nodesource.com/setup_12.x | sudo bash -
+# sudo yum install -y nodejs
 
 # install a docker
 sudo curl -s https://get.docker.com | sudo sh && sudo systemctl start docker && sudo systemctl enable docker
@@ -178,12 +176,12 @@ WantedBy=multi-user.target
 EOF"
 
 # create makedir
-sudo mkdir /home/azureuser/apps
-sudo chown -R azureuser.azureuser /home/azureuser/apps
+# sudo mkdir /home/azureuser/apps
+# sudo chown -R azureuser.azureuser /home/azureuser/apps
 # start node_exporter
 sudo systemctl daemon-reload && sudo systemctl start node_exporter && sudo systemctl enable node_exporter
 
 # prometheus reload
-sudo curl -X POST http://10.1.12.6:9090/-/reload
+# sudo curl -X POST http://10.1.12.6:9090/-/reload
 
 # slack_message "$HOSTNAME 가상 머신을 생성하였습니다." true
