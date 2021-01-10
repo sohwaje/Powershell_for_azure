@@ -176,7 +176,7 @@ Set-AzVMExtension `
  -Settings $customConfig
 
 # IP 출력하기
-Get-AzNetworkInterface -Name $vmName -ResourceGroupName $ResourceGroupName).IpConfigurations.PrivateIpAddress
+Get-AzNetworkInterfaceIpConfig -Name default -NetworkInterface $nic
 
 ## SSH 접속
 # ssh azureuser@IPaddress
