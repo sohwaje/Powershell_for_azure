@@ -8,17 +8,19 @@ $rgName                       = "ISCREAM"
 $location                     = "koreacentral"
 $AzRecoveryServicesVault_name = "hiclass-backup-recovery"
 $backup_policy                = "DefaultPolicy"
-$vmName                       = "Front1-Hi-Class-Service"
+# 백업된 VM 이름
+$vmName                       = "SlaveDB09-HiClass"
 $StorageAccountName           = "diag976"
-$newVM                        = "TEST-VM"
-$Availabilityset              = "Availabilityset-TEST-VM"
+# 복원할 VM 이름
+$newVM                        = "Hi-ClassBackupDB-VM"
+$Availabilityset              = "Hi-ClassBackupDB-VM-Availabilityset"
 $vnet_name                    = "Hi-Class"
-$nicName                      = "TEST-nic"
+$nicName                      = "Hi-ClassBackupDB-nic"
 $destination_path             = "/Users/yusunglee/Downloads/Azure/vmconfig.json"
 # azure portal에 서브넷 리스트의 순서
 $subnetindex                  = 11
-$PrivateIpAddress             = "10.1.11.7"
-$IpConfigName                 = "TEST-Ifconfig-1"
+$PrivateIpAddress             = "10.1.11.100"
+$IpConfigName                 = "Hi-ClassBackupDB-Ifconfig"
 
 # 백업 관련 구독의 모든 자격 증명 모음
 Get-AzRecoveryServicesVault
