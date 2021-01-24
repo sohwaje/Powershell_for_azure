@@ -120,7 +120,7 @@ sudo echo "export PS1=\"[\$LOGNAME@\`hostname\`:\$PWD]\"" >> /root/.bashrc
 ################################################################################
 
 # update system, install software and add yum repository
-sudo yum update -y
+# sudo yum update -y
 sudo yum -y install yum-plugin-priorities \
 epel-release \
 java-1.8.0-openjdk \
