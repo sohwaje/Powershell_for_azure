@@ -20,8 +20,8 @@ $sctip_name        = "HTTPInstall"
 # }
 # Custom Script Extension to run on the Linux Platform
 $customConfig = @{
-    "fileUris" = (,"https://raw.githubusercontent.com/sohwaje/shell_scripts/master/httpd-install.sh");
-    "commandToExecute" = "sudo sh httpd-install.sh"
+    "fileUris" = (,"https://raw.githubusercontent.com/sohwaje/Powershell_for_azure/master/extensions/install.sh");
+    "commandToExecute" = "sudo sh install.sh"
 }
 ################################################################################
 #                         가상 머신 확장 집합을 구한다.

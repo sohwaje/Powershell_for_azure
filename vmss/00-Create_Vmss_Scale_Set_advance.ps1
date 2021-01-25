@@ -76,7 +76,7 @@ $ExpectedLb = Get-AzLoadBalancer -Name $LBName -ResourceGroupName $ResourceGroup
 # New VMSS Parameters
 $VMSSName = "vmss" + $TAG
 $AdminUsername = "azureUser";
-$AdminPassword = "azureUser@123" + $TAG
+$AdminPassword = "azureUser!@#123" + $TAG
 $PublisherName = "OpenLogic"
 $Offer         = "CentOS"
 $Skus          = "7.7"
