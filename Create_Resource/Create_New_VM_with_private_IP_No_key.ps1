@@ -14,16 +14,16 @@
 $VMLocalAdminUser           = "azureuser"
 $VMLocalAdminSecurePassword = ConvertTo-SecureString 'azureuser!@#123' -AsPlainText -Force
 $location                   = "koreacentral"
-$ResourceGroupName          = "전략사업실"
-$vnet_name                  = "전략사업실-vnet"
-$nsg_name                   = "gnedb-NSG"
-$nicName                    = "gnedb-NIC"
-$HostName                   = "gnedb-VM"
-$vmName                     = "gnedb-VM"
+$ResourceGroupName          = "C-TFT"
+$vnet_name                  = "C-TFT-Vnet"
+$nsg_name                   = "example-NSG"
+$nicName                    = "example-NIC"
+$HostName                   = "example-VM"
+$vmName                     = "example-VM"
 $vmSize                     = "Standard_DS3_v2"
-$osDiskName                 = "gnedb-OS-DIsk"
+$osDiskName                 = "example-OS-DIsk"
 $StorageAccountType         = "StandardSSD_LRS"
-$AzAvailabilitySet_name     = "gnedb-Availbility-set"
+$AzAvailabilitySet_name     = "example-Availbility-set"
 $SourceAddressPrefix        = "175.208.212.79","222.231.21.156","112.223.14.90","124.52.7.111","180.224.128.195","1.214.65.2"
 
 # 사용자 지정 스크립트 VM 생성 시 자동 실행
@@ -130,8 +130,9 @@ $vmConfig = Set-AzVMOperatingSystem `
   -VM $vmConfig `
   -Linux `
   -ComputerName $HostName `
-  -Credential $cred `
-  -DisablePasswordAuthentication
+  -Credential $cred
+  # -DisablePasswordAuthentication
+
 $vmConfig = Set-AzVMOSDisk `
   -VM $vmConfig `
   -Name $osDiskName `
@@ -162,11 +163,11 @@ $vmconfig = Set-AzVMBootDiagnostic `
   -Disable
 
 # Configure the SSH key
-$sshPublicKey = cat ~/.ssh/id_rsa.pub     # local public key
-Add-AzVMSshPublicKey `
-  -VM $vmconfig `
-  -KeyData $sshPublicKey `
-  -Path "/home/azureuser/.ssh/authorized_keys"
+# $sshPublicKey = cat ~/.ssh/id_rsa.pub     # local public key
+# Add-AzVMSshPublicKey `
+#   -VM $vmconfig `
+#   -KeyData $sshPublicKey `
+#   -Path "/home/azureuser/.ssh/authorized_keys"
 
 # 가상머신을 생성하면서 가상머신 설정을 반영하기
 New-AzVM `
