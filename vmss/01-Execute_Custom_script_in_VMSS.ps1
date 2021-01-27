@@ -8,8 +8,8 @@
 # Set-AzContext -SubscriptionId "yourSubscriptionID"
 ################################# 변수 설정 ######################################
 $ResourceGroupName = "ISCREAM"
-$vmss_name         = "vmss-gaudium"
-$sctip_name        = "HTTPInstall"
+$vmss_name         = "vmss-example"
+$script_name        = "HTTPInstall"
 ################################################################################
 #                       사용자 지정 스크립트를 정의한다.
 ################################################################################
@@ -19,9 +19,14 @@ $sctip_name        = "HTTPInstall"
 #     "commandToExecute" = "powershell -ExecutionPolicy Unrestricted -File automate-iis.ps1"
 # }
 # Custom Script Extension to run on the Linux Platform
+# $customConfig = @{
+#     "fileUris" = (,"https://raw.githubusercontent.com/sohwaje/shell_scripts/master/httpd-install.sh");
+#     "commandToExecute" = "sudo sh httpd-install.sh"
+# }
+
 $customConfig = @{
-    "fileUris" = (,"https://raw.githubusercontent.com/sohwaje/shell_scripts/master/httpd-install.sh");
-    "commandToExecute" = "sudo sh httpd-install.sh"
+    "fileUris" = (,"https://raw.githubusercontent.com/sohwaje/Powershell_for_azure/master/extensions/install.sh");
+    "commandToExecute" = "sudo sh install.sh"
 }
 ################################################################################
 #                         가상 머신 확장 집합을 구한다.
@@ -35,9 +40,9 @@ $vmss = Get-AzVmss `
 #                       사용자 정의 스크립트 실행을 위한 설정
 ################################################################################
 Add-AzVmssExtension -VirtualMachineScaleSet $vmss `
-  -Name $sctip_name `
-  -Publisher "Microsoft.Azure.Extensions" `
-  -Type "customScript" `
+  -Name $script_name `
+  -Publisher Microsoft.Azure.Extensions `
+  -Type "CustomScript" `
   -TypeHandlerVersion 2.1 `
   -Setting $customConfig
 ################################################################################

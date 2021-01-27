@@ -5,7 +5,7 @@
 
 ################################# 변수 설정 #####################################
 $ResourceGroupName = "ISCREAM"
-$vmss_name         = "vmss-gaudium"
+$vmss_name         = "vmss-example"
 $location          = "koreacentral"
 ################################################################################
 #                               스케일아웃 룰 설정
@@ -13,12 +13,12 @@ $location          = "koreacentral"
 # CPU 부하가 5분간 70%를 초과할 경우 확장 집합의 VM 인스턴스 수를 3개로 늘리는 규칙
 $myRuleScaleOut = New-AzAutoscaleRule `
   -MetricName "Percentage CPU" `
-  -MetricResourceId /subscriptions/64268000-4de0-460d-9cc0-5b7730789327/resourceGroups/ISCREAM/providers/Microsoft.Compute/virtualMachineScaleSets/vmss-gaudium `
+  -MetricResourceId /subscriptions/64268000-4de0-460d-9cc0-5b7730789327/resourceGroups/ISCREAM/providers/Microsoft.Compute/virtualMachineScaleSets/vmss-example `
   -TimeGrain 00:01:00 `
   -MetricStatistic "Average" `
   -TimeWindow 00:05:00 `
   -Operator "GreaterThan" `
-  -Threshold 70 `
+  -Threshold 50 `
   -ScaleActionDirection "Increase" `
   -ScaleActionScaleType "ChangeCount" `
   -ScaleActionValue 3 `
@@ -27,7 +27,7 @@ $myRuleScaleOut = New-AzAutoscaleRule `
 # CPU 부하가 5분 간 30% 미만을 경우 VM의 수를 1개로 줄이는 규칙
 $myRuleScaleIn = New-AzAutoscaleRule `
   -MetricName "Percentage CPU" `
-  -MetricResourceId /subscriptions/64268000-4de0-460d-9cc0-5b7730789327/resourceGroups/ISCREAM/providers/Microsoft.Compute/virtualMachineScaleSets/vmss-gaudium `
+  -MetricResourceId /subscriptions/64268000-4de0-460d-9cc0-5b7730789327/resourceGroups/ISCREAM/providers/Microsoft.Compute/virtualMachineScaleSets/vmss-example `
   -Operator "LessThan" `
   -MetricStatistic "Average" `
   -Threshold 30 `
@@ -44,12 +44,12 @@ $myScaleProfile = New-AzAutoscaleProfile `
   -MaximumCapacity 10 `
   -MinimumCapacity 1 `
   -Rule $myRuleScaleOut,$myRuleScaleIn `
-  -Name "autoprofilev1"
+  -Name "autoprofilev2"
 
-# 자동 스케일 아웃을 VMSS에 적용한다. -Name:자동 크기 조정 설정 이름
+# 자동 스케일 아웃을 VMSS에 적용한다. -Name:자동 크기 조정 설정 이름   자동크기조정 이름 : "autosetting"은 오토스케일셋이 삭제되도 남아 있으므로 새로 오토스케일 셋을 만들 때는 이름을 바꾸도록 한다.
 Add-AzAutoscaleSetting `
   -Location $location `
-  -Name "autosetting" `
+  -Name "autosetting2" `
   -ResourceGroupName $ResourceGroupName `
-  -TargetResourceId /subscriptions/64268000-4de0-460d-9cc0-5b7730789327/resourceGroups/ISCREAM/providers/Microsoft.Compute/virtualMachineScaleSets/vmss-gaudium `
+  -TargetResourceId /subscriptions/64268000-4de0-460d-9cc0-5b7730789327/resourceGroups/ISCREAM/providers/Microsoft.Compute/virtualMachineScaleSets/vmss-example `
   -AutoscaleProfile $myScaleProfile
