@@ -1,0 +1,5 @@
+#cloud-config
+runcmd:
+- systemctl restart nginx
+- cd "/home/sigongweb/apps/api"
+- java -jar *.jar
