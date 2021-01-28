@@ -26,3 +26,14 @@ sudo waagent -deprovision+user
 2. app을 배포한다.
 3. 다시 이미지를 생성한다.
 4. 파워쉘 또는 azure cli를 사용해 이미지를 업데이트 한다.
+
+
+# 가상머신 확장 집합 스케일 아웃 모니터링
+```
+while      true                                                                                                                                  
+do
+sleep 1
+az vmss list-instances --resource-group ISCREAM --name vmss-iscream --output table
+done
+
+```

@@ -1,7 +1,7 @@
-$vmName = "vmss-template"
+$vmName = "example-VM"
 $rgName = "ISCREAM"
 $location = "koreacentral"
-$imageName = "vmssimg-api"
+$imageName = "StdNokeyIMG-centos7"
 
 # 생성된 가상 머신(Linux) 아래 명령어를 통해 Deprovision을 진행한다.
 # sudo waagent -deprovision+user
