@@ -31,17 +31,17 @@ Stop-AzVM `
   -Force
 
 # 이미지 정의 만들기 : 새로운 이미지를 만들 때 Publisher, Offer, Sku는 변경해야 한다.
-# -OsState generalized
+# -OsState generalized, specialized
 $imageDefinition = New-AzGalleryImageDefinition `
    -GalleryName $gallery_name `
    -ResourceGroupName $gallery_ResourceGroupName `
    -Location $gallery_location     `
-   -Name 'vmssImagev4-Definition' `
-   -OsState specialized `
+   -Name 'vmssImagev2-Definition' `
+   -OsState generalized `
    -OsType Linux `
-   -Publisher 'OpenLogicv4' `
-   -Offer 'CentOSv4' `
-   -Sku '7.7v4'
+   -Publisher 'sohwaje' `
+   -Offer 'CentOS' `
+   -Sku 'v7.7'
 
 # 이미지 버전 만들기
 $region1 = @{Name='koreacentral';ReplicaCount=1}
@@ -49,7 +49,7 @@ $targetRegions = @($region1)
 
 $job = $imageVersion = New-AzGalleryImageVersion `
    -GalleryImageDefinitionName $imageDefinition.Name`
-   -GalleryImageVersionName '4.0.0' `
+   -GalleryImageVersionName '2.0.0' `
    -GalleryName $gallery_name `
    -ResourceGroupName $gallery_ResourceGroupName `
    -Location $gallery_location `
