@@ -14,8 +14,8 @@
 $VMLocalAdminUser           = "azureuser"
 $VMLocalAdminSecurePassword = ConvertTo-SecureString 'azureuser!@#123' -AsPlainText -Force
 $location                   = "koreacentral"
-$ResourceGroupName          = "C-TFT"
-$vnet_name                  = "C-TFT-Vnet"
+$ResourceGroupName          = "ISCREAM"
+$vnet_name                  = "Hi-Class"
 $nsg_name                   = "example-NSG"
 $nicName                    = "example-NIC"
 $HostName                   = "example-VM"
@@ -109,7 +109,7 @@ $nic = New-AzNetworkInterface `
   -Name $nicName `
   -ResourceGroupName $ResourceGroupName `
   -Location $location `
-  -SubnetId $vnet.Subnets[0].Id `
+  -SubnetId $vnet.Subnets[13].Id `
   -NetworkSecurityGroupId $nsg.Id
 
 ################################################################################
