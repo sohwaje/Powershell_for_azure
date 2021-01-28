@@ -17,7 +17,7 @@ $gallery = Get-AzGallery `
 
 # VM 가져오기
 $sourceVm = Get-AzVM `
-   -Name $sourceVM_name  `
+   -Name $sourceVM_name `
    -ResourceGroupName $myResourceGroupName
 
 ### Deprovision은 고유 UUID를 삭제한다
@@ -35,7 +35,7 @@ Stop-AzVM `
 $imageDefinition = New-AzGalleryImageDefinition `
    -GalleryName $gallery_name `
    -ResourceGroupName $gallery_ResourceGroupName `
-   -Location $gallery_location     `
+   -Location $gallery_location `
    -Name 'vmssImagev2-Definition' `
    -OsState specialized `
    -OsType Linux `
@@ -48,12 +48,12 @@ $region1 = @{Name='koreacentral';ReplicaCount=1}
 $targetRegions = @($region1)
 
 $job = $imageVersion = New-AzGalleryImageVersion `
-   -GalleryImageDefinitionName $imageDefinition.Name`
+   -GalleryImageDefinitionName $imageDefinition.Name `
    -GalleryImageVersionName '2.0.0' `
    -GalleryName $gallery_name `
    -ResourceGroupName $gallery_ResourceGroupName `
    -Location $gallery_location `
-   -TargetRegion $targetRegions  `
+   -TargetRegion $targetRegions `
    -SourceImageId $sourceVm.Id.ToString() `
    -PublishingProfileEndOfLifeDate '2021-12-01' `
    -asJob
