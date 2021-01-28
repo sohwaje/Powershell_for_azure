@@ -1,7 +1,7 @@
 # 가상 머신 확장 집합에 대한 이미지 업데이트
 
 $ResourceGroupName = "ISCREAM"
-$vmss_name         = "exampl-vmss"
+$vmss_name         = "vmss-iscream"
 
 # 확장 집합 속성 보기
 Get-AzVmss `
@@ -18,7 +18,7 @@ Get-AzVmss `
 Get-AzVmssVM `
   -ResourceGroupName $ResourceGroupName `
   -VMScaleSetName $vmss_name `
-  -InstanceId 1 # 인스턴스의 번호 : 만약 초기 인스턴스가 두 개면 1 또는 2를 선택한다.
+  -InstanceId 1 # 인스턴스의 번호
 
 # 사용자 지정 이미지를 업데이트(-ImageReferenceID는 이미지 -> 속성을 확인한다.)
 Update-AzVmss `
