@@ -14,6 +14,7 @@ Get-AzVmss `
   -VMScaleSetName $vmss_name `
   -InstanceView
 
+
 # 확장 집합 인스턴스의 가상머신 모델 보기
 Get-AzVmssVM `
   -ResourceGroupName $ResourceGroupName `
@@ -24,10 +25,10 @@ Get-AzVmssVM `
 Update-AzVmss `
   -ResourceGroupName $ResourceGroupName `
   -VMScaleSetName $vmss_name `
-  -ImageReferenceId /subscriptions/64268000-4de0-460d-9cc0-5b7730789327/resourceGroups/ISCREAM/providers/Microsoft.Compute/images/vmssimg-api
+  -ImageReferenceId /subscriptions/64268000-4de0-460d-9cc0-5b7730789327/resourceGroups/ISCREAM/providers/Microsoft.Compute/images/StdNokeyIMG-centos7
 
-  # VMSS 인스턴스를 최신으로 업그레이드
-  Update-AzVmssInstance `
-    -ResourceGroupName $ResourceGroupName `
-    -VMScaleSetName $vmss_name `
-    -InstanceId 1
+# VMSS 인스턴스를 최신으로 업그레이드
+Update-AzVmssInstance `
+  -ResourceGroupName $ResourceGroupName `
+  -VMScaleSetName $vmss_name `
+  -InstanceId 1
