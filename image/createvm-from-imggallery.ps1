@@ -37,7 +37,7 @@ $imageDefinition = New-AzGalleryImageDefinition `
    -ResourceGroupName $gallery_ResourceGroupName `
    -Location $gallery_location     `
    -Name 'vmssImagev2-Definition' `
-   -OsState generalized `
+   -OsState specialized `
    -OsType Linux `
    -Publisher 'sohwaje' `
    -Offer 'CentOS' `
