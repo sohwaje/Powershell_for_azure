@@ -3,6 +3,8 @@ $rgName = "ISCREAM"
 $location = "koreacentral"
 $imageName = "vmssimg-api"
 
+# 생성된 가상 머신(Linux) 아래 명령어를 통해 Deprovision을 진행한다.
+# sudo waagent -deprovision+user
 
 
 # 1.VM의 할당이 취소되었는지 확인합니다.
