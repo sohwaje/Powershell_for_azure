@@ -5,10 +5,10 @@
 # Get-AzSubscription
 # Set-AzContext -SubscriptionId "yourSubscriptionID"
 ################################# 변수 설정 ######################################
-$ResourceGroupName            = "ISCREAM"
-$vnet_name                    = "Hi-Class"
-$NewsubnetName                = "hiclass-vmss-subnet"
-$NewSubnetPrefix              = "10.1.14.0/24"
+$ResourceGroupName            = "C-TFT"
+$vnet_name                    = "C-TFT-Vnet"
+$NewsubnetName                = "ISTOOL-subnet"
+$NewSubnetPrefix              = "10.2.4.0/24"
 
 # 현재 만들어진 서브넷 목록 확인하기(목록을 확인한 후 존재하지 않는 서브넷 대역을 생성한다.)
 Get-AzVirtualnetwork -ResourceGroupName $ResourceGroupName | Select -ExpandProperty Subnets | Select AddressPrefix

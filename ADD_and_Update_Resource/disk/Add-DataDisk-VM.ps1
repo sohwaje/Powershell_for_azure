@@ -8,12 +8,12 @@
 #                       가상 머신에 새 관리 디스크 추가하기                             #
 ################################################################################
 # SkuName = Premium_LRS, StandardSSD_LRS, Standard_LRS
-$ResourceGroupName            = "ISCREAM"
+$ResourceGroupName            = "C-TFT"
 $location                     = "koreacentral"
-$vmName                       = "MasterDB-HiClass"
+$vmName                       = "istooldb-VM"
 $storageType                  = "Premium_LRS"
 $dataDiskName                 = $vmName + '_datadisk1'
-$DiskSize                     = 2000
+$DiskSize                     = 500
 
 # 추가할 디스크 구성 설정
 $diskConfig = New-AzDiskConfig `
@@ -33,7 +33,7 @@ $vm = Get-AzVM -Name $vmName -ResourceGroupName $ResourceGroupName
 $vm = Add-AzVMDataDisk -VM $vm -Name $dataDiskName `
   -CreateOption Attach `
   -ManagedDiskId $dataDisk1.Id `
-  -Lun 2
+  -Lun 0
 
 # 가상 머신 업데이트
 Update-AzVM -VM $vm -ResourceGroupName $ResourceGroupName

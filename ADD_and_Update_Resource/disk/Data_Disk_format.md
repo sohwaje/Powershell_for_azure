@@ -16,8 +16,8 @@ sudo partprobe /dev/sdc1
 
 ###[3] 디스크 마운트
 ```
-sudo mkdir /datadrive
-sudo mount /dev/sdc1 /datadrive
+sudo mkdir /data
+sudo mount /dev/sdc1 /data
 ```
 
 ###[4] 디스크 UUID 확인

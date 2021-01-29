@@ -16,14 +16,14 @@ $VMLocalAdminSecurePassword = ConvertTo-SecureString 'azureuser!@#123' -AsPlainT
 $location                   = "koreacentral"
 $ResourceGroupName          = "C-TFT"
 $vnet_name                  = "C-TFT-Vnet"
-$nsg_name                   = "istooldb-NetworkSecurityGroup"
-$nicName                    = "istooldb-NIC"
-$HostName                   = "istooldb-VM"
-$vmName                     = "istooldb-VM"
-$vmSize                     = "Standard_D8s_v3"
-$osDiskName                 = "istooldb-OS-DIsk"
-$StorageAccountType         = "Premium_LRS"
-$AzAvailabilitySet_name     = "istooldb-Availbility-set"
+# $nsg_name                   = "istoolweb-NetworkSecurityGroup"
+$nicName                    = "istoolwas2-NIC"
+$HostName                   = "istoolwas2-VM"
+$vmName                     = "istoolwas2-VM"
+$vmSize                     = "Standard_D4s_v3"
+$osDiskName                 = "istoolwas2-OS-DIsk"
+$StorageAccountType         = "StandardSSD_LRS"
+# $AzAvailabilitySet_name     = "istoolweb-Availbility-set"
 $SourceAddressPrefix        = "175.208.212.79","112.223.14.90"
 
 # 사용자 지정 스크립트 VM 생성 시 자동 실행
@@ -43,16 +43,16 @@ $vnet = Get-AzVirtualNetwork `
 
 ## NSG 만들기
 # SSH rule 만들기
-$nsgRuleSSH = New-AzNetworkSecurityRuleConfig `
-  -Name "SSH"  `
-  -Protocol "Tcp" `
-  -Direction "Inbound" `
-  -Priority 1000 `
-  -SourceAddressPrefix $SourceAddressPrefix `
-  -SourcePortRange * `
-  -DestinationAddressPrefix * `
-  -DestinationPortRange 16215 `
-  -Access "Allow"
+# $nsgRuleSSH = New-AzNetworkSecurityRuleConfig `
+#   -Name "SSH"  `
+#   -Protocol "Tcp" `
+#   -Direction "Inbound" `
+#   -Priority 1000 `
+#   -SourceAddressPrefix $SourceAddressPrefix `
+#   -SourcePortRange * `
+#   -DestinationAddressPrefix * `
+#   -DestinationPortRange 16215 `
+#   -Access "Allow"
 
 # $nsgRulePro = New-AzNetworkSecurityRuleConfig `
 #   -Name "Prometheus"  `
@@ -88,34 +88,33 @@ $nsgRuleSSH = New-AzNetworkSecurityRuleConfig `
 #   -Access "Allow"
 
 # NSG 생성
-$nsg = New-AzNetworkSecurityGroup `
-  -ResourceGroupName $ResourceGroupName `
-  -Location $location `
-  -Name $nsg_name `
-  -SecurityRules $nsgRuleSSH
+# $nsg = New-AzNetworkSecurityGroup `
+#   -ResourceGroupName $ResourceGroupName `
+#   -Location $location `
+#   -Name $nsg_name `
+#   -SecurityRules $nsgRuleSSH
   # -SecurityRules $nsgRuleSSH,$nsgRulePro,$nsgRuleGrafana,$nsgRuleTomcat
 # NIC 만들기
 $nic = New-AzNetworkInterface `
   -Name $nicName `
   -ResourceGroupName $ResourceGroupName `
   -Location $location `
-  -SubnetId $vnet.Subnets[2].Id `
-  -NetworkSecurityGroupId $nsg.Id
+  -SubnetId $vnet.Subnets[3].Id
 
 ################################################################################
 #                             가용성 집합 생성                                     #
 ################################################################################
-$as = New-AzAvailabilitySet -ResourceGroupName $ResourceGroupName -Location $location `
-  -Name $AzAvailabilitySet_name -Sku Aligned -PlatformFaultDomainCount 2 `
-  -PlatformUpdateDomainCount 2
+# $as = New-AzAvailabilitySet -ResourceGroupName $ResourceGroupName -Location $location `
+#   -Name $AzAvailabilitySet_name -Sku Aligned -PlatformFaultDomainCount 2 `
+#   -PlatformUpdateDomainCount 2
 
 $cred = New-Object System.Management.Automation.PSCredential ($VMLocalAdminUser, $VMLocalAdminSecurePassword)
 
 # Create a virtual machine configuration
 $vmConfig = New-AzVMConfig `
   -VMName $vmName `
-  -VMSize $vmSize `
-  -AvailabilitySetId $as.Id
+  -VMSize $vmSize
+
 $vmConfig = Set-AzVMOperatingSystem `
   -VM $vmConfig `
   -Linux `

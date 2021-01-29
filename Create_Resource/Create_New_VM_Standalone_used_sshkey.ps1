@@ -63,17 +63,28 @@ $nsgRuleSSH = New-AzNetworkSecurityRuleConfig `
   -DestinationPortRange 16215 `
   -Access "Allow"
 
-# $nsgRulePro = New-AzNetworkSecurityRuleConfig `
-#   -Name "Prometheus"  `
-#   -Protocol "Tcp" `
-#   -Direction "Inbound" `
-#   -Priority 1001 `
-#   -SourceAddressPrefix $SourceAddressPrefix `
-#   -SourcePortRange * `
-#   -DestinationAddressPrefix * `
-#   -DestinationPortRange 9090 `
-#   -Access "Allow"
-#
+$nsgRuleHTTP = New-AzNetworkSecurityRuleConfig `
+  -Name "HTTP"  `
+  -Protocol "Tcp" `
+  -Direction "Inbound" `
+  -Priority 1001 `
+  -SourceAddressPrefix $SourceAddressPrefix `
+  -SourcePortRange * `
+  -DestinationAddressPrefix * `
+  -DestinationPortRange 80 `
+  -Access "Allow"
+
+$nsgRuleHTTPS = New-AzNetworkSecurityRuleConfig `
+  -Name "HTTP"  `
+  -Protocol "Tcp" `
+  -Direction "Inbound" `
+  -Priority 1001 `
+  -SourceAddressPrefix $SourceAddressPrefix `
+  -SourcePortRange * `
+  -DestinationAddressPrefix * `
+  -DestinationPortRange 80 `
+  -Access "Allow"
+
 # $nsgRuleGrafana = New-AzNetworkSecurityRuleConfig `
 #   -Name "Grafana"  `
 #   -Protocol "Tcp" `

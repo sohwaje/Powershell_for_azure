@@ -36,7 +36,7 @@ $imageDefinition = New-AzGalleryImageDefinition `
    -GalleryName $gallery_name `
    -ResourceGroupName $gallery_ResourceGroupName `
    -Location $gallery_location `
-   -Name 'vmssImagev2-Definition' `
+   -Name 'vmssImagev3-Definition' `
    -OsState specialized `
    -OsType Linux `
    -Publisher 'sohwaje' `
@@ -49,7 +49,7 @@ $targetRegions = @($region1)
 
 $job = $imageVersion = New-AzGalleryImageVersion `
    -GalleryImageDefinitionName $imageDefinition.Name `
-   -GalleryImageVersionName '2.0.0' `
+   -GalleryImageVersionName '3.0.0' `
    -GalleryName $gallery_name `
    -ResourceGroupName $gallery_ResourceGroupName `
    -Location $gallery_location `

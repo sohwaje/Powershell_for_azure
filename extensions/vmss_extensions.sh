@@ -1,5 +1,4 @@
 #!/bin/sh
 
-scp -P 16215 sigongweb@/home/sigongweb/jar/api/* /home/sigongweb/apps/api
-
-/home/sigongweb/apps/bin/api-run.sh restart
+sshpass -p'!#SI0aleldj*)' scp -P 16215 -o StrictHostKeyChecking=no /home/sigongweb/jar/api/*.jar /home/sigongweb/apps/api
+java -jar /home/sigongweb/apps/api/*.jar
