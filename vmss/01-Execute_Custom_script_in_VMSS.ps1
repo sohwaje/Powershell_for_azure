@@ -25,7 +25,7 @@ $script_name        = "HTTPInstall"
 # }
 
 $customConfig = @{
-    "fileUris" = (,"https://raw.githubusercontent.com/sohwaje/Powershell_for_azure/master/extensions/install.sh");
+    "fileUris" = (,"https://raw.githubusercontent.com/sohwaje/Powershell_for_azure/master/extensions/vmss_extensions.sh");
     "commandToExecute" = "sudo sh install.sh"
 }
 ################################################################################
