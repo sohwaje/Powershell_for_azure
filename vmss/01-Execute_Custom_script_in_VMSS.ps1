@@ -8,7 +8,7 @@
 # Set-AzContext -SubscriptionId "yourSubscriptionID"
 ################################# 변수 설정 ######################################
 $ResourceGroupName = "ISCREAM"
-$vmss_name         = "vmss-example"
+$vmss_name         = "example-vmss"
 $script_name        = "API_INSTALL"
 ################################################################################
 #                       사용자 지정 스크립트를 정의한다.
@@ -26,7 +26,7 @@ $script_name        = "API_INSTALL"
 
 $customConfig = @{
     "fileUris" = (,"https://raw.githubusercontent.com/sohwaje/Powershell_for_azure/master/extensions/vmss_extensions.sh");
-    "commandToExecute" = "sudo sh install.sh"
+    "commandToExecute" = "sudo sh vmss_extensions.sh"
 }
 ################################################################################
 #                         가상 머신 확장 집합을 구한다.
