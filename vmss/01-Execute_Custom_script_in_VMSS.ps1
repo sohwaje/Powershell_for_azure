@@ -9,7 +9,7 @@
 ################################# 변수 설정 ######################################
 $ResourceGroupName = "ISCREAM"
 $vmss_name         = "example-vmss"
-$script_name        = "demo"
+$script_name        = "project1"
 ################################################################################
 #                       사용자 지정 스크립트를 정의한다.
 ################################################################################
@@ -24,7 +24,7 @@ $script_name        = "demo"
 #     "commandToExecute" = "sudo sh httpd-install.sh"
 # }
 
-$customConfig = @{
+$customConfigv2 = @{
     "fileUris" = (,"https://raw.githubusercontent.com/sohwaje/Powershell_for_azure/master/extensions/vmss_extensions.sh");
     "commandToExecute" = "sudo sh vmss_extensions.sh"
 }
@@ -44,7 +44,7 @@ Add-AzVmssExtension -VirtualMachineScaleSet $vmss `
   -Publisher Microsoft.Azure.Extensions `
   -Type "CustomScript" `
   -TypeHandlerVersion 2.1 `
-  -Setting $customConfig
+  -Setting $customConfigv2
 ################################################################################
 #                   스크립트를 실행하고 가상머신 확장집합 업데이트
 ################################################################################
