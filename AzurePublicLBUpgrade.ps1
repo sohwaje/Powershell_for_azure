@@ -1,34 +1,6 @@
 <#PSScriptInfo
 
-.VERSION 4.0
-
-.GUID 803f6271-accf-413f-83b9-4388aba6b448
-
-.AUTHOR Microsoft Corporation
-
-.COMPANYNAME Microsoft Corporation
-
-.COPYRIGHT Microsoft Corporation. All rights reserved.
-
-.TAGS Azure, Az, LoadBalancer, AzNetworking
-
-.LICENSEURI
-
-.PROJECTURI
-
-.ICONURI
-
-.EXTERNALMODULEDEPENDENCIES
-
-.REQUIREDSCRIPTS
-
-.EXTERNALSCRIPTDEPENDENCIES
-
-.RELEASENOTES
-
-
-.PRIVATEDATA
-
+기본 LB를 표준 LB로 업그레이드하는 스크립트
 #>
 
 <#
@@ -45,7 +17,7 @@ Name of the newly created Standard Public Load Balancer.
 
 .EXAMPLE
 ./AzureLBUpgrade.ps1 -oldRgName "test_publicUpgrade_rg" -oldLBName "LBForPublic" -newLbName "LBForUpgrade"
-./AzurePublicLBUpgrade.ps1 -oldRgName "C-TFT" -oldLBName "istool-web-lb" -newLbName "istool-lb"  
+./AzurePublicLBUpgrade.ps1 -oldRgName "C-TFT" -oldLBName "istool-web-lb" -newLbName "istool-lb"
 .LINK
 https://aka.ms/upgradeloadbalancerdoc
 https://docs.microsoft.com/en-us/azure/load-balancer/load-balancer-overview/
