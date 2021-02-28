@@ -16,14 +16,14 @@ $VMLocalAdminSecurePassword = ConvertTo-SecureString 'azureuser!@#123' -AsPlainT
 $location                   = "koreacentral"
 $ResourceGroupName          = "C-TFT"
 $vnet_name                  = "C-TFT-Vnet"
-$nsg_name                   = "istooldb-NetworkSecurityGroup"
-$nicName                    = "istooldb-NIC"
-$HostName                   = "istooldb-VM"
-$vmName                     = "istooldb-VM"
+$nsg_name                   = "istooldev-NetworkSecurityGroup"
+$nicName                    = "istooldev-NIC"
+$HostName                   = "istooldev-VM"
+$vmName                     = "istooldev-VM"
 $vmSize                     = "Standard_D8s_v3"
-$osDiskName                 = "istooldb-OS-DIsk"
+$osDiskName                 = "istooldev-OS-DIsk"
 $StorageAccountType         = "Premium_LRS"
-$AzAvailabilitySet_name     = "istooldb-Availbility-set"
+$AzAvailabilitySet_name     = "istooldev-Availbility-set"
 $SourceAddressPrefix        = "175.208.212.79","112.223.14.90"
 
 # 사용자 지정 스크립트 VM 생성 시 자동 실행
@@ -99,7 +99,7 @@ $nic = New-AzNetworkInterface `
   -Name $nicName `
   -ResourceGroupName $ResourceGroupName `
   -Location $location `
-  -SubnetId $vnet.Subnets[2].Id `
+  -SubnetId $vnet.Subnets[4].Id `
   -NetworkSecurityGroupId $nsg.Id
 
 ################################################################################

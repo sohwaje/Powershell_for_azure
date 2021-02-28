@@ -5,15 +5,15 @@
 # Get-AzSubscription
 # Set-AzContext -SubscriptionId "yourSubscriptionID"
 ################################# 변수 설정 #####################################
-$ResourceGroupName        = "ISCREAM"
+$ResourceGroupName        = "C-TFT"
 $Location                 = "koreacentral"
-$vet                      = "Hi-Class"
-$subnet_name              = "Hi-Class-Subnet"
-$newpublicIpName          = "bastion-PIP"
-$vmName                   = "bastion-VM"
-$IpConfigName             = "bastion-IPConfig"
+$vet                      = "C-TFT-Vnet"
+$subnet_name              = "DEV-subnet"
+$newpublicIpName          = "istooldev-PIP"
+$vmName                   = "istooldev-VM"
+$IpConfigName             = "ipconfig1"
 #기존 NIC 이름
-$exitedvmNIC              = "bastion-VM-NIC"
+$exitedvmNIC              = "istooldev-NIC"
 
 # Get-AzPublicIpAddress -Name myPublicIp*
 ################################################################################
