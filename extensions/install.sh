@@ -181,6 +181,6 @@ sudo chown -R azureuser.azureuser /home/azureuser/apps
 sudo systemctl daemon-reload && sudo systemctl start node_exporter && sudo systemctl enable node_exporter
 
 # prometheus reload
-sudo curl -X POST http://10.1.12.6:9090/-/reload
+# sudo curl -X POST http://10.1.12.6:9090/-/reload
 
 # slack_message "$HOSTNAME 가상 머신을 생성하였습니다." true
