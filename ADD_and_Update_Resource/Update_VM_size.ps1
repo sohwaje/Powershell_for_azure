@@ -7,9 +7,9 @@
 ################################################################################
 #                                   변수 설정                                   #
 ################################################################################
-$ResourceGroupName = "전략사업실"
+$ResourceGroupName = "stg-business"
 $vmName            = "SMARTclass"
-$VmSize            = "Standard_B8ms"
+$VmSize            = "Standard_E16-4as_v4"
 # 0. 사용 가능한 리소스 찾기
 Get-AzVMSize -Location "koreacentral"
 
