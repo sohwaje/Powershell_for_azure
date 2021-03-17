@@ -127,7 +127,8 @@ java-1.8.0-openjdk \
 java-1.8.0-openjdk-devel \
 git \
 python3 \
-python3-devel
+python3-devel \
+python3-pip
 
 sudo yum groupinstall -y "Development Tools"
 
