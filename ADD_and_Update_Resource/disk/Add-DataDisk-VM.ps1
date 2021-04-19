@@ -8,12 +8,12 @@
 #                       가상 머신에 새 관리 디스크 추가하기                             #
 ################################################################################
 # SkuName = Premium_LRS, StandardSSD_LRS, Standard_LRS
-$ResourceGroupName            = "C-TFT"
+$ResourceGroupName            = "quiz_rg"
 $location                     = "koreacentral"
-$vmName                       = "istooldb-VM"
-$storageType                  = "Premium_LRS"
+$vmName                       = "stagequiz-vm0"
+$storageType                  = "Standard_LRS"
 $dataDiskName                 = $vmName + '_datadisk1'
-$DiskSize                     = 500
+$DiskSize                     = 100
 
 # 추가할 디스크 구성 설정
 $diskConfig = New-AzDiskConfig `
