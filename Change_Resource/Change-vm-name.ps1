@@ -24,7 +24,7 @@ Get-AzVM -ResourceGroupName `
   -Name $vmname | Export-Clixml C:\work\VM_Backup.xml -Depth 5
 
 # XML 파일에서 VM 속성을 import하고 그것을 변수에 저장한다.
-$oldVM = Import-Clixml C:\VM_Backup.xml
+$oldVM = Import-Clixml C:\work\VM_Backup.xml
 
 # Old VM을 삭제한다.
 Remove-AzVM -ResourceGroupName $oldVM.ResourceGroupName -Name $oldVM.Name
