@@ -15,13 +15,13 @@ https://www.whatsupgold.com/blog/how-to-rename-an-azure-vm-using-powershell-a-st
 ################################# 변수 설정 ######################################
 $location                   = "koreacentral"
 $ResourceGroupName          = "ISCREAM"
-$vmname                     = "bastion-VM"
-$newVMName                  = "jumpbox-vm"
+$vmname                     = "demo"
+$newVMName                  = "EFK"
 
 # vm 속성을 가져온다.
 Get-AzVM -ResourceGroupName `
   $ResourceGroupName `
-  -Name $vmname | Export-Clixml C:\VM_Backup.xml -Depth 5
+  -Name $vmname | Export-Clixml C:\work\VM_Backup.xml -Depth 5
 
 # XML 파일에서 VM 속성을 import하고 그것을 변수에 저장한다.
 $oldVM = Import-Clixml C:\VM_Backup.xml
