@@ -6,22 +6,22 @@
 # Set-AzContext -SubscriptionId "yourSubscriptionID"
 $rgName = "iscreamkids"
 $location = "koreacentral"
-$AzRecoveryServicesVault_name = "hiclass-backup-recovery"
+$AzRecoveryServicesVault_name = "kids-backup"
 $backup_policy = "DefaultPolicy"
 # 백업된 VM 이름
-$vmName = "lhl-DB-VM"
+$vmName = "front02"
 $StorageAccountName = "wid"
 # 복원할 VM 이름
-$newVM = "dev-front-db"
-$Availabilityset = "dev-front-db-avs"
+$newVM = "dev-front02"
+$Availabilityset = "dev-front02-avs"
 $vnet_name = "kids-vnet"
-$nicName = "dev-front-db-nic"
+$nicName = "dev-front02-nic"
 # $destination_path             = "/Users/yusunglee/Downloads/Azure/vmconfig.json"
 $destination_path = "C:\Users\Administrator"
 # azure portal에 서브넷 리스트의 순서
 $subnetindex = 4
-$PrivateIpAddress = "192.168.30.6"
-$IpConfigName = "dev-front-db-ifconfig"
+$PrivateIpAddress = "192.168.30.7"
+$IpConfigName = "dev-front02-ifconfig"
 
 # 백업 관련 구독의 모든 자격 증명 모음
 Get-AzRecoveryServicesVault
@@ -106,4 +106,66 @@ New-AzVM -ResourceGroupName $rgName -Location $location -VM $vm -Verbose
 # 관리형 디스크로 변환 : VM 할당 취소
 Stop-AzVM -ResourceGroupName $rgName -Name $newVM -Force
 # 디스크를 관리형 디스크로 변환 : 변환
-ConvertTo-AzVMManagedDisk -ResourceGroupName $rgName -VMName $newVM
+ConvertTo-AzVMManagedDisk -ResourceGroupName $rgName -VMName $newVM# Azure CLI를 사용하여 Azure에서 가상 머신 백업
+
+# Azure CLI를 사용하여 Azure에서 가상 머신 백업
+
+# 현재 Azure 구독 확인
+```
+az account list --output table
+```
+
+# 자신의 구독으로 변경
+```
+az account set --subscription <SubscriptionID>
+```
+
+# 사용 가능한 복구 지점 나열
+az backup recoverypoint list \
+--resource-group iscreamkids \
+--vault-name kids-backup \
+--backup-management-type AzureIaasVM \
+--container-name front02 \
+--item-name front02 \
+--query [0].name \
+--v-ttvvsv# Azure CLI를 사용하여 Azure에서 가상 머신 백업
+
+# 현재 Azure 구독 확인
+```
+az account list --output table
+```
+
+# 자신의 구독으로 변경
+```
+az account set --subscription <SubscriptionID>
+```
+
+# 사용 가능한 복구 지점 나열
+az backup recoverypoint list \
+--resource-group iscreamkids \
+--vault-name kids-backup \
+--backup-management-type AzureIaasVM \
+--container-name front02 \
+--item-name front02 \
+--query [0].name \
+--v-ttvvsv# Azure CLI를 사용하여 Azure에서 가상 머신 백업
+
+# 현재 Azure 구독 확인
+```
+az account list --output table
+```
+
+# 자신의 구독으로 변경
+```
+az account set --subscription <SubscriptionID>
+```
+
+# 사용 가능한 복구 지점 나열
+az backup recoverypoint list \
+--resource-group iscreamkids \
+--vault-name kids-backup \
+--backup-management-type AzureIaasVM \
+--container-name front02 \
+--item-name front02 \
+--query [0].name \
+--v-ttvvsv
