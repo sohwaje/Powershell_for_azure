@@ -4,6 +4,7 @@
 # Login-AzAccount
 # Get-AzSubscription
 # Set-AzContext -SubscriptionId "yourSubscriptionID"
+<<<<<<< HEAD
 $rgName                       = "iscreamkids"
 $location                     = "koreacentral"
 $AzRecoveryServicesVault_name = "kids-backup"
@@ -22,6 +23,26 @@ $destination_path             = "/Users/yusunglee/Downloads/Azure/vmconfig.json"
 $subnetindex                  = 4
 $PrivateIpAddress             = "192.168.30.99"
 $IpConfigName                 = "front02-backup-ifconfig"
+=======
+$rgName = "iscreamkids"
+$location = "koreacentral"
+$AzRecoveryServicesVault_name = "hiclass-backup-recovery"
+$backup_policy = "DefaultPolicy"
+# 백업된 VM 이름
+$vmName = "lhl-DB-VM"
+$StorageAccountName = "wid"
+# 복원할 VM 이름
+$newVM = "dev-front-db"
+$Availabilityset = "dev-front-db-avs"
+$vnet_name = "kids-vnet"
+$nicName = "dev-front-db-nic"
+# $destination_path             = "/Users/yusunglee/Downloads/Azure/vmconfig.json"
+$destination_path = "C:\Users\Administrator"
+# azure portal에 서브넷 리스트의 순서
+$subnetindex = 4
+$PrivateIpAddress = "192.168.30.6"
+$IpConfigName = "dev-front-db-ifconfig"
+>>>>>>> 6c2e8cc4ea86ff3aa7546568ef5fda729ca20754
 
 # 백업 관련 구독의 모든 자격 증명 모음
 Get-AzRecoveryServicesVault
@@ -38,7 +59,7 @@ Get-AzRecoveryServicesBackupProtectionPolicy -WorkloadType "AzureVM" -VaultId $t
 
 # 백업된 VM 선택
 $namedContainer = Get-AzRecoveryServicesBackupContainer -ContainerType "AzureVM" -Status "Registered" -FriendlyName $vmName -VaultId $targetVault.ID
-$backupitem = Get-AzRecoveryServicesBackupItem -Container $namedContainer  -WorkloadType "AzureVM" -VaultId $targetVault.ID
+$backupitem = Get-AzRecoveryServicesBackupItem -Container $namedContainer -WorkloadType "AzureVM" -VaultId $targetVault.ID
 
 # 복구 지점 선택: 변수 $rp는 지난 7 일간의 선택 된 백업 항목, $rp[0]은 최신 복구
 $startDate = (Get-Date).AddDays(-7)
@@ -53,9 +74,9 @@ $rp[0]
 # $rp[0]이 이 디스크를 복원하는 데 사용할 복구 지점을 선택하여 스토리지에 저장한다.
 # 여기서는 복원이 되는 것이 아니다. 스토리지에 4개의 파일이 저장된다. config, deploy, parameter, 디스크 이미지
 $restorejob = Restore-AzRecoveryServicesBackupItem -RecoveryPoint $rp[0] `
- -StorageAccountName $StorageAccountName `
- -StorageAccountResourceGroupName $rgName `
- -VaultId $targetVault.ID
+    -StorageAccountName $StorageAccountName `
+    -StorageAccountResourceGroupName $rgName `
+    -VaultId $targetVault.ID
 $restorejob
 
 # 복원 작업이 완료될 떄까지 기다린다.
@@ -63,20 +84,20 @@ Wait-AzRecoveryServicesBackupJob -Job $restorejob -Timeout 43200
 
 # 복원 작업이 완료되면 복원 작업의 세부 정보를 가져온다.
 $restorejob = Get-AzRecoveryServicesBackupJob `
--Job $restorejob -VaultId $targetVault.ID
+    -Job $restorejob -VaultId $targetVault.ID
 $details = Get-AzRecoveryServicesBackupJobDetails `
--Job $restorejob -VaultId $targetVault.ID
+    -Job $restorejob -VaultId $targetVault.ID
 
 ################################################################################
 #                       구성 파일을 사용 하여 VM 만들기                              #
 ################################################################################
 # 복원된 디스크 속성에서 작업 세부 정보를 쿼리합니다.
-$properties          = $details.properties
-$storageAccountName  = $properties["Target Storage Account Name"]
-$configBlobName      = $properties["Config Blob Name"]
-$containerName       = $properties["Config Blob Container Name"]
-$configBlobUri       = $properties["Config Blob Uri"]
-$templateBlobURI     = $properties["Template Blob Uri"]
+$properties = $details.properties
+$storageAccountName = $properties["Target Storage Account Name"]
+$configBlobName = $properties["Config Blob Name"]
+$containerName = $properties["Config Blob Container Name"]
+$configBlobUri = $properties["Config Blob Uri"]
+$templateBlobURI = $properties["Template Blob Uri"]
 $TargetResourceGroup = $properties["Target resource group"]
 
 # Azure Storage 컨텍스트를 설정하고 JSON 구성 파일을 복원합니다.
@@ -93,13 +114,13 @@ $vm.StorageProfile.OsDisk.OsType = $obj.'properties.StorageProfile'.OsDisk.OsTyp
 
 # 네트워크 설정 지정
 # $pip = New-AzPublicIpAddress -Name $nicName -ResourceGroupName $rgName -Location $location -AllocationMethod Static
-$vnet           = Get-AzVirtualNetwork -Name $vnet_name -ResourceGroupName $rgName
-$IpConfig1      = New-AzNetworkInterfaceIpConfig -Name $IpConfigName -SubnetId $vnet.Subnets[$subnetindex].Id -PrivateIpAddress $PrivateIpAddress -Primary
+$vnet = Get-AzVirtualNetwork -Name $vnet_name -ResourceGroupName $rgName
+$IpConfig1 = New-AzNetworkInterfaceIpConfig -Name $IpConfigName -SubnetId $vnet.Subnets[$subnetindex].Id -PrivateIpAddress $PrivateIpAddress -Primary
 # NIC에 IP 자동할당
 # $nic          = New-AzNetworkInterface -Name $nicName -ResourceGroupName $rgName -Location $location -SubnetId $vnet.Subnets[$subnetindex].Id -IpConfiguration $IpConfig1
 # $nic          = New-AzNetworkInterface -Name $nicName -ResourceGroupName $rgName -Location $location -SubnetId $vnet.Subnets[$subnetindex].Id -PublicIpAddressId $pip.Id
-$nic            = New-AzNetworkInterface -Name $nicName -ResourceGroupName $rgName -Location $location -IpConfiguration $IpConfig1
-$vm             = Add-AzVMNetworkInterface -VM $vm -Id $nic.Id
+$nic = New-AzNetworkInterface -Name $nicName -ResourceGroupName $rgName -Location $location -IpConfiguration $IpConfig1
+$vm = Add-AzVMNetworkInterface -VM $vm -Id $nic.Id
 
 # 가싱 머신 생성
 New-AzVM -ResourceGroupName $rgName -Location $location -VM $vm -Verbose
