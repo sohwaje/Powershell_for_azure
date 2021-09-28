@@ -6,8 +6,8 @@
 # Set-AzContext -SubscriptionId "yourSubscriptionID"
 # 변수 설정
 $resourceGroup = "ISCREAM"
-$vmName = "Redis4"
-$newAvailSetName = "Availabilityset-redis"
+$vmName = "XCMS-dev"
+$newAvailSetName = "Availabilityset-devxcms"
 
 # VM 정보 가져오기
 $originalVM = Get-AzVM -ResourceGroupName $resourceGroup -Name $vmName
@@ -17,15 +17,15 @@ $availSet = Get-AzAvailabilitySet `
   -ResourceGroupName $resourceGroup `
   -Name $newAvailSetName `
   -ErrorAction Ignore
-  if (-Not $availSet) {
-$availSet = New-AzAvailabilitySet `
-  -Location $originalVM.Location `
-  -Name $newAvailSetName `
-  -ResourceGroupName $resourceGroup `
-  -PlatformFaultDomainCount 2 `
-  -PlatformUpdateDomainCount 2 `
-  -Sku Aligned
-  }
+if (-Not $availSet) {
+  $availSet = New-AzAvailabilitySet `
+    -Location $originalVM.Location `
+    -Name $newAvailSetName `
+    -ResourceGroupName $resourceGroup `
+    -PlatformFaultDomainCount 2 `
+    -PlatformUpdateDomainCount 2 `
+    -Sku Aligned
+}
 
 # 원본 VM을 삭제("Y를 누른다.")
 Remove-AzVM -ResourceGroupName $resourceGroup -Name $vmName -Force -Confirm:$false
@@ -46,32 +46,30 @@ Set-AzVMOSDisk `
 # Add Data Disks
 foreach ($disk in $originalVM.StorageProfile.DataDisks) {
   Add-AzVMDataDisk -VM $newVM `
-  -Name $disk.Name `
-  -ManagedDiskId $disk.ManagedDisk.Id `
-  -Caching $disk.Caching `
-  -Lun $disk.Lun `
-  -DiskSizeInGB $disk.DiskSizeGB `
-  -CreateOption Attach
-    }
+    -Name $disk.Name `
+    -ManagedDiskId $disk.ManagedDisk.Id `
+    -Caching $disk.Caching `
+    -Lun $disk.Lun `
+    -DiskSizeInGB $disk.DiskSizeGB `
+    -CreateOption Attach
+}
 
 # Add NIC(s) and keep the same NIC as primary
-  foreach ($nic in $originalVM.NetworkProfile.NetworkInterfaces) {
-    if ($nic.Primary -eq "True")
-    {
-      Add-AzVMNetworkInterface `
+foreach ($nic in $originalVM.NetworkProfile.NetworkInterfaces) {
+  if ($nic.Primary -eq "True") {
+    Add-AzVMNetworkInterface `
       -VM $newVM `
       -Id $nic.Id -Primary
-    }
-    else
-    {
-      Add-AzVMNetworkInterface `
+  }
+  else {
+    Add-AzVMNetworkInterface `
       -VM $newVM `
       -Id $nic.Id
-            }
-    }
+  }
+}
 
 # Recreate the VM
-  New-AzVM `
+New-AzVM `
   -ResourceGroupName $resourceGroup `
   -Location $originalVM.Location `
   -VM $newVM `
