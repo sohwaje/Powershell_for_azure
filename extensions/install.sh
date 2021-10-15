@@ -52,7 +52,8 @@ sudo systemctl restart sshd
 
 # Add a "welcome banner"
 sudo curl -o /usr/bin/dynmotd https://raw.githubusercontent.com/sohwaje/Powershell_for_azure/master/extensions/motd.sh
-sudo chmod +x /usr/bin/dynmotd && sudo echo "/usr/bin/dynmotd" >> /etc/profile
+sudo sh -c "chmod +x /usr/bin/dynmotd >> /etc/profile"
+sudo sh -c "/usr/bin/dynmotd >> /etc/profile"
 ################################################################################
 # Tunning Kernel parameter values
 sudo swapoff -a
@@ -147,7 +148,7 @@ sudo chmod +x /usr/local/bin/docker-compose
 sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
 
 # python3 pip.
-sudo curl https://bootstrap.pypa.io/get-pip.py | python
+sudo curl https://bootstrap.pypa.io/get-pip.py | python3
 
 # install and import python3 psutil
 sudo python3 -m pip install -U psutil
