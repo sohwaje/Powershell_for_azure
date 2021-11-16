@@ -6,8 +6,8 @@
 # Set-AzContext -SubscriptionId "yourSubscriptionID"
 # 변수 설정
 $resourceGroup = "ISCREAM"
-$vmName = "XCMS-dev"
-$newAvailSetName = "Availabilityset-devxcms"
+$vmName = "rabbitmq-cl03"
+$newAvailSetName = "RabbitMQ01-avs"
 
 # VM 정보 가져오기
 $originalVM = Get-AzVM -ResourceGroupName $resourceGroup -Name $vmName
