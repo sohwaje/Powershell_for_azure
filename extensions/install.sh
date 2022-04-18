@@ -23,21 +23,21 @@ sudo timedatectl set-timezone Asia/Seoul
 sudo sed -i 's/^SELINUX=enforcing$/SELINUX=disable/' /etc/selinux/config && sudo setenforce 0
 ################################################################################
 # change the ssh listening port
-sudo sed -i 's/^#Port 22$/Port 16215/' /etc/ssh/sshd_config
+sudo sed -i 's/^#Port 22$/Port 2222/' /etc/ssh/sshd_config
 sudo sed -i 's/^#Banner none$/Banner \/etc\/issue.net/' /etc/ssh/sshd_config
 # add a login banner
 sudo bash -c "cat << EOF > /etc/issue.net
 *******************************************************************************
 *                                                                             *
 *                                                                             *
-*  [[[ WARNING ]]] This Machine Is ISCREAMmedia Inc's Property.               *
+*  [[[ WARNING ]]] This Machine Is ebayjp Inc's Property.                     *
 *                                                                             *
-*  A Person Autherized By SIGONGmedia Inc Can Use This Machine.               *
+*  A Person Autherized By ebayjp Inc Can Use This Machine.                    *
 *  Even If You Are Autherized, You Can Only Utilize To The Purpose.           *
 *  Any Illegal Action May Results In Severe Civil And Criminal Penalties.     *
 *                                                                             *
 *                                                                             *
-*  [[[ 경 고 ]]] 이 장비는 아이스크림미디어의 자산입니다.                     *
+*  [[[ 경 고 ]]] 이 장비는 이베이재팬의 자산입니다.                                     *
 *  이 장비는 승인된 사용자만 접속해야합니다.                                  *
 *  허가된 목적이 아닌 다른 목적으로 시스템을 사용해선 안 됩니다.              *
 *  불법적인 행동에는 민형사상 법적 책임이 따릅니다.                           *
