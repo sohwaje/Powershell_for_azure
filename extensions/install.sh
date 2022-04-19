@@ -51,9 +51,9 @@ sudo sed -i 's/^#PrintMotd yes$/PrintMotd no/' /etc/ssh/sshd_config
 sudo systemctl restart sshd
 
 # Add a "welcome banner"
-sudo curl -o /usr/bin/dynmotd https://raw.githubusercontent.com/sohwaje/Powershell_for_azure/master/extensions/motd.sh
-sudo sh -c "chmod +x /usr/bin/dynmotd"
-sudo sh -c "echo /usr/bin/dynmotd > /etc/profile.d/motd.sh"
+# sudo curl -o /usr/bin/dynmotd https://raw.githubusercontent.com/sohwaje/Powershell_for_azure/master/extensions/motd.sh
+# sudo sh -c "chmod +x /usr/bin/dynmotd"
+# sudo sh -c "echo /usr/bin/dynmotd > /etc/profile.d/motd.sh"
 ################################################################################
 # Tunning Kernel parameter values
 sudo swapoff -a
